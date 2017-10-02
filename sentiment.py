@@ -22,7 +22,8 @@ def is_useful_word(word):
     return True
 
 
-def create_word_features(words):
+def create_word_features(tweet):
+    words = tweet.lower().split()
     useful_words = filter(is_useful_word, words)
 
     # Naive Bayes Classifier expects word:True pairs
@@ -31,14 +32,14 @@ def create_word_features(words):
 
 
 def main():
-    neg_twts = [(create_word_features(twt.split()), "negative")
+    neg_twts = [(create_word_features(twt), "negative")
                 for twt in twitter_samples.strings('negative_tweets.json')]
 
-    pos_twts = [(create_word_features(twt.split()), "positive")
+    pos_twts = [(create_word_features(twt), "positive")
                 for twt in twitter_samples.strings('positive_tweets.json')]
 
     train_set = neg_twts[:4000] + pos_twts[:4000]
-    test_set = neg_twts[1000:] + pos_twts[1000:]
+    test_set = neg_twts[4000:] + pos_twts[4000:]
 
     classifier = NaiveBayesClassifier.train(train_set)
     accuracy = nltk.classify.util.accuracy(classifier, test_set)
