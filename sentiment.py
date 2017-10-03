@@ -4,6 +4,7 @@ import nltk
 from nltk.corpus import stopwords as nltk_stopwords
 from nltk.corpus import twitter_samples
 from nltk.classify import NaiveBayesClassifier
+from nltk.stem.snowball import SnowballStemmer
 
 
 class SentimentClassifier(object):
@@ -41,8 +42,11 @@ class SentimentClassifier(object):
         words = tweet.lower().split()
         useful_words = filter(self.is_useful_word, words)
 
+        stemmer = SnowballStemmer("english")
+        stemmed_words = [stemmer.stem(word) for word in useful_words]
+
         # Naive Bayes Classifier expects word:True pairs
-        formatted_words = dict([(word, True) for word in useful_words])
+        formatted_words = dict([(word, True) for word in stemmed_words])
         return formatted_words
 
     def classify(self, tweet):
