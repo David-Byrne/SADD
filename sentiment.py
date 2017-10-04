@@ -3,8 +3,9 @@
 import nltk
 from nltk.corpus import stopwords as nltk_stopwords
 from nltk.corpus import twitter_samples
-from nltk.classify import NaiveBayesClassifier
 from nltk.stem.snowball import SnowballStemmer
+from nltk.classify import SklearnClassifier
+from sklearn.naive_bayes import MultinomialNB
 
 
 class SentimentClassifier(object):
@@ -24,7 +25,8 @@ class SentimentClassifier(object):
         train_set = neg_twts[:4000] + pos_twts[:4000]
         test_set = neg_twts[4000:] + pos_twts[4000:]
 
-        self.classifier = NaiveBayesClassifier.train(train_set)
+        self.classifier = SklearnClassifier(MultinomialNB(alpha=1.05))
+        self.classifier.train(train_set)
         accuracy = nltk.classify.util.accuracy(self.classifier, test_set)
         print("Initialised Classifier with accuracy of {}%".format(accuracy*100))
 
