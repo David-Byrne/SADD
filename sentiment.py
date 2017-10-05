@@ -6,6 +6,8 @@ from nltk.corpus import twitter_samples
 from nltk.stem.snowball import SnowballStemmer
 from nltk.classify import SklearnClassifier
 from sklearn.naive_bayes import MultinomialNB
+from statistics import mean, stdev
+from copy import copy
 
 
 class SentimentClassifier(object):
@@ -22,13 +24,13 @@ class SentimentClassifier(object):
         pos_twts = [(self.create_word_features(twt), "positive")
                     for twt in twitter_samples.strings('positive_tweets.json')]
 
-        train_set = neg_twts[:4000] + pos_twts[:4000]
-        test_set = neg_twts[4000:] + pos_twts[4000:]
+        all_twts = neg_twts + pos_twts
 
         self.classifier = SklearnClassifier(MultinomialNB(alpha=1.05))
-        self.classifier.train(train_set)
-        accuracy = nltk.classify.util.accuracy(self.classifier, test_set)
-        print("Initialised Classifier with accuracy of {}%".format(accuracy*100))
+        results = self.cross_validate(self.classifier, all_twts, 10)
+        self.classifier.train(all_twts)
+        print("Initialised classifier with an accuracy of {:.2f}%, +/- {:.2f}%"
+              .format(mean(results) * 100, stdev(results) * 2 * 100))
 
     def is_useful_word(self, word):
         if word in self.STOP_WORDS:
@@ -54,6 +56,23 @@ class SentimentClassifier(object):
     def classify(self, tweet):
         word_features = self.create_word_features(tweet)
         return self.classifier.classify(word_features)
+
+    @staticmethod
+    def cross_validate(algo, data, num_folds):
+        results = []
+        for i in range(0, num_folds):
+            train_data = copy(data)
+            test_data = train_data[i::num_folds]
+            # stratifies the data by picking out every nth element, with increasing offset
+            del train_data[i::num_folds]
+            # removes the test data from the training dataset
+
+            trained_algo = algo.train(train_data)
+            accuracy = nltk.classify.util.accuracy(trained_algo, test_data)
+            results.append(accuracy)
+
+        return results
+
 
 if __name__ == '__main__':
     classifier = SentimentClassifier()
