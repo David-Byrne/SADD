@@ -44,12 +44,13 @@ class SentimentClassifier(object):
 
     def create_word_features(self, tweet):
         words = tweet.lower().split()
-        useful_words = filter(self.is_useful_word, words)
+        words_wo_hts = [word.lstrip("#") for word in words]
+        useful_words = filter(self.is_useful_word, words_wo_hts)
 
         stemmer = SnowballStemmer("english")
         stemmed_words = [stemmer.stem(word) for word in useful_words]
 
-        # Naive Bayes Classifier expects word:True pairs
+        # NLTK Classifiers expect word:True pairs
         formatted_words = dict([(word, True) for word in stemmed_words])
         return formatted_words
 
