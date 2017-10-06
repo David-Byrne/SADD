@@ -26,7 +26,7 @@ class SentimentClassifier(object):
 
         all_twts = neg_twts + pos_twts
 
-        self.classifier = SklearnClassifier(MultinomialNB(alpha=1.05))
+        self.classifier = SklearnClassifier(MultinomialNB(alpha=1.375))
         results = self.cross_validate(self.classifier, all_twts, 10)
         self.classifier.train(all_twts)
         print("Initialised classifier with an accuracy of {:.2f}%, +/- {:.2f}%"
