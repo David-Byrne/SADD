@@ -15,7 +15,8 @@ class TwitterConnector(object):
             return json.load(file)
 
     def fetch_tweets(self, username, limit=300):
-        # maybe look at https://github.com/tweepy/tweepy/blob/master/docs/code_snippet.rst#handling-the-rate-limit-using-cursors
+        # maybe look at:
+        # https://github.com/tweepy/tweepy/blob/master/docs/code_snippet.rst#handling-the-rate-limit-using-cursors
         tweets = []
         for status in tweepy.Cursor(self.api.user_timeline, username, count=200).items(limit):
             tweets.append(status.text)
