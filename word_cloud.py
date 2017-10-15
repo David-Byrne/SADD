@@ -7,14 +7,17 @@ from nltk.tokenize import TweetTokenizer
 class WordCloud(object):
 
     def __init__(self):
+        self.tokeniser = TweetTokenizer()
         tweet_data = " ".join(twitter_samples.strings("tweets.20150430-223406.json"))
-        tweet_words = TweetTokenizer().tokenize(tweet_data)
+        tweet_words = self.tokeniser.tokenize(tweet_data.lower())
         self.reference = Counter(tweet_words)
         self.words = Counter()
 
-    def add(self, new_words):
+    def add(self, tweet):
+        new_words = self.tokeniser.tokenize(tweet.lower())
         for word in new_words:
-            self.words[word] += 1
+            if not word.startswith("@"):
+                self.words[word] += 1
 
     def display(self, limit=5):
         tf_idf = []

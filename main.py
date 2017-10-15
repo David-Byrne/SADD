@@ -1,5 +1,4 @@
 from collections import Counter
-from nltk.tokenize import TweetTokenizer
 import sentiment
 import twitter
 import word_cloud
@@ -18,8 +17,7 @@ def main(handle):
         print("*****************************")
         count[res] += 1
 
-        tweet_tokens = TweetTokenizer().tokenize(tweet)
-        wc.add(tweet_tokens)
+        wc.add(tweet)
 
     print("\nOverall sentiment:")
     print(count)
