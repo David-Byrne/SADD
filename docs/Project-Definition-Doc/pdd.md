@@ -92,9 +92,79 @@ debate.
 
 ## Project Objectives
 > Steps that will bring us to our goal
+> Rename to project structure/architecture?
+
+The system will be designed as a group of modular sections, that when joined
+together form a complete pipeline. Data will come into the pipeline directly
+from the Twitter streaming API and the results will be displayed on a webpage
+in real-time. Various processing techniques will be applied to the data as
+flows through the pipeline. Each of these sections fulfills an objective of
+the project.
+
+The first section of the pipeline will be the Twitter streamer. This will
+connect to the Twitter streaming API and listen for specific hashtags and
+terms related to the 8th amendment. It will drop any Tweets that we feel
+would add unwanted noise to the results such as Tweets in languages other
+than English and Tweets from countries outside Ireland. This will then pass
+on the Tweet's important attributes to the next section of the pipeline.
+
+The next section is the Tweet classifier. This takes in Tweets from the
+streamer section, preprocesses them to prepare them for classification,
+classifies them into positive and negative sentiment and stores them into
+a database. It also stores other attributes for them including their
+viewpoint (repeal the 8th or save the 8th), their Tweet ID and their
+timestamp to allow for easier querying later.
+
+The next section is the aggregator. It is run on a regular interval and
+queries the database for recent data. This can generate average sentiment
+for a given time interval, helping us to see the trends over a longer period
+of time. It will also generate the word clouds for each side based on their
+recent Tweets. These aggregated results can be stored back in the database
+to avoid having to recompute them all every time.
+
+The final section is the webserver. This will create the webpage that
+displays the results in real-time. It will be able to query the database and
+send this data to the clients to keep them up to date.
+
+Other sections could be added to improve performance and reliability of the
+overall system such as an in-memory cache that stores the latest results,
+reducing expensive database queries by the webserver. We could also
+introduce a websocket that pushes new results from the aggregator directly
+to the clients, saving them having to make regular Ajax requests looking for
+new data.
+
+**TODO - add diagram of architecture**
+
 
 ## Technologies
 > Technologies used and why
+
+The main architecture of the system will be based around microservices.
+Microservies are loosely coupled services that each handle a business case,
+and when linked together, serve a business goal. They allow more flexibility
+in development as each microservice can use its own technology stack.
+
+The main programming language used across the project will be Python,
+specifically Python 3. Python is a high-level programming language that
+supports many paradigms including procedural and object-orientated
+programming. This makes it very easy to transition from simple REPL commands
+and scripts to a fully structured project comprised of modules and classes.
+Python isn't my strongest language but it has many libraries useful to this
+project and is very popular in the area of data science so I believe it is
+the right tool for the job. I will hopefully come out of this project with a
+much deeper understanding of Python and its ecosystem.
+
+The database that will store all the data from this project will probably be
+PostgreSQL. It is a fully free, open source, object-relational database
+system and strongly conforms to the ANSI-SQL 2008 standard [6].
+
+The front end logic of the system will be written in JavaScript, as it is
+supported by all major web browsers. Many frameworks such as AngularJS,
+React and Vue.js build upon JavaScript with the aim to simplify creating web
+apps. I feel it is too early in the project to make a decision on which,
+if any, of these to use. All of the frameworks mentioned above are well
+developed and would all support any of the requirements I have for the front
+end.
 
 ## Project Timeline
 > Overview of key milestones with their target date
@@ -117,3 +187,4 @@ debate.
 
 [5] - https://developer.twitter.com/en/docs/tweets/search/overview/30-day-search
 
+[6] - https://www.postgresql.org/about/
