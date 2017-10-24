@@ -22,7 +22,9 @@ people can see something and Tweet a reaction almost instantly.
 
 This project involves taking the lead up to the 8th amendment referendum
 as a case study on sentiment classification in a divisive domain and
-displaying real-time sentiment scores for both sides.
+displaying real-time sentiment scores for both sides. As an addition to the
+sentiment analysis aspect, a word cloud will be created for each side
+displaying the terms they use most relative to the other side.
 
 
 ## Purpose
@@ -36,6 +38,11 @@ strong displays of sentiment from both sides of the debate. Twitter is an
 ideal case study to measure this sentiment due to its real-time nature and
 character limit that enforces conciseness.
 
+Creating a word cloud of each side's relatively most used terms should also
+give us an insight into what areas each side are focusing on. We'd hope to
+see differences in the language used by both sides, and perhaps what type of
+arguments they are using to try and convince undecided voters.
+
 Being able to classify sentiment in real-time will hopefully give us great
 insight into the nature of the campaign and how it changes over time. We'd
 hope to see spikes in either positive or negative sentiment correlating with
@@ -44,7 +51,7 @@ what, if any, differences the two sides have on average sentiment over the
 campaign and how it affects them.
 
 
-## Problem/Oppertunity
+## Problem/Opportunity
 > Why it's worth doing as a project
 > Maybe merge with above?
 
@@ -53,8 +60,35 @@ the referendum campaign still gives us a great opportunity to analyse
 sentiment in real-time for what looks to be one of the most controversial
 votes Ireland has had in years.
 
+Creating the system in the run up to the referendum will allow us to collect
+far more Tweets than would be possible if we only started after the
+referendum, as the normal Twitter Search API only allows you to query the
+last 7 days worth of Tweets [4]. There is an enterprise level search but
+that only allows querying of up to 30 days of historical data [5]. Both of
+these searches focus on relevance rather than completeness meaning it would
+be an incomplete dataset. Streaming the relevant Tweets from Twitter and
+storing their IDs will allow us to build a dataset focused on this
+referendum that's larger and more complete than anything that could be
+generated after the campaign.
+
 ## Project Goal
 > Ideally what we hope to achieve
+
+The goal of the project is to create a system that can give us great insight
+into sentiment on any controversial issue on Twitter. We will use the 8th
+amendment as the initial proof of concept but the system will ideally be
+able to switch domain with minimal changes needed.
+
+We will investigate what strategies give us the best insights into the
+sentiment of the population and also the differences in sentiment between
+the two sides of the debate. Various machine learning and natural language
+processing (NLP) techniques will be attempted.
+
+The results of the real-time analysis and classification will be displayed
+on a live updating website. This should be designed in a such a way that it
+can be clearly understood by a general member of the population, allowing
+them to gain an insight into the sentiment on Twitter from both sides of the
+debate.
 
 ## Project Objectives
 > Steps that will bring us to our goal
@@ -69,7 +103,7 @@ votes Ireland has had in years.
 ## Project Scope
 > What is and isn't included
 
-## Assumptions and Constrainta
+## Assumptions and Constraints
 > What it says on the tin really...
 
 ## References
@@ -78,3 +112,8 @@ votes Ireland has had in years.
 [2] - https://www.irishtimes.com/news/health/irish-abortion-law-violated-woman-s-human-rights-un-says-1.3118145
 
 [3] - https://www.amnesty.ie/abortion-faq/
+
+[4] - https://developer.twitter.com/en/docs/tweets/search/overview/basic-search
+
+[5] - https://developer.twitter.com/en/docs/tweets/search/overview/30-day-search
+
