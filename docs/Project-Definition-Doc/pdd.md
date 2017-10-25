@@ -170,11 +170,57 @@ end.
 > Overview of key milestones with their target date
 > Gantt chart either here or at the end
 
+So far, I've met with my supervisor Dr. Josephine Griffith to discuss the
+project and the direction we will take it in. I've written a few Python
+scripts to act as proofs of concept for the key areas of the project
+(accessing the Twitter API, classifying sentiment, creating word clouds...)
+
+* October 31st - Have Project Definition Document complete.
+* November 30th - Have first half of pipeline up and running, i.e. We're
+collecting tweets, classifying them and storing these results in a database.
+* January 31st - Have the core aspects of the second half of the pipeline up
+and running, i.e. Sentiment is being aggregated over time intervals and we
+have a webpage showing real-time results.
+* February 28th - Have implemented the performance enhancing systems such as
+the in-memory cache and the websocket.
+* March 31st - Have the results analysed and the final report written up.
+* April ??th - Deliver project bench demonstration and Viva Voce.
+
+
 ## Project Scope
 > What is and isn't included
 
+The main aim of the project is to create a system that analyses sentiment
+on Twitter regarding divisive topics and displays the results in a dashboard.
+The tasks described in the above sections that result in the fulfillment of
+this goal are all part of the project scope.
+
+Predicting the result of the referendum is not part of the scope. We aim to
+discover the sentiment of people who support each side, not discover the
+sentiment of the general population regarding the referendum. Predicting the
+results of referenda from Twitter sentiment has been attempted before and
+does not always give results that correspond to the final result of the
+vote [7].
+
+
 ## Assumptions and Constraints
 > What it says on the tin really...
+
+We're assuming there will be enough discussion on Twitter to generate
+sufficient data to analyse. Given how controversial a topic Abortion is and
+how both sides have already begun campaigning I feel this is a safe
+assumption.
+
+We're assuming both sides will continue to use hashtags to tag their
+discussions, making it easier to find the relevent discussions on Twitter.
+We currently plan to follow "#SaveThe8th" and "#RepealThe8th" hashtags on
+Twitter but we can update these if needed.
+
+We're constrained by what data the Twitter API makes available to us. The
+Twitter streaming API allows you to filter by up to 400 key words and will
+return up to about 1% of all Tweets [8]. Both these constraints should not
+be a problem to this project however.
+
 
 ## References
 [1] - https://www.taoiseach.gov.ie/DOT/eng/Historical_Information/The_Constitution/Constitution_of_Ireland_-_Bunreacht_na_h%C3%89ireann.html
@@ -188,3 +234,7 @@ end.
 [5] - https://developer.twitter.com/en/docs/tweets/search/overview/30-day-search
 
 [6] - https://www.postgresql.org/about/
+
+[7] - https://aran.library.nuigalway.ie/handle/10379/6239
+
+[8] - https://developer.twitter.com/en/docs/tweets/filter-realtime/overview
