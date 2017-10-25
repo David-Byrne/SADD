@@ -133,7 +133,7 @@ introduce a websocket that pushes new results from the aggregator directly
 to the clients, saving them having to make regular Ajax requests looking for
 new data.
 
-**TODO - add diagram of architecture**
+![Architecture diagram](Architecture.png)
 
 
 ## Technologies
@@ -186,6 +186,7 @@ the in-memory cache and the websocket.
 * March 31st - Have the results analysed and the final report written up.
 * April ??th - Deliver project bench demonstration and Viva Voce.
 
+![Gantt Chart](Gantt.png)
 
 ## Project Scope
 > What is and isn't included
