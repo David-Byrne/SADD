@@ -24,7 +24,8 @@ This project involves taking the lead up to the 8th amendment referendum
 as a case study on sentiment classification in a divisive domain and
 displaying real-time sentiment scores for both sides. As an addition to the
 sentiment analysis aspect, a word cloud will be created for each side
-displaying the terms they use most relative to the other side.
+displaying the terms they use most relative to the other side. All this must
+be running in real time to display the results live to the user.
 
 
 ## Purpose
@@ -54,6 +55,12 @@ campaign and how it affects them.
 ## Problem/Opportunity
 > Why it's worth doing as a project
 > Maybe merge with above?
+
+Implementing the entire pipeline as a real-time system adds a non-trivial
+level of technical complexity to the project. Each sub-system must have
+minimal delays to ensure the data flows through the pipeline at a reasonable
+rate. Each sub-system must be able to scale as needed to avoid having a
+bottleneck in a single section slowing the whole pipeline.
 
 Although the vote itself will happen after the final submission is delivered,
 the referendum campaign still gives us a great opportunity to analyse
@@ -89,6 +96,12 @@ on a live updating website. This should be designed in a such a way that it
 can be clearly understood by a general member of the population, allowing
 them to gain an insight into the sentiment on Twitter from both sides of the
 debate.
+
+We hope to run a user evaluation session once the website is displaying real
+data to give us feedback on the user interface and the data visualisation.
+This session would hopefully give us feedback for any small changes that can
+be implemented right away and also larger changes that could be taken into
+account for any future applications of the project.
 
 ## Project Objectives
 > Steps that will bring us to our goal
