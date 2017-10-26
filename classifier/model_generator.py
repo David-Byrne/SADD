@@ -30,7 +30,7 @@ class ModelGenerator(object):
     def process_tweet(self, tweet):
         words = self.pre_pro.tokenise_tweet(tweet)
         words_wo_htgs = [self.pre_pro.strip_hash(word) for word in words]
-        useful_words = filter(self.pre_pro.is_useful_word, words_wo_htgs)
+        useful_words = [w for w in words_wo_htgs if self.pre_pro.is_useful_word(w)]
 
         stemmed_words = [self.pre_pro.stem(word) for word in useful_words]
         return self.pre_pro.create_word_features(stemmed_words)
