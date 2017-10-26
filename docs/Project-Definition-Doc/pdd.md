@@ -5,7 +5,6 @@
 ***
 
 ## Project Description
-> What we're doing
 
 Ireland is set to hold a controversial referendum in the Summer of 2018 on
 whether or not to repeal the 8th amendment. The 8th amendment of the Irish
@@ -29,7 +28,6 @@ be running in real time to display the results live to the user.
 
 
 ## Purpose
-> Why we're doing it
 
 Obviously when dealing with a topic as sensitive as abortion, emotions are
 high on both sides of the debate. Modern politics relies heavily on social
@@ -53,8 +51,6 @@ campaign and how it affects them.
 
 
 ## Problem/Opportunity
-> Why it's worth doing as a project
-> Maybe merge with above?
 
 Implementing the entire pipeline as a real-time system adds a non-trivial
 level of technical complexity to the project. Each sub-system must have
@@ -79,7 +75,6 @@ referendum that's larger and more complete than anything that could be
 generated after the campaign.
 
 ## Project Goal
-> Ideally what we hope to achieve
 
 The goal of the project is to create a system that can give us great insight
 into sentiment on any controversial issue on Twitter. We will use the 8th
@@ -104,8 +99,6 @@ be implemented right away and also larger changes that could be taken into
 account for any future applications of the project.
 
 ## Project Objectives
-> Steps that will bring us to our goal
-> Rename to project structure/architecture?
 
 The system will be designed as a group of modular sections, that when joined
 together form a complete pipeline. Data will come into the pipeline directly
@@ -150,7 +143,6 @@ new data.
 
 
 ## Technologies
-> Technologies used and why
 
 The main architecture of the system will be based around microservices.
 Microservies are loosely coupled services that each handle a business case,
@@ -180,8 +172,6 @@ developed and would all support any of the requirements I have for the front
 end.
 
 ## Project Timeline
-> Overview of key milestones with their target date
-> Gantt chart either here or at the end
 
 So far, I've met with my supervisor Dr. Josephine Griffith to discuss the
 project and the direction we will take it in. I've written a few Python
@@ -202,7 +192,6 @@ the in-memory cache and the websocket.
 ![Gantt Chart](Gantt.png)
 
 ## Project Scope
-> What is and isn't included
 
 The main aim of the project is to create a system that analyses sentiment
 on Twitter regarding divisive topics and displays the results in a dashboard.
@@ -218,7 +207,6 @@ vote [7].
 
 
 ## Assumptions and Constraints
-> What it says on the tin really...
 
 We're assuming there will be enough discussion on Twitter to generate
 sufficient data to analyse. Given how controversial a topic Abortion is and
