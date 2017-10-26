@@ -97,7 +97,7 @@ debate.
 The system will be designed as a group of modular sections, that when joined
 together form a complete pipeline. Data will come into the pipeline directly
 from the Twitter streaming API and the results will be displayed on a webpage
-in real-time. Various processing techniques will be applied to the data as
+in real-time. Various processing techniques will be applied to the data as it
 flows through the pipeline. Each of these sections fulfills an objective of
 the project.
 
