@@ -1,5 +1,6 @@
 import tweepy
 import json
+import requests
 import tweet_parsing_utils as utils
 
 
@@ -24,6 +25,7 @@ class TwitterStreamer(tweepy.StreamListener):
 
         print(data)
         print("------------------------------------------")
+        requests.post("http://localhost:5000/classify", json=data)
         # we're just printing the data for now. Eventually we'll
         # send it to the classification microservice for analysis
 
