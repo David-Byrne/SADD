@@ -2,9 +2,14 @@ import tweepy
 import json
 import requests
 import tweet_parsing_utils as utils
+from concurrent.futures import ThreadPoolExecutor
 
 
 class TwitterStreamer(tweepy.StreamListener):
+
+    def __init__(self):
+        self.executor = ThreadPoolExecutor(max_workers=10)
+        super().__init__()
 
     def on_status(self, status):
 
@@ -23,11 +28,12 @@ class TwitterStreamer(tweepy.StreamListener):
             "text": tweet_text
         }
 
+        self.executor.submit(self.send_data_onward, data)
+
+    @staticmethod
+    def send_data_onward(data):
         print(data)
-        print("------------------------------------------")
-        requests.post("http://localhost:5000/classify", json=data)
-        # we're just printing the data for now. Eventually we'll
-        # send it to the classification microservice for analysis
+        requests.post("http://localhost:8000/classify", json=data)
 
 
 def main():
