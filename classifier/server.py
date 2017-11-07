@@ -28,13 +28,11 @@ def classify_tweet():
     data = request.get_json()
 
     sentiment = classi.classify(data["text"]) == "positive"
-    viewpoint = "#repealthe8th" in data["text"].lower()
-    # TODO - determine viewpoint better than this...
 
     # Splitting up command and values helps prevent SQL injection
     cursor.execute("INSERT INTO sentiment (tweet_id, sentiment, timestamp, viewpoint)"
                    "VALUES (%s, %s, to_timestamp(%s), %s);",
-                   (data["id"], sentiment, data["timestamp"], viewpoint))
+                   (data["id"], sentiment, data["timestamp"], data["viewpoint"]))
     db_con.commit()
 
     print(data["text"])
