@@ -5,6 +5,7 @@ Description=Streams from Twitter API
 Type=simple
 WorkingDirectory=/home/david/FYP/streamer
 ExecStart=/usr/bin/python3 streamer.py
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
