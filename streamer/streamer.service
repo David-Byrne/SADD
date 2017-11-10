@@ -1,0 +1,11 @@
+[Unit]
+Description=Streams from Twitter API
+
+[Service]
+Type=simple
+WorkingDirectory=/home/david/FYP/streamer
+ExecStart=/usr/bin/python3 streamer.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
