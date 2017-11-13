@@ -29,11 +29,16 @@ def classify_tweet():
 
     sentiment = classi.classify(data["text"]) == "positive"
 
-    # Splitting up command and values helps prevent SQL injection
-    cursor.execute("INSERT INTO sentiment (tweet_id, sentiment, timestamp, viewpoint)"
-                   "VALUES (%s, %s, to_timestamp(%s), %s);",
-                   (data["id"], sentiment, data["timestamp"], data["viewpoint"]))
-    db_con.commit()
+    try:
+        # Splitting up command and values helps prevent SQL injection
+        cursor.execute("INSERT INTO sentiment (tweet_id, sentiment, timestamp, viewpoint)"
+                       "VALUES (%s, %s, to_timestamp(%s), %s);",
+                       (data["id"], sentiment, data["timestamp"], data["viewpoint"]))
+        db_con.commit()
+    except psycopg2.Error as e:
+        print("!!!!!!!!!!!!!!!!!!!!!")
+        print(e.pgerror)
+        print("!!!!!!!!!!!!!!!!!!!!!")
 
     print(data["text"])
     return "OK"
