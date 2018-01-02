@@ -8,7 +8,7 @@ def connect_to_db():
     with open("../secrets.json") as file:
         config = json.load(file)
         # TODO change host to a dynamic value rather than hard coded
-        conn = psycopg2.connect(database="postgres", host='172.17.0.2',
+        conn = psycopg2.connect(database="postgres", host='localhost',
                                 user=config["dbUser"], password=config["dbPassword"])
     cur = conn.cursor()
     return conn, cur
