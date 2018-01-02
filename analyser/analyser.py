@@ -4,8 +4,8 @@ import matplotlib as mpl
 mpl.use('Agg')
 # Setting MPL to use AGG since default backend needs an X-server, which
 # won't be on the server. Needs to be initialised before importing pyplot
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
+import matplotlib.pyplot as plt  # noqa: 402
+import matplotlib.dates as mdates  # noqa: 402
 
 
 class Analyser(object):
@@ -47,7 +47,7 @@ class Analyser(object):
 
     @staticmethod
     def plot(image_name, x, ys, legend):
-        fig, ax = plt.subplots(figsize=(15,8))
+        fig, ax = plt.subplots(figsize=(15, 8))
         for y in ys:
             ax.plot(x, y)
 
