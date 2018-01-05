@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt  # noqa: 402
 import matplotlib.dates as mdates  # noqa: 402
 
 
-class Analyser(object):
+class StaticAnalyser(object):
 
     def __init__(self):
         self.db_con, self.db_cursor = self.connect_to_db()
@@ -77,7 +77,7 @@ class Analyser(object):
 
 
 if __name__ == '__main__':
-    an = Analyser()
-    an.get_daily_tweet_count()
-    an.get_daily_tweet_count_by_viewpoint()
-    an.get_daily_avg_sentiment_by_viewpoint()
+    sa = StaticAnalyser()
+    sa.get_daily_tweet_count()
+    sa.get_daily_tweet_count_by_viewpoint()
+    sa.get_daily_avg_sentiment_by_viewpoint()
