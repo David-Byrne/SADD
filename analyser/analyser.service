@@ -1,0 +1,12 @@
+[Unit]
+Description=Runs analysis on collected data
+
+[Service]
+Type=simple
+WorkingDirectory=/home/david/FYP/analyser
+#TODO find a way to remove David from the path
+ExecStart=/usr/bin/python3 analyser.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
