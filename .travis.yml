@@ -4,5 +4,7 @@ python:
   - "3.6"
 install:
   - pip install flake8
+  - npm install eslint eslint-plugin-import eslint-config-airbnb-base
 script:
   - flake8
+  - ./node_modules/.bin/eslint **/*.js

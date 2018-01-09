@@ -1,81 +1,82 @@
-"use strict";
+'use strict';
 
-class LineChart{
+/* global Chart:false */
 
-    constructor(canvas, labels, saveData, repealData){
+class LineChart { // eslint-disable-line no-unused-vars
+    constructor(canvas, labels, saveData, repealData) {
         const chartConfig = {
             type: 'line',
             data: {
-                labels: labels,
+                labels,
                 datasets: [{
-                    label: "#RepealThe8th",
+                    label: '#RepealThe8th',
                     backgroundColor: 'rgb(0, 0, 0)',
                     borderColor: 'rgb(0, 0, 0)',
                     borderWidth: 2.5,
                     pointRadius: 1,
                     data: repealData,
-                    fill: false
+                    fill: false,
                 }, {
-                    label: "#SaveThe8th",
+                    label: '#SaveThe8th',
                     backgroundColor: 'rgb(237, 32, 123)',
                     borderColor: 'rgb(237, 32, 123)',
                     borderWidth: 2.5,
                     pointRadius: 1,
                     data: saveData,
-                    fill: false
-                }]
+                    fill: false,
+                }],
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 legend: {
-                    position: "bottom"
+                    position: 'bottom',
                 },
-                title:{
-                    display:true,
-                    text:'Sentiment Chart [**FAKE DATA**]'
+                title: {
+                    display: true,
+                    text: 'Sentiment Chart [**FAKE DATA**]',
                 },
                 tooltips: {
                     mode: 'index',
-                    intersect: false
+                    intersect: false,
                 },
                 hover: {
                     mode: 'nearest',
-                    intersect: true
+                    intersect: true,
                 },
                 scales: {
                     xAxes: [{
                         display: true,
                         ticks: {
-                            fontSize: 10
+                            fontSize: 10,
                         },
                         scaleLabel: {
                             display: false,
-                            labelString: 'Date'
-                        }
+                            labelString: 'Date',
+                        },
                     }],
                     yAxes: [{
                         display: true,
-                        ticks:{
+                        ticks: {
                             max: 1,
-                            min: 0
+                            min: 0,
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: 'Sentiment'
-                        }
-                    }]
-                }
-            }
+                            labelString: 'Sentiment',
+                        },
+                    }],
+                },
+            },
         };
 
         this.chart = new Chart(canvas, chartConfig);
     }
 
-    updateGraph(labels, saveData, repealData){
+    updateGraph(labels, saveData, repealData) {
         this.chart.config.data.labels = labels;
         this.chart.config.data.datasets[0].data = repealData;
         this.chart.config.data.datasets[1].data = saveData;
-        this.chart.update()
+        this.chart.update();
     }
 }
