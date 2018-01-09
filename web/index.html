@@ -10,6 +10,9 @@
             min-height: 300px;
             height: 40vh;
         }
+        .wordcloud {
+            height: 30vh;
+        }
     </style>
 </head>
 
@@ -28,17 +31,13 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
-                        Word Cloud 1 here
-                    </div>
+                    <span class="wordcloud" id="repeal-cloud"></span>
                 </div>
             </div>
 
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
-                        Word Cloud 2 here
-                    </div>
+                    <span class="wordcloud" id="save-cloud"></span>
                 </div>
             </div>
         </div>
@@ -53,6 +52,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.0.6/wordcloud2.js"></script>
 
 <script src="lineChart.js"></script>
+<script src="sentiCloud.js"></script>
 
 <script>
     "use strict";
@@ -63,6 +63,22 @@
         const vnSen = [0.31707, 0.62637, 0.69048, 0.53659, 0.87500, 0.66667, 0.58333, 0.67857, 0.65385, 0.50000, 0.57576, 0.53247, 0.61538, 0.53571, 0.83333, 0.60000, 0.87500, 0.32432, 0.67647, 0.25000, 0.68000, 0.50000, 0.61111, 0.59375, 0.52500, 0.42857, 0.54167, 0.62069, 0.34000, 0.66129, 0.44928, 0.73684, 0.70909, 0.80645, 0.80645, 0.60000, 0.42424, 0.55039, 0.42308, 0.78182, 0.55556, 0.58824, 0.40741, 0.48649, 0.65385, 0.60000, 0.85294, 0.35714, 0.64583, 0.80000, 0.58621, 0.48276, 0.70000, 0.70588, 0.65385, 0.34783, 0.85714, 0.81818, 0.67857, 0.83562, 0.70000, 0.89286];
 
         const lc = new LineChart(ctx, labels, vnSen, vpSen);
+        const repealCloud = new SentiCloud(document.getElementById("repeal-cloud"),
+            [['Repeal',30],['choice',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['women',12],['Repeal',30],['choice',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['women',12],['Repeal',30],['choice',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['women',12],["abcd",10]],
+            {
+                color: '#ffffff',
+                backgroundColor: '#000000'
+            }
+        );
+
+        const saveCloud = new SentiCloud(document.getElementById("save-cloud"),
+            [['Save',30],['killing',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['babies',12],['Save',30],['killing',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['babies',12],['Save',30],['killing',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['babies',12]],
+            {
+                color: '#ffffff',
+                backgroundColor: '#ed207b'
+            }
+        );
+
     };
 </script>
 </html>
