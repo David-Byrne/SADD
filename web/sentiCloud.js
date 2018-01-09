@@ -10,7 +10,9 @@ class SentiCloud{
             shuffle: 0,
             wait: 10,
             weightFactor: 2,
-            shape: "square"
+            shape: "square",
+            gridSize: 12,
+            classes: "cloud-word"
         };
 
         this.config = Object.assign(defaultConfig, extraConfig);
