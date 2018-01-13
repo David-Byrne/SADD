@@ -4,6 +4,14 @@
         "sourceType": "script"
     },
     "rules": {
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "no-console": "off",
+        "no-restricted-syntax": [
+            "error",
+            "ForInStatement",
+            "LabeledStatement",
+            "WithStatement"
+            // Removes For..Of from naughty list
+        ]
     }
 }

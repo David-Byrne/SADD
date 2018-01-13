@@ -1,0 +1,21 @@
+{
+  "name": "websocket-microservice",
+  "version": "1.0.0",
+  "description": "Links the cache and webpage",
+  "main": "websocket.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/David-Byrne/FYP/tree/master/websocket"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "redis": "^2.8.0",
+    "ws": "^4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Byrne",
+  "license": "UNLICENSED"
+}

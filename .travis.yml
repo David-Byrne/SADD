@@ -5,6 +5,7 @@ python:
 install:
   - pip install flake8
   - npm install eslint eslint-plugin-import eslint-config-airbnb-base
+  - npm install --prefix ./websocket/
 script:
   - flake8
   - ./node_modules/.bin/eslint **/*.js

@@ -1,0 +1,11 @@
+[Unit]
+Description=Websocket linking the cache and webpage
+
+[Service]
+Type=simple
+WorkingDirectory=/home/david/FYP/websocket
+ExecStart=/usr/bin/node websocket.js
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
