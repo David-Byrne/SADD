@@ -34,6 +34,9 @@ def classify_tweet():
         cursor.execute("INSERT INTO sentiment (tweet_id, sentiment, timestamp, viewpoint)"
                        "VALUES (%s, %s, to_timestamp(%s), %s);",
                        (data["id"], sentiment, data["timestamp"], data["viewpoint"]))
+        cursor.execute("INSERT INTO tweet (tweet_id, tweet_text, timestamp, viewpoint)"
+                       "VALUES (%s, %s, to_timestamp(%s), %s);",
+                       (data["id"], data["text"], data["timestamp"], data["viewpoint"]))
         db_con.commit()
     except psycopg2.Error as e:
         print("!!!!!!!!!!!!!!!!!!!!!")
