@@ -41,7 +41,7 @@ class LineChart { // eslint-disable-line no-unused-vars
                 },
                 title: {
                     display: true,
-                    text: 'Sentiment Chart [**FAKE DATA**]',
+                    text: 'Sentiment Chart',
                 },
                 tooltips: {
                     mode: 'index',
