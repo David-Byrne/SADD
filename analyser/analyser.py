@@ -15,6 +15,7 @@ class Analyser(object):
     def run_infinitely(self, period=60):
         while True:
             self.get_daily_avg_sentiment_by_viewpoint()
+            self.prune_old_tweets()
             time.sleep(period)
 
     def get_daily_avg_sentiment_by_viewpoint(self):
@@ -31,6 +32,11 @@ class Analyser(object):
         self.redis.hmset("vp:senti", vp_senti)
         self.redis.hmset("vn:senti", vn_senti)
         self.redis.set("lastUpdated", time.time())
+
+    def prune_old_tweets(self):
+        with open("prune_old_tweets.sql") as sql:
+            self.db_cursor.execute(sql.read())
+        self.db_con.commit()
 
     @staticmethod
     def connect_to_db():
