@@ -3,6 +3,7 @@ import time
 import redis
 import psycopg2
 import psycopg2.extras
+from collections import Counter
 
 
 class Analyser(object):
@@ -16,6 +17,7 @@ class Analyser(object):
         while True:
             self.get_daily_avg_sentiment_by_viewpoint()
             self.prune_old_tweets()
+            self.generate_word_cloud_data()
             time.sleep(period)
 
     def get_daily_avg_sentiment_by_viewpoint(self):
@@ -37,6 +39,32 @@ class Analyser(object):
         with open("prune_old_tweets.sql") as sql:
             self.db_cursor.execute(sql.read())
         self.db_con.commit()
+
+    def generate_word_cloud_data(self):
+        save_words = self.get_word_frequency_for_viewpoint(False)
+        repeal_words = self.get_word_frequency_for_viewpoint(True)
+
+        save_cloud = self.calc_relative_word_freq(save_words, repeal_words)
+        repeal_cloud = self.calc_relative_word_freq(repeal_words, save_words)
+
+        self.redis.hmset("vn:cloud", save_cloud)
+        self.redis.hmset("vp:cloud", repeal_cloud)
+
+    def get_word_frequency_for_viewpoint(self, viewpoint):
+        self.db_cursor.execute("SELECT tweet_text "
+                               "FROM tweet "
+                               "WHERE viewpoint = %s",
+                               (viewpoint,))
+        counter = Counter()
+        [counter.update(res.tweet_text.lower().split()) for res in self.db_cursor]
+        return counter
+
+    @staticmethod
+    def calc_relative_word_freq(words, contrast):
+        scores = {}
+        for word, count in words.items():
+            scores[word] = count / (contrast[word] + 1)
+        return scores
 
     @staticmethod
     def connect_to_db():
