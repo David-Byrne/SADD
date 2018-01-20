@@ -9,7 +9,7 @@ bluebird.promisifyAll(redis.RedisClient.prototype);
 
 class WebSocket {
     constructor() {
-        this.KEYS = ['vp:senti', 'vn:senti'];
+        this.KEYS = ['vp:senti', 'vn:senti', 'vp:cloud', 'vn:cloud'];
         // TODO: Add in expected datatype, for now we're just assuming it's a hashmap
         this.wsServer = new ws.Server({ port: 8080 });
         this.redisCon = redis.createClient();
@@ -23,9 +23,10 @@ class WebSocket {
         });
 
         // When there's been a Redis update
-        this.redisSub.on('message', (channel) => {
-            const key = WebSocket.getRedisKey(channel);
+        this.redisSub.on('message', (channel, action) => {
+            if (action === 'del') return;
 
+            const key = WebSocket.getRedisKey(channel);
             this.redisCon.hgetallAsync(key)
                 .then((resp) => {
                     const data = WebSocket.formatDataForSending(key, resp);
