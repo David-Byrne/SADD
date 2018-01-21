@@ -64,6 +64,12 @@
     "use strict";
     window.onload = () => {
         const lc = new LineChart(document.getElementById('sentiment-graph'));
+        const repealCloud = new SentiCloud(document.getElementById("repeal-cloud"), {
+                backgroundColor: '#000000'
+        });
+        const saveCloud = new SentiCloud(document.getElementById("save-cloud"), {
+            backgroundColor: '#ed207b'
+        });
 
         const socket = new WebSocket('ws://hateful8th.com:8080');
 
@@ -85,26 +91,17 @@
                     lc.updateGraph(Object.keys(orderedData), Object.values(orderedData), null);
                     break;
                 }
+                case 'vp:cloud': {
+                    repealCloud.updateGraph(Object.entries(data.data));
+                    break;
+                }
+                case 'vn:cloud': {
+                    saveCloud.updateGraph(Object.entries(data.data));
+                    break;
+                }
             }
 
         }
-
-        const repealCloud = new SentiCloud(document.getElementById("repeal-cloud"),
-            [['Repeal',30],['choice',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['women',12],['Repeal',30],['choice',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['women',12],['Repeal',30],['choice',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['women',12],["abcd",10]],
-            {
-                color: '#ffffff',
-                backgroundColor: '#000000'
-            }
-        );
-
-        const saveCloud = new SentiCloud(document.getElementById("save-cloud"),
-            [['Save',30],['killing',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['babies',12],['Save',30],['killing',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['babies',12],['Save',30],['killing',20],['abortion',15],['8th',20],['fake',10],['data',10],['vote',15],['info',10],['foobar',12],['foo',10],['bar',10],['joe',14],['bloggs',12],['London',10],['travel',10],['abroad',14],['babies',12]],
-            {
-                color: '#ffffff',
-                backgroundColor: '#ed207b'
-            }
-        );
-
     };
 
     function sortObjectKeys(object){
