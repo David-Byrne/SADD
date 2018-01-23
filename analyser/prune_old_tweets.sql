@@ -6,7 +6,7 @@ WHERE tweet_id NOT IN (
     FROM tweet
     WHERE viewpoint = FALSE
     ORDER BY timestamp DESC
-    LIMIT 500
+    LIMIT 1000
   )
 
   UNION
@@ -16,7 +16,7 @@ WHERE tweet_id NOT IN (
     FROM tweet
     WHERE viewpoint = TRUE
     ORDER BY timestamp DESC
-    LIMIT 500
+    LIMIT 1000
   )
 
 );
