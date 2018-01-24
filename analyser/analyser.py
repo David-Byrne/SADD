@@ -81,6 +81,8 @@ class Analyser(object):
             .replace("-", " ") \
             .replace("(", " ") \
             .replace(")", " ") \
+            .replace("<", "&lt;") \
+            .replace(">", "&gt;") \
             .split()
         words_wo_links = [w for w in words if not w.startswith("co/")]
         #  ^This removes Twitter shorthand URLs
