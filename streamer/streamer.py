@@ -16,17 +16,12 @@ class TwitterStreamer(tweepy.StreamListener):
         if not utils.is_tweet_valid(status):
             return
 
-        try:
-            tweet_text = utils.get_tweet_text(status.retweeted_status)
-        except AttributeError:
-            tweet_text = utils.get_tweet_text(status)
-
         data = {
             "id": status.id_str,
             # convert from millisconds to correct epoch format
             "timestamp": int(status.timestamp_ms)//1000,
-            "text": tweet_text,
-            "viewpoint": "repealthe8th" in tweet_text.lower()
+            "text": utils.get_tweet_text(status),
+            "viewpoint": utils.get_tweet_viewpoint(status)
         }
 
         self.executor.submit(self.send_data_onward, data)
