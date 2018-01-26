@@ -12,6 +12,7 @@
             "LabeledStatement",
             "WithStatement"
             // Removes For..Of from naughty list
-        ]
+        ],
+        "no-plusplus": "off"
     }
 }

@@ -25,8 +25,28 @@ class SentiCloud { // eslint-disable-line no-unused-vars
     updateGraph(data) {
         // Maybe run a check first to see if the update would actually change things?
         data.sort((a, b) => b[1] - a[1]);
-        const scaledWords = data.map(entry => [entry[0], 6 * Math.log(entry[1] / 1.3)]);
-        this.config.list = scaledWords;
-        WordCloud(this.element, this.config);
+
+        if (this.isWorthRepaint(data)) {
+            const scaledWords = data.map(entry => [entry[0], 6 * Math.log(entry[1] / 1.3)]);
+            this.config.list = scaledWords;
+            WordCloud(this.element, this.config);
+        }
+    }
+
+    isWorthRepaint(data) {
+        if (data.length !== this.config.list.length) {
+            return true;
+        }
+
+        let diffCounter = 0;
+
+        for (const [index, pair] of data.entries()) {
+            if (pair[0] !== this.config.list[index][0]) {
+                diffCounter++;
+            }
+        }
+
+        return diffCounter > 10;
+        // Any fewer changes than that and it's not really worth a repaint...
     }
 }
