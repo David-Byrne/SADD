@@ -73,8 +73,6 @@ class Analyser(object):
             .replace(";", " ") \
             .replace(":", " ") \
             .replace('"', " ") \
-            .replace("‘", " ") \
-            .replace("’", " ") \
             .replace("“", " ") \
             .replace("”", " ") \
             .replace("!", " ") \
@@ -87,7 +85,7 @@ class Analyser(object):
             .split()
         words_wo_links = [w for w in words if not w.startswith("co/")]
         #  ^This removes Twitter shorthand URLs
-        words_wo_quots = [w.strip("'") for w in words_wo_links]
+        words_wo_quots = [w.strip("'‘’") for w in words_wo_links]
         return [w for w in words_wo_quots if len(w) > 1]
 
     @staticmethod
