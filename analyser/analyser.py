@@ -78,6 +78,7 @@ class Analyser(object):
             .replace("!", " ") \
             .replace("?", " ") \
             .replace("-", " ") \
+            .replace("*", " ") \
             .replace("(", " ") \
             .replace(")", " ") \
             .replace("<", "&lt;") \
