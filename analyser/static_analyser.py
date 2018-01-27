@@ -45,6 +45,17 @@ class StaticAnalyser(object):
                       [res[2] for res in results if not res[1]]],
                   legend=["Pro-Choice Tweets", "Pro-Life Tweets"])
 
+    def get_relative_daily_tweet_count_by_viewpoint(self):
+        with open("relative_daily_tweet_count_by_viewpoint.sql") as query:
+            self.db_cursor.execute(query.read())
+
+        results = self.db_cursor.fetchall()
+        self.plot("relative_daily_tweet_count_by_viewpoint",
+                  x=[res[0] for res in results if res[1]],
+                  ys=[[res[2] for res in results if res[1]],
+                      [res[2] for res in results if not res[1]]],
+                  legend=["#RepealThe8th Tweets", "#SaveThe8th Tweets"])
+
     @staticmethod
     def plot(image_name, x, ys, legend):
         fig, ax = plt.subplots(figsize=(15, 8))
@@ -81,3 +92,4 @@ if __name__ == '__main__':
     sa.get_daily_tweet_count()
     sa.get_daily_tweet_count_by_viewpoint()
     sa.get_daily_avg_sentiment_by_viewpoint()
+    sa.get_relative_daily_tweet_count_by_viewpoint()
