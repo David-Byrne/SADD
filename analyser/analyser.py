@@ -56,7 +56,7 @@ class Analyser(object):
                                "WHERE viewpoint = %s",
                                (viewpoint,))
         counter = Counter()
-        [counter.update(self.parse_tweet(res.tweet_text)) for res in self.db_cursor]
+        [counter.update(WordCloud.parse_tweet(res.tweet_text)) for res in self.db_cursor]
         return counter
 
     def add_to_cache(self, key, value):
@@ -64,30 +64,6 @@ class Analyser(object):
         self.redis.delete(key)
         self.redis.hmset(key, value)
         transaction.execute()
-
-    @staticmethod
-    def parse_tweet(text):
-        words = text.lower() \
-            .replace(".", " ") \
-            .replace(",", " ") \
-            .replace(";", " ") \
-            .replace(":", " ") \
-            .replace('"', " ") \
-            .replace("“", " ") \
-            .replace("”", " ") \
-            .replace("!", " ") \
-            .replace("?", " ") \
-            .replace("-", " ") \
-            .replace("*", " ") \
-            .replace("(", " ") \
-            .replace(")", " ") \
-            .replace("<", "&lt;") \
-            .replace(">", "&gt;") \
-            .split()
-        words_wo_links = [w for w in words if not w.startswith("co/")]
-        #  ^This removes Twitter shorthand URLs
-        words_wo_quots = [w.strip("'‘’") for w in words_wo_links]
-        return [w for w in words_wo_quots if len(w) > 1]
 
     @staticmethod
     def connect_to_db():
