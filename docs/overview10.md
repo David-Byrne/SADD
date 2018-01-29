@@ -19,11 +19,11 @@ identify links so case sensitivity would allow many more possible
 combinations.
 
 I changed my SQL query so that I was just looking for 'https://t.co/3l28',
-with only one letter I could check both it's upper and lower cases to see
-if either returned a match. Sure enough, a bunch of IDs are returned. When
+with only one letter I could check both its upper and lower cases to see
+if either returned a match. Sure enough, a bunch of IDs were returned. When
 I cross-checked their contents, I found 'https://t.co/3l28Q56GiS' common to
 them all. By converting all my word cloud words to lower case, I was
-breaking Twitter's shorthand link system. Now we'll be filtering these links
+breaking Twitter's shorthand link system. We'll be filtering these links
 out of the wordcloud anyway but it's still good to get it figured out.
 
 ---
@@ -61,7 +61,7 @@ query to see if any tweets were marked Repeal but actually contained
 '#SaveThe8th'. And, as I had expected, I got results. I checked the first
 result returned, [956265187560116225](https://twitter.com/MariaLaoise/status/956265187560116225), and it
 contained both hashtags... Not what I was expecting. Tweets like these do
-explain why the Save hashtag appears in both categories but it shouldn't
+explain why the Save hashtag appears in both categories, but it shouldn't
 have ever entered the system, I'm meant to be dropping tweets that contain
 both hashtags. Marking the earlier bug involving the setting of the
 viewpoint attribute as a ToDo item, I turned my attention to the section of
@@ -111,7 +111,7 @@ to the period. There's an impossibly large amount of characters to try split
 on so this won't work out either.
 
 The only real option left was regex, [unfortunately](https://softwareengineering.stackexchange.com/questions/223634/what-is-meant-by-now-you-have-two-problems).
-Now luckily I was able to use a fairly simple regex pattern to match
+Luckily I was able to use a fairly simple regex pattern to match
 hashtags so it's not as bad as I feared originally.
 
 ---
