@@ -1,9 +1,9 @@
 'use strict';
 
-/* global WordCloud:false */
+/* global WordCloud:false window:false */
 
 class SentiCloud { // eslint-disable-line no-unused-vars
-    constructor(element, extraConfig) {
+    constructor(name, element, extraConfig) {
         const defaultConfig = {
             fontFamily: 'Helvetica',
             color: '#ffffff',
@@ -14,6 +14,11 @@ class SentiCloud { // eslint-disable-line no-unused-vars
             weightFactor: 1,
             gridSize: 12,
             classes: 'cloud-word',
+            click: (item) => {
+                const query = encodeURIComponent(`${name} ${item[0]}`);
+                const url = `https://twitter.com/search?q=${query}`;
+                window.open(url, item[0]);
+            },
         };
 
         this.config = Object.assign(defaultConfig, extraConfig);

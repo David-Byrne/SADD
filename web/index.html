@@ -14,10 +14,13 @@
             height: 30vh;
         }
         .cloud-word {
+            cursor: pointer;
             transition: text-shadow .3s;
         }
         .cloud-word:hover {
             text-shadow: 0 0 15px #ffffff;
+            text-decoration: underline;
+
         }
     </style>
 </head>
@@ -64,10 +67,10 @@
     "use strict";
     window.onload = () => {
         const lc = new LineChart(document.getElementById('sentiment-graph'));
-        const repealCloud = new SentiCloud(document.getElementById("repeal-cloud"), {
+        const repealCloud = new SentiCloud("#repealthe8th", document.getElementById("repeal-cloud"), {
                 backgroundColor: '#000000'
         });
-        const saveCloud = new SentiCloud(document.getElementById("save-cloud"), {
+        const saveCloud = new SentiCloud("#savethe8th", document.getElementById("save-cloud"), {
             backgroundColor: '#ed207b'
         });
 
