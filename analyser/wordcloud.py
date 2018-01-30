@@ -41,6 +41,8 @@ class WordCloud(object):
             .replace("*", " ") \
             .replace("(", " ") \
             .replace(")", " ") \
+            .replace("[", " ") \
+            .replace("]", " ") \
             .replace("<", "&lt;") \
             .replace(">", "&gt;") \
             .split()
