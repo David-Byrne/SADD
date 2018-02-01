@@ -1,6 +1,6 @@
 import operator
 from collections import Counter
-from nltk.corpus import twitter_samples
+from nltk.corpus import webtext
 
 
 class WordCloud(object):
@@ -53,5 +53,5 @@ class WordCloud(object):
 
 
 _normal_word_freq = Counter()
-[_normal_word_freq.update(WordCloud.parse_tweet(twt)) for twt in
- twitter_samples.strings("tweets.20150430-223406.json")]
+[_normal_word_freq.update(WordCloud.parse_tweet(text.split(":", maxsplit=1)[-1]))
+ for text in webtext.raw("overheard.txt").split("\n")]
