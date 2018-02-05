@@ -74,7 +74,7 @@
             backgroundColor: '#ed207b'
         });
 
-        const socket = new WebSocket('ws://hateful8th.com:8080');
+        const socket = new WebSocket(`ws://${window.location.hostname}:8080`);
 
         socket.onopen = () => {
             console.log('Connection established');
