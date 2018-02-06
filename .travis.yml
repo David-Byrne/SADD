@@ -9,3 +9,4 @@ install:
 script:
   - flake8
   - ./node_modules/.bin/eslint **/*.js
+  - for filename in **/*.Dockerfile; do docker run --rm -i hadolint/hadolint < $filename; done;
