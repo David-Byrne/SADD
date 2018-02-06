@@ -1,0 +1,68 @@
+version: '2.1'
+services:
+  streamer:
+    build:
+      context: .
+      dockerfile: streamer/streamer.Dockerfile
+    depends_on:
+      classifier:
+        condition: service_started
+
+  classifier:
+    build:
+      context: .
+      dockerfile: classifier/classifier.Dockerfile
+    ports:
+      - "8000"
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    build:
+      context: .
+      dockerfile: database/database.Dockerfile
+    ports:
+      - "5432"
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      interval: 3s
+      timeout: 5s
+      retries: 5
+
+  analyser:
+    build:
+      context: .
+      dockerfile: analyser/analyser.Dockerfile
+    depends_on:
+      cache:
+        condition: service_started
+      database:
+        condition: service_healthy
+
+  cache:
+    build:
+      context: cache
+      dockerfile: cache.Dockerfile
+    ports:
+      - "6379"
+
+  websocket:
+    build:
+      context: websocket
+      dockerfile: websocket.Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+       cache:
+        condition: service_started
+
+  web:
+    build:
+      context: web
+      dockerfile: web.Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+       websocket:
+        condition: service_started
