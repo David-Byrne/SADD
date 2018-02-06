@@ -29,7 +29,7 @@ class TwitterStreamer(tweepy.StreamListener):
     @staticmethod
     def send_data_onward(data):
         print(data)
-        requests.post("http://localhost:8000/classify", json=data)
+        requests.post("http://classifier:8000/classify", json=data)
 
 
 def main():
