@@ -18,7 +18,7 @@ class LineChart { // eslint-disable-line no-unused-vars
                     borderColor: 'rgb(0, 0, 0)',
                     borderWidth: 2.5,
                     pointRadius: 1,
-                    data: Array(defaultLen).fill(0.5),
+                    data: Array(defaultLen).fill(0),
                     fill: false,
                 }, {
                     label: '#SaveThe8th',
@@ -26,7 +26,7 @@ class LineChart { // eslint-disable-line no-unused-vars
                     borderColor: 'rgb(237, 32, 123)',
                     borderWidth: 2.5,
                     pointRadius: 1,
-                    data: Array(defaultLen).fill(0.5),
+                    data: Array(defaultLen).fill(0),
                     fill: false,
                 }],
             },
@@ -66,11 +66,11 @@ class LineChart { // eslint-disable-line no-unused-vars
                         display: true,
                         ticks: {
                             max: 1,
-                            min: 0,
+                            min: -1,
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: 'Sentiment',
+                            labelString: '):               Sentiment               (:',
                         },
                     }],
                 },
@@ -84,12 +84,19 @@ class LineChart { // eslint-disable-line no-unused-vars
         this.chart.config.data.labels = labels;
 
         if (repealData) {
-            this.chart.config.data.datasets[0].data = repealData;
+            const scaledData = LineChart.scaleData(repealData);
+            this.chart.config.data.datasets[0].data = scaledData;
         }
         if (saveData) {
-            this.chart.config.data.datasets[1].data = saveData;
+            const scaleData = LineChart.scaleData(saveData);
+            this.chart.config.data.datasets[1].data = scaleData;
         }
 
         this.chart.update();
+    }
+
+    static scaleData(data) {
+        // Scales data to range [-1,1] instead of [0,1]
+        return data.map(value => (2 * value) - 1);
     }
 }
