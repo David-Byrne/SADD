@@ -97,6 +97,6 @@ class LineChart { // eslint-disable-line no-unused-vars
 
     static scaleData(data) {
         // Scales data to range [-1,1] instead of [0,1]
-        return data.map(value => (2 * value) - 1);
+        return data.map(value => ((2 * value) - 1).toFixed(3));
     }
 }
