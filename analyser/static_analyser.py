@@ -76,7 +76,8 @@ class StaticAnalyser(object):
         plt.xlim([0, 6])
         x = [res[0] for res in results]
         y = [res[1] for res in results]
-        plt.xticks(x, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
+        plt.xticks(x,
+                   ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
         plt.plot(x, y)
         plt.legend(["Average number of tweets by day of week"], loc="upper left")
         plt.savefig("avg_tweet_count_by_day_of_week" + ".png")
