@@ -56,6 +56,32 @@ class StaticAnalyser(object):
                       [res[2] for res in results if not res[1]]],
                   legend=["#RepealThe8th Tweets", "#SaveThe8th Tweets"])
 
+    def get_avg_tweet_count_by_hour(self):
+        with open("avg_tweet_count_by_hour.sql") as query:
+            self.db_cursor.execute(query.read())
+        results = self.db_cursor.fetchall()
+
+        plt.clf()
+        plt.xlim([0, 23])
+        plt.plot([res[0] for res in results], [res[1] for res in results])
+        plt.legend(["Average number of tweets by hour"], loc="upper left")
+        plt.savefig("avg_tweet_count_by_hour" + ".png")
+
+    def get_avg_tweet_count_by_day_of_week(self):
+        with open("avg_tweet_count_by_day_of_week.sql") as query:
+            self.db_cursor.execute(query.read())
+        results = self.db_cursor.fetchall()
+
+        plt.clf()
+        plt.xlim([0, 6])
+        x = [res[0] for res in results]
+        y = [res[1] for res in results]
+        plt.xticks(x,
+                   ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
+        plt.plot(x, y)
+        plt.legend(["Average number of tweets by day of week"], loc="upper left")
+        plt.savefig("avg_tweet_count_by_day_of_week" + ".png")
+
     @staticmethod
     def plot(image_name, x, ys, legend):
         fig, ax = plt.subplots(figsize=(15, 8))
@@ -93,3 +119,5 @@ if __name__ == '__main__':
     sa.get_daily_tweet_count_by_viewpoint()
     sa.get_daily_avg_sentiment_by_viewpoint()
     sa.get_relative_daily_tweet_count_by_viewpoint()
+    sa.get_avg_tweet_count_by_hour()
+    sa.get_avg_tweet_count_by_day_of_week()
