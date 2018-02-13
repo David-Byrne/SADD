@@ -7,9 +7,9 @@ from tweet_parsing_utils import TweetParser
 
 class TwitterStreamer(tweepy.StreamListener):
 
-    def __init__(self, hashtag1, hashtag2):
+    def __init__(self, config):
         self.executor = ThreadPoolExecutor(max_workers=10)
-        self.parser = TweetParser(hashtag1, hashtag2)
+        self.parser = TweetParser(config)
         super().__init__()
 
     def on_status(self, status):
@@ -43,7 +43,7 @@ def main():
         config = json.load(file)
     hashtag1 = config["topic1"]["name"].lower()
     hashtag2 = config["topic2"]["name"].lower()
-    stream = tweepy.Stream(auth=auth, listener=TwitterStreamer(hashtag1, hashtag2))
+    stream = tweepy.Stream(auth=auth, listener=TwitterStreamer(config))
     stream.filter(track=[hashtag1, hashtag2], async=True)
 
 

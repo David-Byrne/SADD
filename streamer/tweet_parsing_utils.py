@@ -3,9 +3,12 @@ import re
 
 class TweetParser(object):
 
-    def __init__(self, hashtag1, hashtag2):
-        self.hashtag1 = hashtag1
-        self.tracked_hts = {hashtag1, hashtag2}
+    def __init__(self, config):
+        self.hashtag1 = config["topic1"]["name"]
+        self.hashtag2 = config["topic2"]["name"]
+        self.languages = config["supportedLanguages"]
+        self.timezones = config["supportedTimezones"]
+        self.tracked_hts = {self.hashtag1, self.hashtag2}
 
     def get_tweet_viewpoint(self, status):
         text = TweetParser.get_tweet_text(status).lower()
@@ -21,9 +24,9 @@ class TweetParser(object):
         return self.hashtag1 in used_hts
 
     def is_tweet_valid(self, status):
-        if status.lang not in ["en", "en-gb"]:
+        if status.lang not in self.languages:
             return False
-        if status.user.time_zone not in ["Dublin", None]:
+        if status.user.time_zone not in self.timezones:
             # if we know they're not in Ireland, should they get a say?
             return False
 

@@ -7,5 +7,7 @@
         "name": "#SaveThe8th",
         "colour": "#ed207b"
     },
-    "name": "Hateful8th"
+    "name": "Hateful8th",
+    "supportedLanguages": ["en", "en-gb"],
+    "supportedTimezones": ["Dublin", null]
 }
