@@ -1,27 +1,28 @@
 import tweepy
 import json
 import requests
-import tweet_parsing_utils as utils
 from concurrent.futures import ThreadPoolExecutor
+from tweet_parsing_utils import TweetParser
 
 
 class TwitterStreamer(tweepy.StreamListener):
 
-    def __init__(self):
+    def __init__(self, hashtag1, hashtag2):
         self.executor = ThreadPoolExecutor(max_workers=10)
+        self.parser = TweetParser(hashtag1, hashtag2)
         super().__init__()
 
     def on_status(self, status):
 
-        if not utils.is_tweet_valid(status):
+        if not self.parser.is_tweet_valid(status):
             return
 
         data = {
             "id": status.id_str,
             # convert from millisconds to correct epoch format
             "timestamp": int(status.timestamp_ms)//1000,
-            "text": utils.get_tweet_text(status),
-            "viewpoint": utils.get_tweet_viewpoint(status)
+            "text": self.parser.get_tweet_text(status),
+            "viewpoint": self.parser.get_tweet_viewpoint(status)
         }
 
         self.executor.submit(self.send_data_onward, data)
@@ -35,11 +36,15 @@ class TwitterStreamer(tweepy.StreamListener):
 def main():
     with open("../secrets.json") as file:
         secrets = json.load(file)
-        auth = tweepy.OAuthHandler(secrets["consumerKey"], secrets["consumerSecret"])
-        auth.set_access_token(secrets["accessTokenKey"], secrets["accessTokenSecret"])
+    auth = tweepy.OAuthHandler(secrets["consumerKey"], secrets["consumerSecret"])
+    auth.set_access_token(secrets["accessTokenKey"], secrets["accessTokenSecret"])
 
-        stream = tweepy.Stream(auth=auth, listener=TwitterStreamer())
-        stream.filter(track=["#savethe8th", "#repealthe8th"], async=True)
+    with open("../config.json") as file:
+        config = json.load(file)
+    hashtag1 = config["topic1"]["name"].lower()
+    hashtag2 = config["topic2"]["name"].lower()
+    stream = tweepy.Stream(auth=auth, listener=TwitterStreamer(hashtag1, hashtag2))
+    stream.filter(track=[hashtag1, hashtag2], async=True)
 
 
 if __name__ == '__main__':

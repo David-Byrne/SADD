@@ -1,49 +1,53 @@
 import re
 
 
-def is_tweet_valid(status):
-    if status.lang not in ["en", "en-gb"]:
-        return False
-    if status.user.time_zone not in ["Dublin", None]:
-        # if we know they're not in Ireland, should they get a say?
-        return False
+class TweetParser(object):
 
-    try:
-        get_tweet_viewpoint(status)
-    except ValueError:
-        # Tweet must have an illegal number of hashtags
-        return False
+    def __init__(self, hashtag1, hashtag2):
+        self.hashtag1 = hashtag1
+        self.tracked_hts = {hashtag1, hashtag2}
 
-    return True
+    def get_tweet_viewpoint(self, status):
+        text = TweetParser.get_tweet_text(status).lower()
+        used_hts = re.findall("#\w+", text)
+        # This regex is used to match hashtags, it means hash symbol followed by at least
+        # one word character
 
+        if len(self.tracked_hts.intersection(used_hts)) != 1:
+            raise ValueError("Tweet contains wrong number of important hashtags")
 
-def get_tweet_viewpoint(status):
-    text = get_tweet_text(status).lower()
-    used_hts = re.findall("#\w+", text)
-    # This regex is used to match hashtags, it means hash symbol followed by at least
-    # one word character
+        # At this point we know exactly one of the 2 hashtags were used,
+        # so we can assume if it's not one, then it's the other
+        return self.hashtag1 in used_hts
 
-    tracked_hts = {"#repealthe8th", "#savethe8th"}
-    if len(tracked_hts.intersection(used_hts)) != 1:
-        raise ValueError("Tweet contains wrong number of important hashtags")
+    def is_tweet_valid(self, status):
+        if status.lang not in ["en", "en-gb"]:
+            return False
+        if status.user.time_zone not in ["Dublin", None]:
+            # if we know they're not in Ireland, should they get a say?
+            return False
 
-    # At this point we know exactly one of the 2 hashtags were used,
-    # so we can assume if it's not repeal, then it's save
-    return "#repealthe8th" in used_hts
+        try:
+            self.get_tweet_viewpoint(status)
+        except ValueError:
+            # Tweet must have an illegal number of hashtags
+            return False
 
+        return True
 
-def get_tweet_text(status):
-    try:
-        tweet_text = _get_status_text(status.retweeted_status)
-    except AttributeError:
-        tweet_text = _get_status_text(status)
+    @staticmethod
+    def get_tweet_text(status):
+        try:
+            tweet_text = TweetParser._get_status_text(status.retweeted_status)
+        except AttributeError:
+            tweet_text = TweetParser._get_status_text(status)
 
-    return tweet_text
+        return tweet_text
 
-
-def _get_status_text(tweet_status):
-    try:
-        return tweet_status.extended_tweet["full_text"]
-    except AttributeError:
-        # if it wasn't a long tweet, just get it the normal way
-        return tweet_status.text
+    @staticmethod
+    def _get_status_text(tweet_status):
+        try:
+            return tweet_status.extended_tweet["full_text"]
+        except AttributeError:
+            # if it wasn't a long tweet, just get it the normal way
+            return tweet_status.text
