@@ -12,12 +12,14 @@ function sortObjectKeys(object) {
 }
 
 window.onload = () => {
-    const lc = new LineChart(document.getElementById('sentiment-graph'));
-    const repealCloud = new SentiCloud('#repealthe8th', document.getElementById('repeal-cloud'), {
-        backgroundColor: '#000000',
+    document.getElementById("website-name").innerText = CONFIG.name;
+
+    const lc = new LineChart(document.getElementById('sentiment-graph'), CONFIG.topic1, CONFIG.topic2);
+    const repealCloud = new SentiCloud(CONFIG.topic1.name, document.getElementById('repeal-cloud'), {
+        backgroundColor: CONFIG.topic1.colour,
     });
-    const saveCloud = new SentiCloud('#savethe8th', document.getElementById('save-cloud'), {
-        backgroundColor: '#ed207b',
+    const saveCloud = new SentiCloud(CONFIG.topic2.name, document.getElementById('save-cloud'), {
+        backgroundColor: CONFIG.topic2.colour,
     });
 
     const socket = new WebSocket(`ws://${window.location.hostname}:8080`);

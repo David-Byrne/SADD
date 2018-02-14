@@ -3,7 +3,7 @@
 /* global Chart:false */
 
 class LineChart { // eslint-disable-line no-unused-vars
-    constructor(canvas) {
+    constructor(canvas, topic1, topic2) {
         const defaultLen = Math.ceil((new Date() - new Date(2017, 10, 8)) / (24 * 60 * 60 * 1000));
         // defaultLen is roughly how many days of data we'll be displaying, since the animation
         // works best if we've about the same amount of place holder and real data.
@@ -13,17 +13,17 @@ class LineChart { // eslint-disable-line no-unused-vars
             data: {
                 labels: Array(defaultLen).fill('                  '),
                 datasets: [{
-                    label: '#RepealThe8th',
-                    backgroundColor: 'rgb(0, 0, 0)',
-                    borderColor: 'rgb(0, 0, 0)',
+                    label: topic1.name,
+                    backgroundColor: topic1.colour,
+                    borderColor: topic1.colour,
                     borderWidth: 2.5,
                     pointRadius: 1,
                     data: Array(defaultLen).fill(0),
                     fill: false,
                 }, {
-                    label: '#SaveThe8th',
-                    backgroundColor: 'rgb(237, 32, 123)',
-                    borderColor: 'rgb(237, 32, 123)',
+                    label: topic2.name,
+                    backgroundColor: topic2.colour,
+                    borderColor: topic2.colour,
                     borderWidth: 2.5,
                     pointRadius: 1,
                     data: Array(defaultLen).fill(0),
