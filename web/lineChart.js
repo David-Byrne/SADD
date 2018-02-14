@@ -41,7 +41,7 @@ class LineChart { // eslint-disable-line no-unused-vars
                 },
                 title: {
                     display: true,
-                    text: 'Sentiment Chart',
+                    text: 'Mood',
                 },
                 tooltips: {
                     mode: 'index',
@@ -70,7 +70,7 @@ class LineChart { // eslint-disable-line no-unused-vars
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: '):               Sentiment               (:',
+                            labelString: '):               Mood               (:',
                         },
                     }],
                 },
