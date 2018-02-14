@@ -1,6 +1,7 @@
 'use strict';
 
-/* global window:false document:false WebSocket:false SentiCloud:false LineChart:false */
+/* global window:false document:false CONFIG:false WebSocket:false SentiCloud:false
+          LineChart:false */
 /* eslint-disable indent */ // Stops eslint complaining about indentation in switch statement
 
 function sortObjectKeys(object) {
@@ -12,7 +13,7 @@ function sortObjectKeys(object) {
 }
 
 window.onload = () => {
-    document.getElementById("website-name").innerText = CONFIG.name;
+    document.getElementById('website-name').innerText = CONFIG.name;
 
     const lc = new LineChart(document.getElementById('sentiment-graph'), CONFIG.topic1, CONFIG.topic2);
     const repealCloud = new SentiCloud(CONFIG.topic1.name, document.getElementById('repeal-cloud'), {
