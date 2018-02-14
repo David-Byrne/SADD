@@ -1,0 +1,13 @@
+{
+    "topic1": {
+        "name": "#RepealThe8th",
+        "colour": "#000000"
+    },
+    "topic2": {
+        "name": "#SaveThe8th",
+        "colour": "#ed207b"
+    },
+    "name": "Hateful8th",
+    "supportedLanguages": ["en", "en-gb"],
+    "supportedTimezones": ["Dublin", null]
+}
