@@ -4,8 +4,8 @@ import re
 class TweetParser(object):
 
     def __init__(self, config):
-        self.hashtag1 = config["topic1"]["name"]
-        self.hashtag2 = config["topic2"]["name"]
+        self.hashtag1 = config["topic1"]["name"].lower()
+        self.hashtag2 = config["topic2"]["name"].lower()
         self.languages = config["supportedLanguages"]
         self.timezones = config["supportedTimezones"]
         self.tracked_hts = {self.hashtag1, self.hashtag2}
