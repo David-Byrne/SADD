@@ -3,7 +3,8 @@ import time
 import redis
 import psycopg2
 import psycopg2.extras
-from collections import Counter
+from collections import Counter, namedtuple
+from decimal import Decimal
 from wordcloud import WordCloud
 
 
@@ -27,13 +28,32 @@ class Analyser(object):
 
         results = self.db_cursor.fetchall()
 
+        vp_results = [res for res in results if res.viewpoint]
+        vn_results = [res for res in results if not res.viewpoint]
+
         vp_senti = {res.timestamp.isoformat(): round(res.avg, 5)
-                    for res in results if res.viewpoint}
+                    for res in Analyser.smooth_results(vp_results)}
         vn_senti = {res.timestamp.isoformat(): round(res.avg, 5)
-                    for res in results if not res.viewpoint}
+                    for res in Analyser.smooth_results(vn_results)}
 
         self.add_to_cache("vp:senti", vp_senti)
         self.add_to_cache("vn:senti", vn_senti)
+
+    @staticmethod
+    # calculates moving average to reduce noise in sentiment graph
+    def smooth_results(results):
+        Result = namedtuple("Result", ["avg", "timestamp"])
+        shaped_results = []
+
+        prev_res = [Decimal(0.5), Decimal(0.5)]
+        for r in results:
+            moved_average = Decimal(0.6) * r.avg + \
+                            Decimal(0.3) * prev_res[0] + \
+                            Decimal(0.1) * prev_res[1]
+            shaped_results.append(Result(moved_average, r.timestamp))
+            prev_res = [moved_average, prev_res[0]]
+
+        return shaped_results
 
     def prune_old_tweets(self):
         with open("prune_old_tweets.sql") as sql:
