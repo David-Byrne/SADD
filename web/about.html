@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+    .tweet {
+        font-style: italic;
+    }
+    .repeal-text {
+        background-color: #000000;
+        color: #FFFFFF;
+        padding-left: 0.3em;
+        padding-right: 0.3em;
+    }
+    .save-text {
+        background-color: #ed207b;
+        color: #FFFFFF;
+        padding-left: 0.3em;
+        padding-right: 0.3em;
+    }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light navbar-expand-sm">
+        <a class="navbar-brand" href="/">Hateful8th</a>
+
+        <div class="navbar-nav ml-auto d-sm-none">
+            <a class="nav-item nav-link" href="/about.html">About</a>
+            <!-- Display on small displays and below -->
+        </div>
+
+        <div class="navbar-nav mr-auto d-none d-sm-block">
+            <a class="nav-item nav-link" href="/about.html">About</a>
+            <!-- Display on medium displays and above -->
+        </div>
+
+        <div class="d-none d-sm-block navbar-text">
+            Real time '8th debate' analysis on Twitter
+        </div>
+    </nav>
+
+
+    <div class="container">
+
+        <div class="card mt-4 offset-lg-1 col-lg-10">
+            <div class="card-body">
+                <h4 class="card-title">8th Debate</h4>
+                <p>
+                    Ireland is set to hold a referendum on whether or not to repeal
+                    the 8th amendment of the Irish constitution. This would remove
+                    the effective ban on abortion in Ireland. The 2 sides of the
+                    debate are those who want to <span class="repeal-text">repeal
+                    the 8th</span> amendment (ie 'Pro-Choice') and those who want to
+                    <span class="save-text">save the 8th</span> amendment (ie
+                    'Pro-Life')
+                </p>
+            </div>
+        </div>
+
+        <div class="card mt-4  offset-lg-1 col-lg-10">
+            <div class="card-body">
+                <h4 class="card-title">Mood</h4>
+                <p>
+                    Mood is a generalisation of the main emotion appearing in a
+                    tweet. Positive mood (with 1 being a totally positive
+                    score) includes happiness, hope, kindness... Negative mood
+                    (with -1 being a totally negative score) includes sadness,
+                    despair, anger...
+                </p>
+                <p>
+                    Given abortion is such a divisive topic, it's likely to cause
+                    strong outbursts of mood from both ends of the spectrum,
+                    and from both sides of the debate.
+                </p>
+                <p>
+                    An example of a tweet with a positive mood could be
+                    <span class="tweet">
+                        "Loving this article that appeared in the Dungarvan Leader!
+                        #savelives #savethe8th"
+                    </span>
+                </p>
+                <p>
+                    A tweet with negative mood would be more like
+                    <span class="tweet">
+                        "Anyone who is pro-abortion needs to go back to primary school
+                        and study basic science. You might then be able to put your brain
+                        cells together and realize that abortion is the murder of an
+                        innocent child.#ProLife #savethe8th"
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <div class="card mt-4 offset-lg-1 col-lg-10">
+            <div class="card-body">
+                <h4 class="card-title">WordClouds</h4>
+                <p>
+                    The wordclouds display the words currently most used by each
+                    side, relative to the other. This allows us to see what topics
+                    are being focused on by each side, and also the different type
+                    of language used. As opposed to the mood graph which gives
+                    an overview of the entire debate, the wordclouds focus on the
+                    current state of the debate and the trending topics.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

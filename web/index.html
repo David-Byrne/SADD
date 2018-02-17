@@ -8,8 +8,20 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#" id="website-name"></a>
+    <nav class="navbar navbar-light bg-light navbar-expand-sm">
+        <a class="navbar-brand" href="/" id="website-name"></a>
+
+        <div class="navbar-nav ml-auto d-sm-none">
+            <a class="nav-item nav-link" href="/about.html">About</a>
+            <!-- Display on small displays and below -->
+        </div>
+
+        <div class="navbar-nav mr-auto d-none d-sm-block">
+            <a class="nav-item nav-link" href="/about.html">About</a>
+            <!-- Display on medium displays and above -->
+        </div>
+
+        <div class="d-none d-sm-block navbar-text" id="website-tagline"></div>
     </nav>
     <div id="loading-bar" class="loader-placeholder loader-bar"></div>
 

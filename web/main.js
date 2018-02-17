@@ -14,6 +14,7 @@ function sortObjectKeys(object) {
 
 window.onload = () => {
     document.getElementById('website-name').innerText = CONFIG.name;
+    document.getElementById('website-tagline').innerText = CONFIG.tagline;
 
     const lc = new LineChart(document.getElementById('sentiment-graph'), CONFIG.topic1, CONFIG.topic2);
     const repealCloud = new SentiCloud(CONFIG.topic1.name, document.getElementById('repeal-cloud'), {
