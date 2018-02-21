@@ -12,7 +12,7 @@ The services that together make up the entire system are as follows:
 * **Database**: This stores the results of the data processing being done by the pipeline.
 * **Analyser**: This analyses the data stored by the database microservice, looking for trends and general insights.
 * **Cache**: This is short term storage for the results of the analyser. Rather than having to re-process all the data each time, we can store the most up to date version of it here.
-* **Websocket**: This sends the latest results of the data analysis to the connected clients as soon as they are calculated. As it focuses on transferring time sensitive data, low latencies are key
+* **Websocket**: This sends the latest results of the data analysis to the connected clients as soon as they are calculated. As it focuses on transferring time sensitive data, low latencies are highly important.
 * **Web**: This sends HTML pages to the clients when they load the page. This HTML is then inflated using the data sent by the websocket service to display the latest results and analytics.
 
 ![corpus @ 1.0](images/arch.png)
