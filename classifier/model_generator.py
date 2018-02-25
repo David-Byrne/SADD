@@ -22,10 +22,11 @@ class ModelGenerator(object):
 
         all_twts = neg_twts + pos_twts
 
-        results = self.cross_validate(self.classifier, all_twts, 10)
+        acc_scores, confusion_matrix = self.cross_validate(self.classifier, all_twts, 10)
         self.classifier.train(all_twts)
         print("Initialised classifier with an accuracy of {:.2f}%, +/- {:.2f}%"
-              .format(mean(results) * 100, stdev(results) * 2 * 100))
+              .format(mean(acc_scores) * 100, stdev(acc_scores) * 2 * 100))
+        print("Confusion matrix: \n{}".format(confusion_matrix))
 
     def process_tweet(self, tweet):
         words = self.pre_pro.tokenise_tweet(tweet)
@@ -40,7 +41,10 @@ class ModelGenerator(object):
 
     @staticmethod
     def cross_validate(algo, data, num_folds):
-        results = []
+        acc_scores = []
+        predicted_results = []
+        actual_results = []
+
         for i in range(0, num_folds):
             train_data = copy(data)
             test_data = train_data[i::num_folds]
@@ -50,9 +54,14 @@ class ModelGenerator(object):
 
             trained_algo = algo.train(train_data)
             accuracy = nltk.classify.util.accuracy(trained_algo, test_data)
-            results.append(accuracy)
+            acc_scores.append(accuracy)
 
-        return results
+            for td in test_data:
+                predicted_results.append(trained_algo.classify(td[0]))
+                actual_results.append(td[1])
+
+        confusion_mat = nltk.ConfusionMatrix(actual_results, predicted_results)
+        return acc_scores, confusion_mat
 
 
 if __name__ == '__main__':
