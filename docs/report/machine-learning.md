@@ -37,7 +37,7 @@ However, recall from above that the fairest way to estimate real world performan
 2. Bernouli Naive Bayes: 803 classified correctly, giving an accuracy score of 80.3%. This is marginally lower than the training accuracy, however it's still well within the margin of error.
 3. Multinomial Naive Bayes: 810 classified correctly, giving an accuracy score of 81.0%. This is actually higher than the training accuracy, but again well within the margin of error.
 
-Interestingly, the top 3 list in the training accuracy scores has been reversed when testing against the validation set. Given these surprising results, I also tested the SVC with a linear kernel against the validation set, as it had quite close an accuracy rate to the top 3 algorithms in the training phase.
+Interestingly, the top 3 algorithms in training accuracy scores have been reversed when testing against the validation set. Given these surprising results, I also tested the SVC with a linear kernel against the validation set, as it had quite close an accuracy rate to the top 3 algorithms in the training phase.
 
 4. Linear SVC: 781 classified correctly, giving an accuracy score of 78.1%. This is lower than the training accuracy, although within the margin of error. It's also significantly lower than the other algorithms tested against the validation dataset.
 
