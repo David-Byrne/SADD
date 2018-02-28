@@ -54,6 +54,15 @@ class WordCloud(object):
         return [w for w in words_wo_quots if len(w) > 1]
 
 
-_normal_word_freq = Counter()
-[_normal_word_freq.update(WordCloud.parse_tweet(text.split(":", maxsplit=1)[-1]))
- for text in webtext.raw("overheard.txt").split("\n")]
+def calculate_normal_word_freq():
+    normal_word_freq = Counter()
+    [normal_word_freq.update(WordCloud.parse_tweet(text.split(":", maxsplit=1)[-1]))
+     for text in webtext.raw("overheard.txt").split("\n")]
+    return normal_word_freq
+
+
+_normal_word_freq = calculate_normal_word_freq()
+# This is run when the module is first imported and is stored as a module level varaible. This
+# is done because it's a large operation that would take too long to run every time a
+# WordCloud object is instantiated. Since it's shared it also reduces memory usage which is
+# another plus.
