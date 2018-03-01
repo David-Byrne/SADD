@@ -11,4 +11,7 @@ script:
   - flake8
   - ./node_modules/.bin/eslint **/*.js
   - for filename in **/*.Dockerfile; do docker run --rm -i hadolint/hadolint < $filename; done;
-  - ./analyser/run_tests.sh
+  - |
+    touch secrets.json && \
+    docker build -f analyser/analyser.Dockerfile -t analyser-test . && \
+    docker run analyser-test /analyser/run_tests.sh .
