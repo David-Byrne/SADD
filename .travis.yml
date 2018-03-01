@@ -4,9 +4,11 @@ python:
   - "3.6"
 install:
   - pip install flake8
+  - pip install -r analyser/analyser.requirements.txt
   - npm install eslint eslint-plugin-import eslint-config-airbnb-base
   - npm install --prefix ./websocket/
 script:
   - flake8
   - ./node_modules/.bin/eslint **/*.js
   - for filename in **/*.Dockerfile; do docker run --rm -i hadolint/hadolint < $filename; done;
+  - ./analyser/run_tests.sh
