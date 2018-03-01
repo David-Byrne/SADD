@@ -250,6 +250,6 @@ class AnalyserTester(unittest.TestCase):
         self.assertEqual(mocked_cursor, cursor)
         # checking these to ensure the 2 return values are in the correct order
 
-        mocked_connect.assert_called_once_with(database="database", host="localhost",
+        mocked_connect.assert_called_once_with(database="postgres", host="database",
                                                user="user", password="pass")
         # this check ensures we're authenticating to the database correctly
