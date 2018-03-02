@@ -89,3 +89,39 @@ wordcloud.py      28      0   100%
 --------------------------------------------
 TOTAL             96      1    99%
 ````
+
+## Linting
+While testing checks how code runs, linting is the process of checking how code looks. Linters run static analysis against code to try find programming and stylistic errors. They don't execute code or test logic however. The languages I've set up linters for are Python, JavaScript and Dockerfiles.
+
+Python linting is done using a Python module called flake8. This combines a number of Python style guidelines including PEP8 and Pyflakes into a single check. It warns about multiple issues including incorrect whitespace, unused variables, incorrect syntax and overly complex code. It can be configured using a `.flake8` config file at the root of the project structure. To keep every python based microservice consistent, I'm enforcing the same flake8 configuration across them all. I only have one custom override of the default style guide and that's increasing the maximum line length from 80 to 100 characters. This allows me to use slightly longer but more descriptive naming for variables and functions which I feel improves readability and clarity. To run the linter, run `flake8 .` from the root of the project structure.
+
+JavaScript linting is done using ESLint. There are many JavaScript linters available but ESLint is one of the most customisable and flexible. It does need an initial configuration to get started however, it isn't supplied with one like flake8. As a base ruleset, I chose the "Airbnb JavaScript Style Guide". It is one of the most popular style guides and it matches many of my preferences. I did override some of the style rules as I encountered situations where I disagreed with the base ruleset's defaults. My custom eslint configuration is:
+````YAML
+{
+    "extends": "airbnb-base",
+    "parserOptions": {
+        "sourceType": "script"
+    },
+    "rules": {
+        "indent": ["error", 4],
+        "no-console": "off",
+        "no-restricted-syntax": [
+            "error",
+            "ForInStatement",
+            "LabeledStatement",
+            "WithStatement"
+            // Removes For..Of from naughty list
+        ],
+        "no-plusplus": "off"
+    }
+}
+````
+The adjustments I've made can be seen above, which include setting the default indent width to 4 characters as well as removing the ban on console logging, the for..of loop and the unary increment operator (i.e. `i++`).
+
+Dockerfile linting is done using Hadolint. It can validate inline bash commands as well as enforcing best practice for Docker image building. I didn't change any of the default configuration for this linter as it all felt correct to me. The hadolint program can be run without installation as it is distributed as a Docker image. Simply pull the image and then pipe the Dockerfile that needs to be tested into the running container. As Hadolint only supports linting a single Dockerfile at a time, I wrote a short bash script that finds all the Dockerfiles in the codebase and pipes them into it one by one.
+```` bash
+for filename in **/*.Dockerfile;
+    do docker run --rm -i hadolint/hadolint < $filename;
+done;
+````
+This allows the linting to validate every Dockerfile without needing to maintain a hard coded list of their paths.
