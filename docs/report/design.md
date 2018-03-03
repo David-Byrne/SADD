@@ -1,6 +1,6 @@
 # Design
 
-The project follows the Microservices software architecture pattern. This means the overall project is made up of small, modular, loosely coupled sub-systems which use lightweight network protocols to communicate. The Microservices pattern can be viewed as a variant of the more general Service-Orientated-Architecture (SOA) pattern.
+The project follows the Microservices software architecture pattern. This means the overall project is made up of small, modular, loosely coupled sub-systems which use lightweight network protocols to communicate. The Microservices pattern can be viewed as a variant of the more general Service-Orientated-Architecture (SOA) pattern. [1]
 
 As each sub-system is independent, it gives them the freedom to use the technology stack that best suits its needs. For example, the websocket service which sends data updates to connected clients needs to be able to maintain low latency whilst under heavy load. Node.js, which uses an event-driven, non-blocking I/O model, matches these requirements perfectly. The websocket service was able to use Node.js to take advantage of this, despite the rest of the project being mostly written in Python. This wouldn't be possible if the system used a monolithic design, as the entire codebase would need to use the same language.
 
@@ -17,3 +17,5 @@ The services that together make up the entire system are as follows:
 
 ![corpus @ 1.0](images/arch.png)
 #### Figure X: A system architecture diagram that displays the various microservices and how they connect to form the overall pipeline.
+
+[1] - [Software Architecture Patterns](http://www.oreilly.com/programming/free/files/software-architecture-patterns.pdf) by Mark Richards
