@@ -14,7 +14,7 @@ class StaticAnalyser(object):
         self.db_con, self.db_cursor = self.connect_to_db()
 
     def get_daily_tweet_count(self):
-        with open("daily_tweet_count.sql") as query:
+        with open("sql/daily_tweet_count.sql") as query:
             self.db_cursor.execute(query.read())
 
         results = self.db_cursor.fetchall()
@@ -24,7 +24,7 @@ class StaticAnalyser(object):
                   legend=["Tweets Collected by Day"])
 
     def get_daily_tweet_count_by_viewpoint(self):
-        with open("daily_tweet_count_by_viewpoint.sql") as query:
+        with open("sql/daily_tweet_count_by_viewpoint.sql") as query:
             self.db_cursor.execute(query.read())
 
         results = self.db_cursor.fetchall()
@@ -35,7 +35,7 @@ class StaticAnalyser(object):
                   legend=["Pro-Choice Tweets", "Pro-Life Tweets"])
 
     def get_daily_avg_sentiment_by_viewpoint(self):
-        with open("daily_avg_sentiment_by_viewpoint.sql") as query:
+        with open("sql/daily_avg_sentiment_by_viewpoint.sql") as query:
             self.db_cursor.execute(query.read())
 
         results = self.db_cursor.fetchall()
@@ -46,7 +46,7 @@ class StaticAnalyser(object):
                   legend=["Pro-Choice Tweets", "Pro-Life Tweets"])
 
     def get_relative_daily_tweet_count_by_viewpoint(self):
-        with open("relative_daily_tweet_count_by_viewpoint.sql") as query:
+        with open("sql/relative_daily_tweet_count_by_viewpoint.sql") as query:
             self.db_cursor.execute(query.read())
 
         results = self.db_cursor.fetchall()
@@ -57,7 +57,7 @@ class StaticAnalyser(object):
                   legend=["#RepealThe8th Tweets", "#SaveThe8th Tweets"])
 
     def get_avg_tweet_count_by_hour(self):
-        with open("avg_tweet_count_by_hour.sql") as query:
+        with open("sql/avg_tweet_count_by_hour.sql") as query:
             self.db_cursor.execute(query.read())
         results = self.db_cursor.fetchall()
 
@@ -68,7 +68,7 @@ class StaticAnalyser(object):
         plt.savefig("avg_tweet_count_by_hour" + ".png")
 
     def get_avg_tweet_count_by_day_of_week(self):
-        with open("avg_tweet_count_by_day_of_week.sql") as query:
+        with open("sql/avg_tweet_count_by_day_of_week.sql") as query:
             self.db_cursor.execute(query.read())
         results = self.db_cursor.fetchall()
 

@@ -23,7 +23,7 @@ class Analyser(object):
             time.sleep(period)
 
     def get_daily_avg_sentiment_by_viewpoint(self):
-        with open("daily_avg_sentiment_by_viewpoint.sql") as query:
+        with open("sql/daily_avg_sentiment_by_viewpoint.sql") as query:
             self.db_cursor.execute(query.read())
 
         results = self.db_cursor.fetchall()
@@ -56,7 +56,7 @@ class Analyser(object):
         return shaped_results
 
     def prune_old_tweets(self):
-        with open("prune_old_tweets.sql") as sql:
+        with open("sql/prune_old_tweets.sql") as sql:
             self.db_cursor.execute(sql.read())
         self.db_con.commit()
 
