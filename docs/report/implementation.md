@@ -119,7 +119,7 @@ GROUP BY 1, 2
 ORDER BY 1, 2;
 ````
 
-This data is quite noisy however with large fluctuations, so we calculate a weighted moving average that takes the previous days sentiment into account when generating that day's figure. A hashmap for each viewpoint with the date as the key and the sentiment score as the value is then stored into the cache.
+This data is quite noisy however with large fluctuations, so we calculate a weighted moving average that takes the previous days' sentiment into account when generating that day's figure. A hashmap for each viewpoint with the date as the key and the sentiment score as the value is then stored into the cache.
 
 ```` python
 def smooth_results(results):
@@ -150,8 +150,28 @@ def calc_relative_word_freq(words, contrast):
 
 The top 100 scoring terms for each viewpoint are used to create hashmaps with the word as the key and the score as the value. These hashmaps are then inserted into the cache. These analytics are re-generated regularly to keep the results data up to date.
 
+### Cache
+
 The cache is implemented using Redis, an open-source, in-memory data-structure store. Its simple command based language and high performance made it the ideal choice for this service. It also supports key-space notifications, which are publish-subscribe (pub-sub) channels that receive event-messages every time a value is updated. This allows the websocket to be informed as soon as the analyser pushes new results to the cache in a highly efficient and performant manner.
 
-The websocket service is written in JavaScript using Node.js, since its event based model matches the service's main use cases. It uses the Redis and WS libraries to connect to the cache and create a websocket. When it is started up, it connects to the cache and subscribes to messages about any updates that occur. Whenever a value in the cache is updated by the analyser, it is notified of the change and it broadcasts the new value to all connected clients. When a new client connects, it queries the cache for the latest results and sends them directly to the new client.
+### Websocket
+
+The websocket service is written in JavaScript using Node.js, since its event based model matches the service's main use cases. It uses the Redis and WS libraries to connect to the cache and create a websocket. When it is started up, it connects to the cache and subscribes to messages about any updates that occur. Whenever a value in the cache is updated by the analyser, it is notified of the change and it broadcasts the new value to all connected clients.
+
+```` javascript
+this.redisSub.on('message', (channel, action) => {
+    if (action === 'del') return;
+
+    const key = WebSocket.getRedisKey(channel);
+    this.redisCon.hgetallAsync(key)
+        .then((resp) => {
+            const data = WebSocket.formatDataForSending(key, resp);
+            this.broadcastUpdates(data);
+        })
+        .catch(console.error);
+});
+````
+
+When a new client connects, it queries the cache for the latest results and sends them directly to the new client.
 
 The web service is powered by an Nginx server. I chose Nginx as it is highly performant and it maintains a low memory footprint under load. All the resources it serves are static, i.e. they don't need to be dynamically created using a server side programming language such as PHP. This is done by sending a HTML page that, when it loads, immediately connects to the websocket service. It receives the latest data when it connects and uses it to inflate the visualisations. To display the chart of sentiment levels over time, we're using the Chart.js library to create the graph. The data is scaled from the range [0,1] to [-1,1] as a symmetrical scoring system was found to be more user friendly. The values are rounded to 3 decimal places to prevent irrational numbers taking up too much space. To create the word clouds, we're using the WordCloud2.js library. We're sorting the words based on their score, ensuring the largest words are painted first. As the library starts painting from the center and keeps moving outwards until it finds space for a word, this ensures a good spread across the canvas with the most important term being in the center. The sizing of the word directly corresponds to the score it was given back in the analyser service. The sizing is scaled logarithmically however, or else the most frequent terms would be too large for the canvas and the less common terms would be illegibly small. Before repainting, the new data is compared with the old data to check if a sufficiently large change has taken place. This is done because, unlike the sentiment chart library, the word cloud library doesn't support dynamic changes without an entire repaint of the canvas. If only 2 words have swapped places in the top 100 words, there's no point triggering an entire repaint. If a large change takes place however, it's worth triggering the repaint. Each of the terms is also a link to the relevant Tweets in which it appears. This is done by dynamically building a link to a Twitter search, containing the term specified as well as the main term in the word cloud, which ensures the context is correct. This is extremely useful to clarify the context of any ambiguous or surprising terms.
