@@ -63,7 +63,35 @@ def on_status(self, status):
     self.executor.submit(self.send_data_onward, data)
 ````
 
-The classifier service is the most technically advanced of the services. Python has many machine learning and natural language processing (NLP) libraries making it one of the most popular languages for data science, so I chose it for this service. When its docker image is being built, it trains a machine learning model using a corpus of positive and negative Tweets supplied by the Natural Language Tool Kit (NLTK) library. For more information on the machine learning aspect, see the machine learning section of the report. The classifier service is run using Gunicorn. This allows us to run multiple instances of the service that all listen at the same port. When an instance of the service is started up, it loads in the serialised machine learning model from disk and establishes a connection to the database service. It then listens for POST requests from the streamer service. When it receives one, it extracts the Tweet data and classifies it using the model generated earlier. It then inserts the Tweet details and predicted sentiment into the database.
+### Classifier
+
+The classifier service is the most technically advanced of the services. Python has many machine learning and natural language processing (NLP) libraries making it one of the most popular languages for data science, so I chose it for this service. When its docker image is being built, it trains a machine learning model using a corpus of positive and negative Tweets supplied by the Natural Language Tool Kit (NLTK) library. For more information on the machine learning aspect, see the machine learning section of the report.
+
+```` python
+neg_twts = [(self.process_tweet(twt), "negative")
+            for twt in twitter_samples.strings('negative_tweets.json')]
+
+pos_twts = [(self.process_tweet(twt), "positive")
+            for twt in twitter_samples.strings('positive_tweets.json')]
+
+all_twts = neg_twts + pos_twts
+self.classifier.train(all_twts)
+````
+
+The classifier service is run using Gunicorn. This allows us to run multiple instances of the service that all listen at the same port. When an instance of the service is started up, it loads in the serialised machine learning model from disk and establishes a connection to the database service. It then listens for POST requests from the streamer service. When it receives one, it extracts the Tweet data and classifies it using the model generated earlier. It then inserts the Tweet details and predicted sentiment into the database.
+
+```` python
+@app.route("/classify", methods=["POST"])
+def classify_tweet():
+    data = request.get_json()
+
+    sentiment = classi.classify(data["text"]) == "positive"
+
+    # Splitting up command and values helps prevent SQL injection
+    cursor.execute("INSERT INTO sentiment (tweet_id, sentiment, timestamp, viewpoint)"
+                   "VALUES (%s, %s, to_timestamp(%s), %s);",
+                   (data["id"], sentiment, data["timestamp"], data["viewpoint"]))
+````
 
 The database is PostgresSQL, an open-source, object-relational database management system. I chose PostgresSQL because it is free, scalable and focuses on standards compliance. The table that stores the classified sentiment data contains 4 columns: the Tweet ID (also being used as primary key), the Tweet timestamp, the Tweet viewpoint and its sentiment. If we ever need to re-calculate sentiment at any point, we can re-fetch the Tweet's text from the Twitter API using its ID. This removes the need to store the text for every tweet. A second table is used to store the text from some tweets, but only the last 1000 from each viewpoint, since that's all that's needed to create the word clouds. This table is quite similar to the previous one, except we're storing the Tweet's text rather than its sentiment.
 
