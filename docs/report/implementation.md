@@ -25,7 +25,43 @@ Rather than having to manage the building and running of all the Docker images m
 
 ## Services
 
-The streamer service is the first part of the pipeline. It is written in Python as I found the Tweepy library to suit my requirements perfectly. Although Node.js's event driven, non-blocking I/O model would suit this service quite well, none of the Node.js Twitter API libraries seemed to be as stable and have as good support for streaming as Tweepy does. This swung my decision to use Python instead. The streamer service uses Tweepy to connect to the Twitter streaming API and listen for new tweets. When a new tweet is received, it is checked to make sure it is valid. This includes checks such as ensuring it's not in a foreign language (since the classifier is only trained for English text), ensuring it's not from a foreign timezone (since these Tweets are probably just noise and aren't relevant) and ensuring it contains exactly one of the required hashtags (since we can't have a Tweet that expresses both viewpoints). If the Tweet is valid, it is sent onwards to the classifier service via a POST request to the clasifier service's REST API. The streamer keeps a thread-pool of workers to send the POST request, to prevent the streamer service from becoming blocked if the classifier is slow to acknowledge the POST request.
+### Streamer
+
+The streamer service is the first part of the pipeline. It is written in Python as I found the Tweepy library to suit my requirements perfectly. Although Node.js's event driven, non-blocking I/O model would suit this service quite well, none of the Node.js Twitter API libraries seemed to be as stable and have as good support for streaming as Tweepy does. This swung my decision to use Python instead. The streamer service uses Tweepy to connect to the Twitter streaming API and listen for new tweets. Before connecting to Twitter however, it first reads in configuration from config files which include API keys, specific hashtags etc.
+
+````python
+def main():
+    with open("../secrets.json") as file:
+        secrets = json.load(file)
+    auth = tweepy.OAuthHandler(secrets["consumerKey"], secrets["consumerSecret"])
+    auth.set_access_token(secrets["accessTokenKey"], secrets["accessTokenSecret"])
+
+    with open("../config.json") as file:
+        config = json.load(file)
+    hashtag1 = config["topic1"]["name"].lower()
+    hashtag2 = config["topic2"]["name"].lower()
+    stream = tweepy.Stream(auth=auth, listener=TwitterStreamer(config))
+    stream.filter(track=[hashtag1, hashtag2], async=True)
+````
+
+When a new tweet is received, it is checked to make sure it is valid. This includes checks such as ensuring it's not in a foreign language (since the classifier is only trained for English text), ensuring it's not from a foreign timezone (since these Tweets are probably just noise and aren't relevant) and ensuring it contains exactly one of the required hashtags (since we can't have a Tweet that expresses both viewpoints). If the Tweet is valid, it is sent onwards to the classifier service via a POST request to the clasifier service's REST API. The streamer keeps a thread-pool of workers to send the POST request, to prevent the streamer service from becoming blocked if the classifier is slow to acknowledge the POST request.
+
+```` python
+def on_status(self, status):
+
+    if not self.parser.is_tweet_valid(status):
+        return
+
+    data = {
+        "id": status.id_str,
+        # convert from millisconds to correct epoch format
+        "timestamp": int(status.timestamp_ms)//1000,
+        "text": self.parser.get_tweet_text(status),
+        "viewpoint": self.parser.get_tweet_viewpoint(status)
+    }
+
+    self.executor.submit(self.send_data_onward, data)
+````
 
 The classifier service is the most technically advanced of the services. Python has many machine learning and natural language processing (NLP) libraries making it one of the most popular languages for data science, so I chose it for this service. When its docker image is being built, it trains a machine learning model using a corpus of positive and negative Tweets supplied by the Natural Language Tool Kit (NLTK) library. For more information on the machine learning aspect, see the machine learning section of the report. The classifier service is run using Gunicorn. This allows us to run multiple instances of the service that all listen at the same port. When an instance of the service is started up, it loads in the serialised machine learning model from disk and establishes a connection to the database service. It then listens for POST requests from the streamer service. When it receives one, it extracts the Tweet data and classifies it using the model generated earlier. It then inserts the Tweet details and predicted sentiment into the database.
 
