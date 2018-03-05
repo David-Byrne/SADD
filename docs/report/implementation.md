@@ -93,7 +93,20 @@ def classify_tweet():
                    (data["id"], sentiment, data["timestamp"], data["viewpoint"]))
 ````
 
-The database is PostgresSQL, an open-source, object-relational database management system. I chose PostgresSQL because it is free, scalable and focuses on standards compliance. The table that stores the classified sentiment data contains 4 columns: the Tweet ID (also being used as primary key), the Tweet timestamp, the Tweet viewpoint and its sentiment. If we ever need to re-calculate sentiment at any point, we can re-fetch the Tweet's text from the Twitter API using its ID. This removes the need to store the text for every tweet. A second table is used to store the text from some tweets, but only the last 1000 from each viewpoint, since that's all that's needed to create the word clouds. This table is quite similar to the previous one, except we're storing the Tweet's text rather than its sentiment.
+### Database
+
+The database is PostgresSQL, an open-source, object-relational database management system. I chose PostgresSQL because it is free, scalable and focuses on standards compliance. The table that stores the classified sentiment data contains 4 columns: the Tweet ID (also being used as primary key), the Tweet timestamp, the Tweet viewpoint and its sentiment.
+
+````
+Table "sentiment"
+======================================================
+COLUMN | tweet_id | sentiment | timestamp | viewpoint
+-------+----------+-----------+-----------+-----------
+TYPE   | text     | boolean   | timestamp | boolean
+
+````
+
+If we ever need to re-calculate sentiment at any point, we can re-fetch the Tweet's text from the Twitter API using its ID. This removes the need to store the text for every tweet. A second table is used to store the text from some tweets, but only the last 1000 from each viewpoint, since that's all that's needed to create the word clouds. This table is quite similar to the previous one, except we're storing the Tweet's text rather than its sentiment.
 
 The analyser service runs various analytics across the data in the database and stores the results in the cache. Python's huge library support and ease of prototyping made it the obvious choice. I use the Psycopg2 and Redis libraries to connect to the database and cache. All the queries to fetch information from the database are written in SQL, as it's the query language supported by PostgresSQL. To generate the data for the daily sentiment visualisation, the service runs an SQL query to calculate the average daily sentiment, grouped by viewpoint. This data is quite noisy however with large fluctuations, so we calculate a weighted moving average that takes the previous days sentiment into account when generating that day's figure. A hashmap for each viewpoint with the date as the key and the sentiment score as the value is then stored into the cache. To calculate the data for the wordcloud, the last 1000 Tweets from each viewpoint are retrieved from the database and split into words. The number of occurrences of each word is calculated per viewpoint. To generate the scoring, a TF-IDF style approach is used in which the term frequency for a viewpoint is divided by the document frequency. The 'document' in this case is made up of all the Tweets from the opposing viewpoint, as well as a corpus of conversations supplied by the NLTK library. This allows us to find contrast in the language used by each viewpoint while also reducing the score of words that are commonly used in conversation, as they would likely not give us any insight into the debate. The top 100 scoring terms for each viewpoint are used to create hashmaps with the word as the key and the score as the value. These hashmaps are then inserted into the cache. These analytics are re-generated regularly to keep the results data up to date.
 
