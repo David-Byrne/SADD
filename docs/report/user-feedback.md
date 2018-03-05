@@ -1,8 +1,8 @@
 # User Feedback
-In an attempt to further improve the user experience (UX) of the frontend of the system, a user feedback process was created. I created a feedback form based off the Questionnaire for User Interface Satisfaction (QUIS), which was originally developed by the University of Maryland [1]. I re-worded certain questions to make them more suitable for our application and I removed others which I felt were irrelevant. I tried to keep the questionnaire as minimal as possible to encourage more people to complete it, whilst still having a sufficient range of questions to generate valuable information.
+In an attempt to further improve the user experience (UX) of the frontend of the system, a user feedback process was created. I created a feedback form based off the Questionnaire for User Interface Satisfaction (QUIS), which was originally developed by the University of Maryland [1]. I re-worded certain questions to make them more suitable for this application and I removed others which I felt were irrelevant. I tried to keep the questionnaire as minimal as possible to encourage more people to complete it, whilst still having a sufficient range of questions to generate valuable information.
 
-The feedback form began with a link to the web frontend and a disclaimer encouraging people to skip any questions they felt uncomfortable answering. It was then split into a number of sections, each comprising of a number of questions focusing on a certain part of the software.
-* Overall reaction to the software:
+The feedback form began with a link to the web frontend and a disclaimer encouraging people to skip any questions they felt uncomfortable answering. It was then split into a number of sections, each comprising of a number of questions focusing on a certain part of the software. These are as follows:
+* Overall reaction to the software
   * How good was the software? This was marked on a scale of 0-9 with 0 labelled as terrible and 9 labelled as wonderful.
   * How easy to use was the software? This was marked on a scale of 0-9 with 0 labelled as difficult and 9 labelled as easy.
   * How interesting was the software? This was marked on a scale of 0-9 with 0 labelled as dull and 9 labelled as stimulating.
