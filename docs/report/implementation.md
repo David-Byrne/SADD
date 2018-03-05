@@ -108,7 +108,47 @@ TYPE   | text     | boolean   | timestamp | boolean
 
 If we ever need to re-calculate sentiment at any point, we can re-fetch the Tweet's text from the Twitter API using its ID. This removes the need to store the text for every tweet. A second table is used to store the text from some tweets, but only the last 1000 from each viewpoint, since that's all that's needed to create the word clouds. This table is quite similar to the previous one, except we're storing the Tweet's text rather than its sentiment.
 
-The analyser service runs various analytics across the data in the database and stores the results in the cache. Python's huge library support and ease of prototyping made it the obvious choice. I use the Psycopg2 and Redis libraries to connect to the database and cache. All the queries to fetch information from the database are written in SQL, as it's the query language supported by PostgresSQL. To generate the data for the daily sentiment visualisation, the service runs an SQL query to calculate the average daily sentiment, grouped by viewpoint. This data is quite noisy however with large fluctuations, so we calculate a weighted moving average that takes the previous days sentiment into account when generating that day's figure. A hashmap for each viewpoint with the date as the key and the sentiment score as the value is then stored into the cache. To calculate the data for the wordcloud, the last 1000 Tweets from each viewpoint are retrieved from the database and split into words. The number of occurrences of each word is calculated per viewpoint. To generate the scoring, a TF-IDF style approach is used in which the term frequency for a viewpoint is divided by the document frequency. The 'document' in this case is made up of all the Tweets from the opposing viewpoint, as well as a corpus of conversations supplied by the NLTK library. This allows us to find contrast in the language used by each viewpoint while also reducing the score of words that are commonly used in conversation, as they would likely not give us any insight into the debate. The top 100 scoring terms for each viewpoint are used to create hashmaps with the word as the key and the score as the value. These hashmaps are then inserted into the cache. These analytics are re-generated regularly to keep the results data up to date.
+### Analyser
+
+The analyser service runs various analytics across the data in the database and stores the results in the cache. Python's huge library support and ease of prototyping made it the obvious choice. I use the Psycopg2 and Redis libraries to connect to the database and cache. All the queries to fetch information from the database are written in SQL, as it's the query language supported by PostgresSQL. To generate the data for the daily sentiment visualisation, the service runs an SQL query to calculate the average daily sentiment, grouped by viewpoint.
+
+```` sql
+SELECT timestamp::date, viewpoint, AVG(sentiment::int)
+FROM sentiment
+GROUP BY 1, 2
+ORDER BY 1, 2;
+````
+
+This data is quite noisy however with large fluctuations, so we calculate a weighted moving average that takes the previous days sentiment into account when generating that day's figure. A hashmap for each viewpoint with the date as the key and the sentiment score as the value is then stored into the cache.
+
+```` python
+def smooth_results(results):
+    Result = namedtuple("Result", ["avg", "timestamp"])
+    shaped_results = []
+
+    prev_res = [Decimal(0.5), Decimal(0.5)]
+    for r in results:
+        moved_average = Decimal(0.6) * r.avg + \
+                        Decimal(0.3) * prev_res[0] + \
+                        Decimal(0.1) * prev_res[1]
+        shaped_results.append(Result(moved_average, r.timestamp))
+        prev_res = [moved_average, prev_res[0]]
+
+    return shaped_results
+````
+
+To calculate the data for the wordcloud, the last 1000 Tweets from each viewpoint are retrieved from the database and split into words. The number of occurrences of each word is calculated per viewpoint. To generate the scoring, a TF-IDF style approach is used in which the term frequency for a viewpoint is divided by the document frequency. The 'document' in this case is made up of all the Tweets from the opposing viewpoint, as well as a corpus of conversations supplied by the NLTK library. This allows us to find contrast in the language used by each viewpoint while also reducing the score of words that are commonly used in conversation, as they would likely not give us any insight into the debate.
+
+```` python
+def calc_relative_word_freq(words, contrast):
+    scores = {}
+    for word, count in words.items():
+        idf = 1 + contrast[word] + (0.1 * _normal_word_freq[word])
+        scores[word] = count / idf
+    return scores
+````
+
+The top 100 scoring terms for each viewpoint are used to create hashmaps with the word as the key and the score as the value. These hashmaps are then inserted into the cache. These analytics are re-generated regularly to keep the results data up to date.
 
 The cache is implemented using Redis, an open-source, in-memory data-structure store. Its simple command based language and high performance made it the ideal choice for this service. It also supports key-space notifications, which are publish-subscribe (pub-sub) channels that receive event-messages every time a value is updated. This allows the websocket to be informed as soon as the analyser pushes new results to the cache in a highly efficient and performant manner.
 
