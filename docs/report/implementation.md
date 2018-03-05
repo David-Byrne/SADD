@@ -174,4 +174,69 @@ this.redisSub.on('message', (channel, action) => {
 
 When a new client connects, it queries the cache for the latest results and sends them directly to the new client.
 
-The web service is powered by an Nginx server. I chose Nginx as it is highly performant and it maintains a low memory footprint under load. All the resources it serves are static, i.e. they don't need to be dynamically created using a server side programming language such as PHP. This is done by sending a HTML page that, when it loads, immediately connects to the websocket service. It receives the latest data when it connects and uses it to inflate the visualisations. To display the chart of sentiment levels over time, we're using the Chart.js library to create the graph. The data is scaled from the range [0,1] to [-1,1] as a symmetrical scoring system was found to be more user friendly. The values are rounded to 3 decimal places to prevent irrational numbers taking up too much space. To create the word clouds, we're using the WordCloud2.js library. We're sorting the words based on their score, ensuring the largest words are painted first. As the library starts painting from the center and keeps moving outwards until it finds space for a word, this ensures a good spread across the canvas with the most important term being in the center. The sizing of the word directly corresponds to the score it was given back in the analyser service. The sizing is scaled logarithmically however, or else the most frequent terms would be too large for the canvas and the less common terms would be illegibly small. Before repainting, the new data is compared with the old data to check if a sufficiently large change has taken place. This is done because, unlike the sentiment chart library, the word cloud library doesn't support dynamic changes without an entire repaint of the canvas. If only 2 words have swapped places in the top 100 words, there's no point triggering an entire repaint. If a large change takes place however, it's worth triggering the repaint. Each of the terms is also a link to the relevant Tweets in which it appears. This is done by dynamically building a link to a Twitter search, containing the term specified as well as the main term in the word cloud, which ensures the context is correct. This is extremely useful to clarify the context of any ambiguous or surprising terms.
+### Web
+
+The web service is powered by an Nginx server. I chose Nginx as it is highly performant and it maintains a low memory footprint under load. All the resources it serves are static, i.e., they don't need to be dynamically created using a server side programming language such as PHP. This is done by sending a HTML page that, when it loads, immediately connects to the websocket service. It receives the latest data when it connects and uses it to inflate the visualisations.
+
+```` javascript
+socket.onmessage = (message) => {
+    const data = JSON.parse(message.data);
+
+    switch (data.channel) {
+        case 'vp:senti': {
+            const orderedData = sortObjectKeys(data.data);
+            lc.updateGraph(Object.keys(orderedData), null, Object.values(orderedData));
+            break;
+        }
+        case 'vn:senti': {
+            const orderedData = sortObjectKeys(data.data);
+            lc.updateGraph(Object.keys(orderedData), Object.values(orderedData), null);
+            break;
+        }
+        case 'vp:cloud': {
+            vpCloud.updateGraph(Object.entries(data.data));
+            break;
+        }
+        case 'vn:cloud': {
+            vnCloud.updateGraph(Object.entries(data.data));
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+};
+````
+
+To display the chart of sentiment levels over time, we're using the Chart.js library to create the graph. The data is scaled from the range [0,1] to [-1,1] as a symmetrical scoring system was found to be more user friendly. The values are rounded to 3 decimal places to prevent irrational numbers taking up too much space.
+
+```` javascript
+static scaleData(data) {
+    // Scales data to range [-1,1] instead of [0,1]
+    return data.map(value => ((2 * value) - 1).toFixed(3));
+}
+````
+
+To create the word clouds, we're using the WordCloud2.js library. We're sorting the words based on their score, ensuring the largest words are painted first. As the library starts painting from the center and keeps moving outwards until it finds space for a word, this ensures a good spread across the canvas with the most important term being in the center. The sizing of the word directly corresponds to the score it was given back in the analyser service. The sizing is scaled logarithmically however, or else the most frequent terms would be too large for the canvas and the less common terms would be illegibly small.
+
+```` javascript
+updateGraph(data) {
+    data.sort((a, b) => b[1] - a[1]);
+
+    if (this.isWorthRepaint(data)) {
+        const scaledWords = data.map(entry => [entry[0], 6 * Math.log(entry[1] / 1.3)]);
+        this.config.list = scaledWords;
+        WordCloud(this.element, this.config);
+    }
+}
+````
+
+Before repainting the word clouds, the new data is compared with the old data to check if a sufficiently large change has taken place. This is done because, unlike the sentiment chart library, the word cloud library doesn't support dynamic changes without an entire repaint of the canvas. If only 2 words have swapped places in the top 100 words, there's no point triggering an entire repaint. If a large change takes place however, it's worth triggering the repaint. Each of the terms is also a link to the relevant Tweets in which it appears. This is done by dynamically building a link to a Twitter search, containing the term specified as well as the main term in the word cloud, which ensures the context is correct. This is extremely useful to clarify the context of any ambiguous or surprising terms.
+
+```` javascript
+click: (item) => {
+    const query = encodeURIComponent(`${name} ${item[0]}`);
+    const url = `https://twitter.com/search?q=${query}`;
+    window.open(url, item[0]);
+},
+````
