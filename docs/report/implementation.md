@@ -25,16 +25,218 @@ Rather than having to manage the building and running of all the Docker images m
 
 ## Services
 
-The streamer service is the first part of the pipeline. It is written in Python as I found the Tweepy library to suit my requirements perfectly. Although Node.js's event driven, non-blocking I/O model would suit this service quite well, none of the Node.js Twitter API libraries seemed to be as stable and have as good support for streaming as Tweepy does. This swung my decision to use Python instead. The streamer service uses Tweepy to connect to the Twitter streaming API and listen for new tweets. When a new tweet is received, it is checked to make sure it is valid. This includes checks such as ensuring it's not in a foreign language (since the classifier is only trained for English text), ensuring it's not from a foreign timezone (since these Tweets are probably just noise and aren't relevant) and ensuring it contains exactly one of the required hashtags (since we can't have a Tweet that expresses both viewpoints). If the Tweet is valid, it is sent onwards to the classifier service via a POST request to the clasifier service's REST API. The streamer keeps a thread-pool of workers to send the POST request, to prevent the streamer service from becoming blocked if the classifier is slow to acknowledge the POST request.
+### Streamer
 
-The classifier service is the most technically advanced of the services. Python has many machine learning and natural language processing (NLP) libraries making it one of the most popular languages for data science, so I chose it for this service. When its docker image is being built, it trains a machine learning model using a corpus of positive and negative Tweets supplied by the Natural Language Tool Kit (NLTK) library. For more information on the machine learning aspect, see the machine learning section of the report. The classifier service is run using Gunicorn. This allows us to run multiple instances of the service that all listen at the same port. When an instance of the service is started up, it loads in the serialised machine learning model from disk and establishes a connection to the database service. It then listens for POST requests from the streamer service. When it receives one, it extracts the Tweet data and classifies it using the model generated earlier. It then inserts the Tweet details and predicted sentiment into the database.
+The streamer service is the first part of the pipeline. It is written in Python as I found the Tweepy library to suit my requirements perfectly. Although Node.js's event driven, non-blocking I/O model would suit this service quite well, none of the Node.js Twitter API libraries seemed to be as stable and have as good support for streaming as Tweepy does. This swung my decision to use Python instead. The streamer service uses Tweepy to connect to the Twitter streaming API and listen for new tweets. Before connecting to Twitter however, it first reads in configuration from config files which include API keys, specific hashtags etc.
 
-The database is PostgresSQL, an open-source, object-relational database management system. I chose PostgresSQL because it is free, scalable and focuses on standards compliance. The table that stores the classified sentiment data contains 4 columns: the Tweet ID (also being used as primary key), the Tweet timestamp, the Tweet viewpoint and its sentiment. If we ever need to re-calculate sentiment at any point, we can re-fetch the Tweet's text from the Twitter API using its ID. This removes the need to store the text for every tweet. A second table is used to store the text from some tweets, but only the last 1000 from each viewpoint, since that's all that's needed to create the word clouds. This table is quite similar to the previous one, except we're storing the Tweet's text rather than its sentiment.
+````python
+def main():
+    with open("../secrets.json") as file:
+        secrets = json.load(file)
+    auth = tweepy.OAuthHandler(secrets["consumerKey"], secrets["consumerSecret"])
+    auth.set_access_token(secrets["accessTokenKey"], secrets["accessTokenSecret"])
 
-The analyser service runs various analytics across the data in the database and stores the results in the cache. Python's huge library support and ease of prototyping made it the obvious choice. I use the Psycopg2 and Redis libraries to connect to the database and cache. All the queries to fetch information from the database are written in SQL, as it's the query language supported by PostgresSQL. To generate the data for the daily sentiment visualisation, the service runs an SQL query to calculate the average daily sentiment, grouped by viewpoint. This data is quite noisy however with large fluctuations, so we calculate a weighted moving average that takes the previous days sentiment into account when generating that day's figure. A hashmap for each viewpoint with the date as the key and the sentiment score as the value is then stored into the cache. To calculate the data for the wordcloud, the last 1000 Tweets from each viewpoint are retrieved from the database and split into words. The number of occurrences of each word is calculated per viewpoint. To generate the scoring, a TF-IDF style approach is used in which the term frequency for a viewpoint is divided by the document frequency. The 'document' in this case is made up of all the Tweets from the opposing viewpoint, as well as a corpus of conversations supplied by the NLTK library. This allows us to find contrast in the language used by each viewpoint while also reducing the score of words that are commonly used in conversation, as they would likely not give us any insight into the debate. The top 100 scoring terms for each viewpoint are used to create hashmaps with the word as the key and the score as the value. These hashmaps are then inserted into the cache. These analytics are re-generated regularly to keep the results data up to date.
+    with open("../config.json") as file:
+        config = json.load(file)
+    hashtag1 = config["topic1"]["name"].lower()
+    hashtag2 = config["topic2"]["name"].lower()
+    stream = tweepy.Stream(auth=auth, listener=TwitterStreamer(config))
+    stream.filter(track=[hashtag1, hashtag2], async=True)
+````
+
+When a new tweet is received, it is checked to make sure it is valid. This includes checks such as ensuring it's not in a foreign language (since the classifier is only trained for English text), ensuring it's not from a foreign timezone (since these Tweets are probably just noise and aren't relevant) and ensuring it contains exactly one of the required hashtags (since we can't have a Tweet that expresses both viewpoints). If the Tweet is valid, it is sent onwards to the classifier service via a POST request to the clasifier service's REST API. The streamer keeps a thread-pool of workers to send the POST request, to prevent the streamer service from becoming blocked if the classifier is slow to acknowledge the POST request.
+
+```` python
+def on_status(self, status):
+
+    if not self.parser.is_tweet_valid(status):
+        return
+
+    data = {
+        "id": status.id_str,
+        # convert from millisconds to correct epoch format
+        "timestamp": int(status.timestamp_ms)//1000,
+        "text": self.parser.get_tweet_text(status),
+        "viewpoint": self.parser.get_tweet_viewpoint(status)
+    }
+
+    self.executor.submit(self.send_data_onward, data)
+````
+
+### Classifier
+
+The classifier service is the most technically advanced of the services. Python has many machine learning and natural language processing (NLP) libraries making it one of the most popular languages for data science, so I chose it for this service. When its docker image is being built, it trains a machine learning model using a corpus of positive and negative Tweets supplied by the Natural Language Tool Kit (NLTK) library. For more information on the machine learning aspect, see the machine learning section of the report.
+
+```` python
+neg_twts = [(self.process_tweet(twt), "negative")
+            for twt in twitter_samples.strings('negative_tweets.json')]
+
+pos_twts = [(self.process_tweet(twt), "positive")
+            for twt in twitter_samples.strings('positive_tweets.json')]
+
+all_twts = neg_twts + pos_twts
+self.classifier.train(all_twts)
+````
+
+The classifier service is run using Gunicorn. This allows us to run multiple instances of the service that all listen at the same port. When an instance of the service is started up, it loads in the serialised machine learning model from disk and establishes a connection to the database service. It then listens for POST requests from the streamer service. When it receives one, it extracts the Tweet data and classifies it using the model generated earlier. It then inserts the Tweet details and predicted sentiment into the database.
+
+```` python
+@app.route("/classify", methods=["POST"])
+def classify_tweet():
+    data = request.get_json()
+
+    sentiment = classi.classify(data["text"]) == "positive"
+
+    # Splitting up command and values helps prevent SQL injection
+    cursor.execute("INSERT INTO sentiment (tweet_id, sentiment, timestamp, viewpoint)"
+                   "VALUES (%s, %s, to_timestamp(%s), %s);",
+                   (data["id"], sentiment, data["timestamp"], data["viewpoint"]))
+````
+
+### Database
+
+The database is PostgresSQL, an open-source, object-relational database management system. I chose PostgresSQL because it is free, scalable and focuses on standards compliance. The table that stores the classified sentiment data contains 4 columns: the Tweet ID (also being used as primary key), the Tweet timestamp, the Tweet viewpoint and its sentiment.
+
+````
+Table "sentiment"
+======================================================
+COLUMN | tweet_id | sentiment | timestamp | viewpoint
+-------+----------+-----------+-----------+-----------
+TYPE   | text     | boolean   | timestamp | boolean
+
+````
+
+If we ever need to re-calculate sentiment at any point, we can re-fetch the Tweet's text from the Twitter API using its ID. This removes the need to store the text for every tweet. A second table is used to store the text from some tweets, but only the last 1000 from each viewpoint, since that's all that's needed to create the word clouds. This table is quite similar to the previous one, except we're storing the Tweet's text rather than its sentiment.
+
+### Analyser
+
+The analyser service runs various analytics across the data in the database and stores the results in the cache. Python's huge library support and ease of prototyping made it the obvious choice. I use the Psycopg2 and Redis libraries to connect to the database and cache. All the queries to fetch information from the database are written in SQL, as it's the query language supported by PostgresSQL. To generate the data for the daily sentiment visualisation, the service runs an SQL query to calculate the average daily sentiment, grouped by viewpoint.
+
+```` sql
+SELECT timestamp::date, viewpoint, AVG(sentiment::int)
+FROM sentiment
+GROUP BY 1, 2
+ORDER BY 1, 2;
+````
+
+This data is quite noisy however with large fluctuations, so we calculate a weighted moving average that takes the previous days' sentiment into account when generating that day's figure. A hashmap for each viewpoint with the date as the key and the sentiment score as the value is then stored into the cache.
+
+```` python
+def smooth_results(results):
+    Result = namedtuple("Result", ["avg", "timestamp"])
+    shaped_results = []
+
+    prev_res = [Decimal(0.5), Decimal(0.5)]
+    for r in results:
+        moved_average = Decimal(0.6) * r.avg + \
+                        Decimal(0.3) * prev_res[0] + \
+                        Decimal(0.1) * prev_res[1]
+        shaped_results.append(Result(moved_average, r.timestamp))
+        prev_res = [moved_average, prev_res[0]]
+
+    return shaped_results
+````
+
+To calculate the data for the wordcloud, the last 1000 Tweets from each viewpoint are retrieved from the database and split into words. The number of occurrences of each word is calculated per viewpoint. To generate the scoring, a TF-IDF style approach is used in which the term frequency for a viewpoint is divided by the document frequency. The 'document' in this case is made up of all the Tweets from the opposing viewpoint, as well as a corpus of conversations supplied by the NLTK library. This allows us to find contrast in the language used by each viewpoint while also reducing the score of words that are commonly used in conversation, as they would likely not give us any insight into the debate.
+
+```` python
+def calc_relative_word_freq(words, contrast):
+    scores = {}
+    for word, count in words.items():
+        idf = 1 + contrast[word] + (0.1 * _normal_word_freq[word])
+        scores[word] = count / idf
+    return scores
+````
+
+The top 100 scoring terms for each viewpoint are used to create hashmaps with the word as the key and the score as the value. These hashmaps are then inserted into the cache. These analytics are re-generated regularly to keep the results data up to date.
+
+### Cache
 
 The cache is implemented using Redis, an open-source, in-memory data-structure store. Its simple command based language and high performance made it the ideal choice for this service. It also supports key-space notifications, which are publish-subscribe (pub-sub) channels that receive event-messages every time a value is updated. This allows the websocket to be informed as soon as the analyser pushes new results to the cache in a highly efficient and performant manner.
 
-The websocket service is written in JavaScript using Node.js, since its event based model matches the service's main use cases. It uses the Redis and WS libraries to connect to the cache and create a websocket. When it is started up, it connects to the cache and subscribes to messages about any updates that occur. Whenever a value in the cache is updated by the analyser, it is notified of the change and it broadcasts the new value to all connected clients. When a new client connects, it queries the cache for the latest results and sends them directly to the new client.
+### Websocket
 
-The web service is powered by an Nginx server. I chose Nginx as it is highly performant and it maintains a low memory footprint under load. All the resources it serves are static, i.e. they don't need to be dynamically created using a server side programming language such as PHP. This is done by sending a HTML page that, when it loads, immediately connects to the websocket service. It receives the latest data when it connects and uses it to inflate the visualisations. To display the chart of sentiment levels over time, we're using the Chart.js library to create the graph. The data is scaled from the range [0,1] to [-1,1] as a symmetrical scoring system was found to be more user friendly. The values are rounded to 3 decimal places to prevent irrational numbers taking up too much space. To create the word clouds, we're using the WordCloud2.js library. We're sorting the words based on their score, ensuring the largest words are painted first. As the library starts painting from the center and keeps moving outwards until it finds space for a word, this ensures a good spread across the canvas with the most important term being in the center. The sizing of the word directly corresponds to the score it was given back in the analyser service. The sizing is scaled logarithmically however, or else the most frequent terms would be too large for the canvas and the less common terms would be illegibly small. Before repainting, the new data is compared with the old data to check if a sufficiently large change has taken place. This is done because, unlike the sentiment chart library, the word cloud library doesn't support dynamic changes without an entire repaint of the canvas. If only 2 words have swapped places in the top 100 words, there's no point triggering an entire repaint. If a large change takes place however, it's worth triggering the repaint. Each of the terms is also a link to the relevant Tweets in which it appears. This is done by dynamically building a link to a Twitter search, containing the term specified as well as the main term in the word cloud, which ensures the context is correct. This is extremely useful to clarify the context of any ambiguous or surprising terms.
+The websocket service is written in JavaScript using Node.js, since its event based model matches the service's main use cases. It uses the Redis and WS libraries to connect to the cache and create a websocket. When it is started up, it connects to the cache and subscribes to messages about any updates that occur. Whenever a value in the cache is updated by the analyser, it is notified of the change and it broadcasts the new value to all connected clients.
+
+```` javascript
+this.redisSub.on('message', (channel, action) => {
+    if (action === 'del') return;
+
+    const key = WebSocket.getRedisKey(channel);
+    this.redisCon.hgetallAsync(key)
+        .then((resp) => {
+            const data = WebSocket.formatDataForSending(key, resp);
+            this.broadcastUpdates(data);
+        })
+        .catch(console.error);
+});
+````
+
+When a new client connects, it queries the cache for the latest results and sends them directly to the new client.
+
+### Web
+
+The web service is powered by an Nginx server. I chose Nginx as it is highly performant and it maintains a low memory footprint under load. All the resources it serves are static, i.e., they don't need to be dynamically created using a server side programming language such as PHP. This is done by sending a HTML page that, when it loads, immediately connects to the websocket service. It receives the latest data when it connects and uses it to inflate the visualisations.
+
+```` javascript
+socket.onmessage = (message) => {
+    const data = JSON.parse(message.data);
+
+    switch (data.channel) {
+        case 'vp:senti': {
+            const orderedData = sortObjectKeys(data.data);
+            lc.updateGraph(Object.keys(orderedData), null, Object.values(orderedData));
+            break;
+        }
+        case 'vn:senti': {
+            const orderedData = sortObjectKeys(data.data);
+            lc.updateGraph(Object.keys(orderedData), Object.values(orderedData), null);
+            break;
+        }
+        case 'vp:cloud': {
+            vpCloud.updateGraph(Object.entries(data.data));
+            break;
+        }
+        case 'vn:cloud': {
+            vnCloud.updateGraph(Object.entries(data.data));
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+};
+````
+
+To display the chart of sentiment levels over time, we're using the Chart.js library to create the graph. The data is scaled from the range [0,1] to [-1,1] as a symmetrical scoring system was found to be more user friendly. The values are rounded to 3 decimal places to prevent irrational numbers taking up too much space.
+
+```` javascript
+static scaleData(data) {
+    // Scales data to range [-1,1] instead of [0,1]
+    return data.map(value => ((2 * value) - 1).toFixed(3));
+}
+````
+
+To create the word clouds, we're using the WordCloud2.js library. We're sorting the words based on their score, ensuring the largest words are painted first. As the library starts painting from the center and keeps moving outwards until it finds space for a word, this ensures a good spread across the canvas with the most important term being in the center. The sizing of the word directly corresponds to the score it was given back in the analyser service. The sizing is scaled logarithmically however, or else the most frequent terms would be too large for the canvas and the less common terms would be illegibly small.
+
+```` javascript
+updateGraph(data) {
+    data.sort((a, b) => b[1] - a[1]);
+
+    if (this.isWorthRepaint(data)) {
+        const scaledWords = data.map(entry => [entry[0], 6 * Math.log(entry[1] / 1.3)]);
+        this.config.list = scaledWords;
+        WordCloud(this.element, this.config);
+    }
+}
+````
+
+Before repainting the word clouds, the new data is compared with the old data to check if a sufficiently large change has taken place. This is done because, unlike the sentiment chart library, the word cloud library doesn't support dynamic changes without an entire repaint of the canvas. If only 2 words have swapped places in the top 100 words, there's no point triggering an entire repaint. If a large change takes place however, it's worth triggering the repaint. Each of the terms is also a link to the relevant Tweets in which it appears. This is done by dynamically building a link to a Twitter search, containing the term specified as well as the main term in the word cloud, which ensures the context is correct. This is extremely useful to clarify the context of any ambiguous or surprising terms.
+
+```` javascript
+click: (item) => {
+    const query = encodeURIComponent(`${name} ${item[0]}`);
+    const url = `https://twitter.com/search?q=${query}`;
+    window.open(url, item[0]);
+},
+````
