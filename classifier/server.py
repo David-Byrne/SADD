@@ -10,6 +10,7 @@ def connect_to_db():
         # TODO change host to a dynamic value rather than hard coded
         conn = psycopg2.connect(database="postgres", host="database",
                                 user=config["dbUser"], password=config["dbPassword"])
+    conn.set_session(autocommit=True)
     cur = conn.cursor()
     return conn, cur
 
@@ -36,7 +37,6 @@ def classify_tweet():
     cursor.execute("INSERT INTO tweet (tweet_id, tweet_text, timestamp, viewpoint)"
                    "VALUES (%s, %s, to_timestamp(%s), %s);",
                    (data["id"], data["text"], data["timestamp"], data["viewpoint"]))
-    db_con.commit()
 
     print(data["text"])
     return "OK"
