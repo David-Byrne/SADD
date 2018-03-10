@@ -44,6 +44,28 @@ I used the median number of Tweets as I felt using a mean average would result i
 
 Again, the median was calculated as very important days during the debate would be large outliers. Unlike the hour of the day graph, this one doesn't really have a shape that could be easily predicted. It would be hard to know in advance what days would be more active than others. Surprisingly, the most active day for Tweets on the topic was Wednesday. The middle of the week seemed to be the busiest portion with Wednesday, Thursday and Tuesday making up the top 3 most active days. The weekend and its surrounding days were much quieter overall. Potentially this could be explained by the majority of Twitter activity on the issue being reactionary. If TDs or campaigners aren't working at the weekends, there is less to react to which reduces activity. There could be a number of factors that are influencing this graph however.
 
+## Sentiment
+
+Analysing sentiment is the most challenging aspect of the project. Despite the classifier having an accuracy rate of slightly over 80%, which is marginally better than average human accuracy, it still results in almost 1 in 5 Tweets being mis-classified. This adds an extra layer of uncertainty which makes extracting information form the data more difficult. In order to reduce the noise in the calculated sentiment data, I calculated a weighted moving average for the sentiment on any given day. I felt this would be a fairer figure as many people wouldn't Tweet about the topic every day, but their sentiment towards it would be unlikely to change drastically in a short period of time. This smoothed the data, making any trends contained in the data easier to see.
+
+![sentiment](images/sentiment.png)
+#### Figure X: The sentiment over the course of the debate so far.
+
+This shows the smoothed sentiment calculated so far by the pipeline. It is displayed in the range [-1,1] as we found this to be a more user friendly option than the usual range of [0,1]. For the remainder of this section, all figures for sentiment will be given for the [-1,1] range to keep consistency with the graph.
+
+It can clearly be seen from this graph that the sentiment values were more extreme nearer the start of the debate, especially on the Save side. This is more likely to do with the lower levels of Twitter activity nearer the start, than any calming of discussion. As seen in the above subsections, there was very little Save Twitter activity in the first few months of measurements. This means noise had a far greater impact as a few extra negative Tweets in a day noticeably brought down the average. From mid-January onwards, all daily values have kept within the [-0.2,0.4] interval. This coincides with the increase in Twitter activity discussed above.
+
+Unlike the above section on Tweet volumes, it is much harder to link any changes in the graph to specific events in the campaign. The rate of Tweets may increase but the overall sentiment doesn't swing outside of the usual fluctuation zone. The overall sentiment levels are too changeable to say with any confidence that a particular fluctuation was caused by a specific event. As the referendum draws nearer, it's possible that reactions to certain news stories would be more uniform, resulting in clearer changes in sentiment. An example of this would be on results day, where we would expect very positive Tweets from the winning side and potentially very negative Tweets from the other.
+
+![sentiment](images/mirror-sentiment.png)
+#### Figure X: Sentiment levels moving in the same directions.
+
+![sentiment](images/inverse-sentiment.png)
+#### Figure X: Sentiment levels moving in opposite directions.
+
+Interestingly, a number of patterns are visible in the sentiment data between the 2 sides. For some short periods of time, both sentiment levels tend to change in a synchronised manner (fig. X above). They rise and fall on the same days, even when there's a large gap in their real values. A possible explanation for this is that sentiment expressed by one side is reacted to in a similar manner by the other side. A polite debate would likely result in positive sentiment from both sides, whereas an angry one would likely result in negative sentiment. Inversely, for other short periods of time, they move in opposite directions (fig. X above). This is probably closer to what one might expect, as positive news for one side would likely be negative news for the other (e.g. poll results showing one side has a large lead).
+
+The overall average sentiment for Repeal Tweets is 0.1415 and for Save Tweets is 0.2017. Surprisingly, both values are positive meaning the debate might not be as negative as some feared it would be. It also shows Save supporters may be slightly more positive than Repeal supporters, although there is very little between the two sides.
 
 [1] - [Twitter Demographics](https://sproutsocial.com/insights/new-social-media-demographics/#twitter)
 
