@@ -1,4 +1,4 @@
 SELECT timestamp::date, viewpoint, AVG(sentiment::int)
 FROM sentiment
-GROUP BY 1, viewpoint
-ORDER BY 1, viewpoint;
+GROUP BY 1, 2
+ORDER BY 1, 2;

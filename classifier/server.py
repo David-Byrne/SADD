@@ -7,7 +7,6 @@ from flask import Flask, request
 def connect_to_db():
     with open("../secrets.json") as file:
         config = json.load(file)
-        # TODO change host to a dynamic value rather than hard coded
         conn = psycopg2.connect(database="postgres", host="database",
                                 user=config["dbUser"], password=config["dbPassword"])
     conn.set_session(autocommit=True)
