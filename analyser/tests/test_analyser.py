@@ -153,10 +153,6 @@ class AnalyserTester(unittest.TestCase):
             {"alpha": 5},
             {"beta": 2}
         ]
-        # mocked_wordcloud.as_dict.side_effect = [
-        #     {"alpha": 0.5},
-        #     {"beta": 0.2}
-        # ]
         mocked_wordcloud_obj = mock.MagicMock()
         mocked_wordcloud_obj.as_dict.side_effect = [
             {"alpha": 0.5},

@@ -13,7 +13,6 @@ class Analyser(object):
     def __init__(self):
         self.db_con, self.db_cursor = self.connect_to_db()
         self.redis = redis.StrictRedis(host='cache', port=6379, db=0)
-        # TODO change host to a dynamic value rather than hard coded
 
     def run_infinitely(self, period=60):
         while True:
@@ -91,7 +90,6 @@ class Analyser(object):
     def connect_to_db():
         with open("../secrets.json") as file:
             config = json.load(file)
-            # TODO change host to a dynamic value rather than hard coded
             conn = psycopg2.connect(database="postgres", host="database",
                                     user=config["dbUser"], password=config["dbPassword"])
         cur = conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
