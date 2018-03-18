@@ -108,6 +108,31 @@ Initially looking at these, there's no clear relevance to the debate. After cros
 
 Dates and times for events are commonly very popular terms in the word clouds, since they are likely only related to one side. An example is this Save cloud, where we can see the key details of the "All-Ireland Rally for Life". This was taking place on Saturday the 10th of March, from 2pm in Parnell square, and was organised by Youth Defence [3].
 
+## Configurable Pipeline
+Although all the above results are specific to the 8th amendment referendum debate, the core pipeline is entirely configurable. To demonstrate this, I modified the config.json file that determines the target topic and didn't touch anything else. I then re-deployed the pipeline and collected a small set of new results. The new topic I chose was the battle between 2 highly popular gaming consoles in America, the Nintendo Switch and the PlayStation 4. The modified config.json file is as follows:
+```` json
+{
+    "topic1": {
+        "name": "#NintendoSwitch",
+        "colour": "#e80113"
+    },
+    "topic2": {
+        "name": "#PS4",
+        "colour": "#06418d"
+    },
+    "name": "Console Wars",
+    "tagline": "Real time Gaming Console analysis on Twitter",
+    "supportedLanguages": ["en"],
+    "supportedTimezones": ["Eastern Time (US & Canada)", "Central Time (US & Canada)",
+        "Mountain Time (US & Canada)", "Pacific Time (US & Canada)"]
+}
+````
+This specifies all the details that are specific to the topic being analysed. As can be seen from the configuration file, the pipeline was set up to analyse Tweets containing either #NintendoSwitch or #PS4 from North America in English. After leaving this pipeline running for a few hours, this is what the results page looked like:
+
+![Nintendo Switch vs PlayStation 4](images/switch-vs-ps4.png)
+#### Figure X: This shows the web frontend of the pipeline after collecting data on gaming console discussion from North America over a few hours.
+
+With only a few hours of data collected, it's clearly not enough to draw any results from. It does show however that the pipeline can be pointed at another target and work perfectly. The sentiment chart looks broken but that's only because it contains a single point of data, which can be seen on the far left of the chart. Had I run the pipeline over 2 or more days, a proper graph of sentiment level changes would be seen. The word clouds both work perfectly in this new domain, although again more data would result in a better representation of the state of the debate. The #NintendoSwitch word cloud (in red) in particular looks sparse around the edges due to a lack of data.
 
 [1] - [Twitter Demographics](https://sproutsocial.com/insights/new-social-media-demographics/#twitter)
 
