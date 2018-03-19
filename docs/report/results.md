@@ -108,6 +108,11 @@ Initially looking at these, there's no clear relevance to the debate. After cros
 
 Dates and times for events are commonly very popular terms in the word clouds, since they are likely only related to one side. An example is this Save cloud, where we can see the key details of the "All-Ireland Rally for Life". This was taking place on Saturday the 10th of March, from 2pm in Parnell square, and was organised by Youth Defence [3].
 
+![Twitter Lookup](images/twitter-search.png)
+#### Figure X: Twitter search results that are automatically opened when clicking on a term in a word cloud. In this case the results shown correspond to clicking on the '#BeastFromTheEast' term in the Repeal word cloud.
+
+Clicking on a term in a word cloud opens Twitter search results for the corresponding Tweets in a new tab. It does this by dynamically building a Twitter query string containing the selected term, as well as the main term in the word cloud to add context. As can be seen in the above image, it clarifies terms that on their own don't seem to have much relevance to the debate. This feature has been very useful to fill in the context missing from the word clouds.
+
 ## Configurable Pipeline
 Although all the above results are specific to the 8th amendment referendum debate, the core pipeline is entirely configurable. To demonstrate this, I modified the config.json file that determines the target topic and didn't touch anything else. I then re-deployed the pipeline and collected a small set of new results. The new topic I chose was the battle between 2 highly popular gaming consoles in America, the Nintendo Switch and the PlayStation 4. The modified config.json file is as follows:
 ```` json
