@@ -67,7 +67,7 @@ Another common piece of feedback was the desire to interact more with the system
 
 > Although black and pink are very aesthetically pleasing, I would be wary of using them for something like this project as they may portray different connotations i.e. black traditionally meaning death, pink being love, etc.
 
-Colour connotations was something I tried keep in mind when selecting colours for both sides. I ended up going with colours that are often used by each viewpoint to associate each visualisation with the corresponding viewpoint, and also to avoid adding any potential bias from choosing colours myself. The colours I went for were black (like the "REPEAL" jumpers) and pink (like the "Love Both" advertising). They also offer sufficient contrast against the white background and text, as well as against each other for anyone suffering from colour blindness. This is an important factor to keep in mind from an accessibility point of view.
+Colour connotations was something I tried keep in mind when selecting colours for both sides. I ended up going with colours that are often used by each viewpoint, to associate each visualisation with the corresponding viewpoint, and also to avoid adding any potential bias from choosing colours myself. The colours I went for were black (like the "REPEAL" jumpers) and pink (like the "Love Both" advertising). They also offer sufficient contrast against the white background and text, as well as against each other for anyone suffering from colour blindness. This is an important factor to keep in mind from an accessibility point of view.
 
 For the most positive aspects of the system, responses included:
 > The minimalist design is awesome. The word-cloud is also amazing. Well done!
