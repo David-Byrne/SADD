@@ -32,7 +32,7 @@ class StaticAnalyser(object):
                   x=[res[0] for res in results if res[1]],
                   ys=[[res[2] for res in results if res[1]],
                       [res[2] for res in results if not res[1]]],
-                  legend=["Pro-Choice Tweets", "Pro-Life Tweets"])
+                  legend=["#RepealThe8th Tweets", "#SaveThe8th Tweets"])
 
     def get_daily_avg_sentiment_by_viewpoint(self):
         with open("sql/daily_avg_sentiment_by_viewpoint.sql") as query:
@@ -106,7 +106,6 @@ class StaticAnalyser(object):
     def connect_to_db():
         with open("../secrets.json") as file:
             config = json.load(file)
-            # TODO change host to a dynamic value rather than hard coded
             conn = psycopg2.connect(database="postgres", host='localhost',
                                     user=config["dbUser"], password=config["dbPassword"])
         cur = conn.cursor()

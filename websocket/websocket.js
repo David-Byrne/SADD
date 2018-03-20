@@ -10,7 +10,6 @@ bluebird.promisifyAll(redis.RedisClient.prototype);
 class WebSocket {
     constructor() {
         this.KEYS = ['vp:senti', 'vn:senti', 'vp:cloud', 'vn:cloud'];
-        // TODO: Add in expected datatype, for now we're just assuming it's a hashmap
         this.wsServer = new ws.Server({ port: 8080 });
         this.redisCon = redis.createClient({ host: 'cache' });
         this.redisSub = redis.createClient({ host: 'cache' });
