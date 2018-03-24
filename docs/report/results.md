@@ -1,6 +1,6 @@
 # Results
 
-The primary goal of the project has been fulfilled. We have created a microservice based, machine learning pipeline, that can collect, classify and analyse Twitter data on any divisive domain and display these results in a web based dashboard in real time. We have used the run up to the referendum on repealing the 8th amendment in Ireland as an initial, real world test case to validate the system.
+The primary goal of the project has been fulfilled. We have created a microservice based, machine learning pipeline, that can collect, classify and analyse Twitter data on any divisive domain and display these results in a web-based dashboard in real time. We have used the run up to the referendum on repealing the 8th amendment in Ireland as an initial, real-world test case to validate the system.
 
 ## Raw Data
 The pipeline has been running almost constantly since the 8th of November, 2017. Since then, it has collected over 120,000 Tweets regarding the 8th amendment debate. This makes it an extremely valuable corpus detailing the run up to one of the most important and controversial referenda in recent Irish history. It is my intention to keep the pipeline running until after the referendum is held, to increase the coverage of the dataset. Although this project will be finished by then, it would seem like a waste of a major opportunity to not keep the pipeline running until the end.
@@ -9,7 +9,7 @@ The pipeline has been running almost constantly since the 8th of November, 2017.
 #### Figure X: The number of Tweets collected daily since the pipeline began.
 
 This graph is quite a simple visualisation of daily Tweet count. It does highlight many of the key events of the campaign so far, showing Twitter is being used to discuss news as it breaks. Some of the important events that have a noticeable impact on the graph include:
-* 2017-11-18: [Sinn Féin adopts a united party position to repeal the eight amendment, rejecting proposals for a free vote on the topic.](https://www.irishtimes.com/news/politics/sinn-f%C3%A9in-rejects-proposal-for-free-vote-on-eighth-amendment-1.3297287)
+* 2017-11-18: [Sinn Féin adopts a united party position to repeal the eighth amendment, rejecting proposals for a free vote on the topic.](https://www.irishtimes.com/news/politics/sinn-f%C3%A9in-rejects-proposal-for-free-vote-on-eighth-amendment-1.3297287)
 * 2017-12-13: [Oireachtas committee votes to recommend repealing the eighth amendment.](https://www.rte.ie/news/2017/1213/927010-eighth_amendment/)
 * 2017-12-20: [Oireachtas committee publishes final report, recommending a repeal of the 8th amendment.](https://www.rte.ie/news/2017/1220/928633-eighth-amendment-committee/)
 * 2018-01-10: [Taoiseach raises concern that allowing abortion up to 12 weeks may be a step too far.](https://www.irishtimes.com/news/politics/proposal-to-allow-abortion-up-to-12-weeks-may-be-a-step-too-far-taoiseach-1.3351057)
@@ -37,7 +37,7 @@ What time people tend to Tweet about this debate at is another area to explore. 
 ![avg_tweet_count_by_hour](images/avg_tweet_count_by_hour.png)
 #### Figure X: The median number of Tweets per hour of the day.
 
-I used the median number of Tweets as I felt using a mean average would result in outliers from large news stories distorting the true Tweet pattern. The graph looks quite like what you would expect. It's at its lowest at about 5 a.m., when most people would be asleep. It then climbs steadily from 6 a.m. until 10 a.m. when it plateaus. This corresponds to most of the population waking up and getting ready in the morning. The Tweet levels stay quite steady until after 4 p.m.. There is a small spike at 5 p.m. which matches people finishing work and perhaps catching up on the day's activity on Twitter. It slumps a little from 6 p.m. until 8 p.m. which is when people would likely be getting dinner. There's then a larger spike in activity from 9 p.m. until 10 p.m when people might be relaxing on social media at the end of the day. The Tweet levels then start to drop fairly  consistently until about 2 a.m., where they bottom out until about 6 a.m.. The activity levels matching an average Irish person's day so closely also imply there's little foreign influence in the data. If the Tweet peak was at 4 a.m., that would be unexpected and probably a sign of something going wrong, as the activity would likely be coming from another part of the world that was mostly awake at that time. The lack of surprising results can be considered a good sign that our data is likely valid.
+I used the median number of Tweets as I felt using a mean average would result in outliers from large news stories distorting the true Tweet pattern. The graph looks quite like what you would expect. It's at its lowest at about 5 a.m., when most people would be asleep. It then climbs steadily from 6 a.m. until 10 a.m. when it plateaus. This corresponds to most of the population waking up and getting ready in the morning. The Tweet levels stay quite steady until after 4 p.m. There is a small spike at 5 p.m. which matches people finishing work and perhaps catching up on the day's activity on Twitter. It slumps a little from 6 p.m. until 8 p.m. which is when people would likely be getting dinner. There's then a larger spike in activity from 9 p.m. until 10 p.m. when people might be relaxing on social media at the end of the day. The Tweet levels then start to drop fairly  consistently until about 2 a.m., where they bottom out until about 6 a.m. The activity levels matching an average Irish person's day so closely also imply there's little foreign influence in the data. If the Tweet peak was at 4 a.m., that would be unexpected and probably a sign of something going wrong, as the activity would likely be coming from another part of the world that was mostly awake at that time. The lack of surprising results can be considered a good sign that our data is likely valid.
 
 ![avg_tweet_count_by_day_of_week](images/avg_tweet_count_by_day_of_week.png)
 #### Figure X: The median number of Tweets per day of the week.
@@ -51,7 +51,7 @@ Analysing sentiment is the most challenging aspect of the project. Despite the c
 ![sentiment](images/sentiment.png)
 #### Figure X: The sentiment over the course of the debate so far.
 
-This shows the smoothed sentiment calculated so far by the pipeline. It is displayed in the range [-1,1] as we found this to be a more user friendly option than the usual range of [0,1]. For the remainder of this section, all figures for sentiment will be given for the [-1,1] range to keep consistency with the graph.
+This shows the smoothed sentiment calculated so far by the pipeline. It is displayed in the range [-1,1] as we found this to be a more user-friendly option than the usual range of [0,1]. For the remainder of this section, all figures for sentiment will be given for the [-1,1] range to keep consistency with the graph.
 
 It can clearly be seen from this graph that the sentiment values were more extreme nearer the start of the debate, especially on the Save side. This is more likely to do with the lower levels of Twitter activity nearer the start, than any calming of discussion. As seen in the above subsections, there was very little Save Twitter activity in the first few months of measurements. This means noise had a far greater impact as a few extra negative Tweets in a day noticeably brought down the average. From mid-January onwards, all daily values have kept within the [-0.2,0.4] interval. This coincides with the increase in Twitter activity discussed above.
 
@@ -73,7 +73,7 @@ Some of the most interesting findings from the pipeline have come from the word 
 
 
 ![wordclouds mar 11](images/wordclouds_2018-03-11.png)
-#### Figure X: The trending topics in the word clouds, on March 11th 2018.
+#### Figure X: The trending topics in the word clouds, on March 11th, 2018.
 
 This image of the word clouds shows the different types of language used by both sides in the debate. Repeal, for example, frequently used terms including:
 * magdalene laundries

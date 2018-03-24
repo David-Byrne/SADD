@@ -2,9 +2,9 @@
 
 ## Languages
 
-The main language used across the entire codebase is Python 3. I chose this as it is a general purpose programming language with huge library support. It focuses on readability and succinctness. It allows you to initially develop snippets of code using the REPL shell and simple scripts, and then easily refactor it into an object orientated and module based system. This, combined with the language's high level features, make it very quick to develop in. This allowed a rapid iteration of ideas, enabling the codebase to evolve as was needed.
+The main language used across the entire codebase is Python 3. I chose this as it is a general purpose programming language with huge library support. It focuses on readability and succinctness. It allows you to initially develop snippets of code using the REPL shell and simple scripts, and then easily refactor it into an object orientated and module-based system. This, combined with the language's high-level features, make it very quick to develop in. This allowed a rapid iteration of ideas, enabling the codebase to evolve as was needed.
 
-The secondary language used in the project was JavaScript. Given that I wanted to create an interactive, web-based visualisation, it was the obvious choice as it is the only scripting language supported by all major browsers. I could have used a language that transpiles to JavaScript, such as TypeScript, but I felt there was very little benefit unless I planned to build a much larger web-app. Although JavaScript began its life as a browser based scripting language, it has recently become popular as a server-side programming language as well. Node.js is a server-side JavaScript runtime built on top of Google Chrome's V8 JavaScript engine. This allows developers to use the same language on both front-end and back-end web development, reducing duplication of code and the overhead of context switching. This enabled me to use JavaScript rather than Python in situations where it was better suited.
+The secondary language used in the project was JavaScript. Given that I wanted to create an interactive, web-based visualisation, it was the obvious choice as it is the only scripting language supported by all major browsers. I could have used a language that transpiles to JavaScript, such as TypeScript, but I felt there was very little benefit unless I planned to build a much larger web-app. Although JavaScript began its life as a browser-based scripting language, it has recently become popular as a server-side programming language as well. Node.js is a server-side JavaScript runtime built on top of Google Chrome's V8 JavaScript engine. This allows developers to use the same language on both front-end and back-end web development, reducing duplication of code and the overhead of context switching. This enabled me to use JavaScript rather than Python in situations where it was better suited.
 
 ## Containerisation
 
@@ -19,7 +19,7 @@ RUN pip install -r streamer.requirements.txt
 CMD ["python", "-u", "streamer.py"]
 ```
 
-The `FROM` instruction tells the Docker service to start building this image on top of the Python image of version 3.6.4. Images are built as layers allowing re-use and saving storage space. The `COPY` instruction is moving the source code and secrets from the codebase into the image. This provides it with the necessary files without needing to mount the local filesystem into the container at runtime. The `WORKDIR` instruction switches the context to the directory we created in the image to store the code. The `RUN` instruction executes the command preceding it in a shell while building the image. In this case, it uses Pip, the Python dependency manager, to install the dependencies for the streamer service. Finally the `CMD` instruction declares the command that should be used to run the program the container is meant to execute. In this case, it's getting the Python interpreter to run the streamer.py file. There are many more supported Dockerfile instructions but they weren't needed by this service to allow it to run in a container. Building this image can be done by executing `docker build --file streamer/streamer.Dockerfile --tag streamer .`. To run this newly built image, execute `docker run streamer`. This will work on any host that has docker installed, regardless of environment or dependencies.
+The `FROM` instruction tells the Docker service to start building this image on top of the Python image of version 3.6.4. Images are built as layers allowing re-use and saving storage space. The `COPY` instruction is moving the source code and secrets from the codebase into the image. This provides it with the necessary files without needing to mount the local filesystem into the container at runtime. The `WORKDIR` instruction switches the context to the directory we created in the image to store the code. The `RUN` instruction executes the command preceding it in a shell while building the image. In this case, it uses Pip, the Python dependency manager, to install the dependencies for the streamer service. Finally, the `CMD` instruction declares the command that should be used to run the program the container is meant to execute. In this case, it's getting the Python interpreter to run the streamer.py file. There are many more supported Dockerfile instructions but they weren't needed by this service to allow it to run in a container. Building this image can be done by executing `docker build --file streamer/streamer.Dockerfile --tag streamer .`. To run this newly built image, execute `docker run streamer`. This will work on any host that has docker installed, regardless of environment or dependencies.
 
 Rather than having to manage the building and running of all the Docker images manually, I added support for Docker-Compose. This is a container orchestration tool that automates the build and run lifecycle. To run the entire pipeline, simply execute `docker-compose up` and the whole system will start up. Once Docker and Docker-Compose are installed on a system, that one command is all that is needed to run the pipeline. This makes deployments completely frictionless on any OS.
 
@@ -44,7 +44,7 @@ def main():
     stream.filter(track=[hashtag1, hashtag2], async=True)
 ````
 
-When a new tweet is received, it is checked to make sure it is valid. This includes checks such as ensuring it's not in a foreign language (since the classifier is only trained for English text), ensuring it's not from a foreign timezone (since these Tweets are probably just noise and aren't relevant) and ensuring it contains exactly one of the required hashtags (since we can't have a Tweet that expresses both viewpoints). If the Tweet is valid, it is sent onwards to the classifier service via a POST request to the clasifier service's REST API. The streamer keeps a thread-pool of workers to send the POST request, to prevent the streamer service from becoming blocked if the classifier is slow to acknowledge the POST request.
+When a new tweet is received, it is checked to make sure it is valid. This includes checks such as ensuring it's not in a foreign language (since the classifier is only trained for English text), ensuring it's not from a foreign time zone (since these Tweets are probably just noise and aren't relevant) and ensuring it contains exactly one of the required hashtags (since we can't have a Tweet that expresses both viewpoints). If the Tweet is valid, it is sent onwards to the classifier service via a POST request to the classifier service's REST API. The streamer keeps a thread-pool of workers to send the POST request, to prevent the streamer service from becoming blocked if the classifier is slow to acknowledge the POST request.
 
 ```` python
 def on_status(self, status):
@@ -137,7 +137,7 @@ def smooth_results(results):
     return shaped_results
 ````
 
-To calculate the data for the wordcloud, the last 1000 Tweets from each viewpoint are retrieved from the database and split into words. The number of occurrences of each word is calculated per viewpoint. To generate the scoring, a TF-IDF style approach is used in which the term frequency for a viewpoint is divided by the document frequency. The 'document' in this case is made up of all the Tweets from the opposing viewpoint, as well as a corpus of conversations supplied by the NLTK library. This allows us to find contrast in the language used by each viewpoint while also reducing the score of words that are commonly used in conversation, as they would likely not give us any insight into the debate.
+To calculate the data for the word clouds, the last 1000 Tweets from each viewpoint are retrieved from the database and split into words. The number of occurrences of each word is calculated per viewpoint. To generate the scoring, a TF-IDF style approach is used in which the term frequency for a viewpoint is divided by the document frequency. The 'document' in this case is made up of all the Tweets from the opposing viewpoint, as well as a corpus of conversations supplied by the NLTK library. This allows us to find contrast in the language used by each viewpoint while also reducing the score of words that are commonly used in conversation, as they would likely not give us any insight into the debate.
 
 ```` python
 def calc_relative_word_freq(words, contrast):
@@ -156,7 +156,7 @@ The cache is implemented using Redis, an open-source, in-memory data-structure s
 
 ### Websocket
 
-The websocket service is written in JavaScript using Node.js, since its event based model matches the service's main use cases. It uses the Redis and WS libraries to connect to the cache and create a websocket. When it is started up, it connects to the cache and subscribes to messages about any updates that occur. Whenever a value in the cache is updated by the analyser, it is notified of the change and it broadcasts the new value to all connected clients.
+The websocket service is written in JavaScript using Node.js, since its event-based model matches the service's main use cases. It uses the Redis and WS libraries to connect to the cache and create a websocket. When it is started up, it connects to the cache and subscribes to messages about any updates that occur. Whenever a value in the cache is updated by the analyser, it is notified of the change and it broadcasts the new value to all connected clients.
 
 ```` javascript
 this.redisSub.on('message', (channel, action) => {
@@ -176,7 +176,7 @@ When a new client connects, it queries the cache for the latest results and send
 
 ### Web
 
-The web service is powered by an Nginx server. I chose Nginx as it is highly performant and it maintains a low memory footprint under load. All the resources it serves are static, i.e., they don't need to be dynamically created using a server side programming language such as PHP. This is done by sending a HTML page that, when it loads, immediately connects to the websocket service. It receives the latest data when it connects and uses it to inflate the visualisations.
+The web service is powered by an Nginx server. I chose Nginx as it is highly performant and it maintains a low memory footprint under load. All the resources it serves are static, i.e., they don't need to be dynamically created using a server-side programming language such as PHP. This is done by sending a HTML page that, when it loads, immediately connects to the websocket service. It receives the latest data when it connects and uses it to inflate the visualisations.
 
 ```` javascript
 socket.onmessage = (message) => {
@@ -217,7 +217,7 @@ static scaleData(data) {
 }
 ````
 
-To create the word clouds, we're using the WordCloud2.js library. We're sorting the words based on their score, ensuring the largest words are painted first. As the library starts painting from the center and keeps moving outwards until it finds space for a word, this ensures a good spread across the canvas with the most important term being in the center. The sizing of the word directly corresponds to the score it was given back in the analyser service. The sizing is scaled logarithmically however, or else the most frequent terms would be too large for the canvas and the less common terms would be illegibly small.
+To create the word clouds, we're using the WordCloud2.js library. We're sorting the words based on their score, ensuring the largest words are painted first. As the library starts painting from the centre and keeps moving outwards until it finds space for a word, this ensures a good spread across the canvas with the most important term being in the centre. The sizing of the word directly corresponds to the score it was given back in the analyser service. The sizing is scaled logarithmically however, or else the most frequent terms would be too large for the canvas and the less common terms would be illegibly small.
 
 ```` javascript
 updateGraph(data) {
