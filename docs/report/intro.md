@@ -11,6 +11,8 @@ Despite the attorney general at the time describing the wording of the amendment
 
 This project's aim is to develop a machine learning based, sentiment analysis system, that can be used to analyse discussion of any divisive subject on Twitter. We will use the campaign to repeal the 8th amendment of the Irish constitution as a real-world test case to validate the system. It should be generic enough to allow it to be applied to any domain however. As Twitter is primarily used as a reactionary social network, this makes it ideal to analyse changes in sentiment as events unfold. Given how sensitive the topic of abortion is, as well as how divisive related referendums have been in the past, it is likely one of the best topics to test the system against.
 
+The majority of the project's development effort is involved with setting up the back-end of the system. This would include services such as data gathering, pre-processing, classifying, storing and analysing the results. A front-end web application will be used to display the live results of the system in a user-friendly manner. This would involve setting up a webserver to serve the application, as well as a websocket to transmit the results calculated by the back-end to the clients with low latencies and low overhead.
+
 
 [1] - [The Offences Against The Person Act, 1861](http://www.irishstatutebook.ie/eli/1861/act/100/enacted/en/print.html)
 
