@@ -2,7 +2,7 @@
 
 ## Languages
 
-The main language used across the entire codebase is Python 3. I chose this as it is a general purpose programming language with huge library support. It focuses on readability and succinctness. It allows you to initially develop snippets of code using the REPL shell and simple scripts, and then easily refactor it into an object orientated and module-based system. This, combined with the language's high-level features, make it very quick to develop in. This allowed a rapid iteration of ideas, enabling the codebase to evolve as was needed.
+The main language used across the entire codebase is Python 3. I chose this as it is a general-purpose programming language with huge library support. It focuses on readability and succinctness. It allows you to initially develop snippets of code using the REPL shell and simple scripts, and then easily refactor it into an object orientated and module-based system. This, combined with the language's high-level features, make it very quick to develop in. This allowed a rapid iteration of ideas, enabling the codebase to evolve as was needed.
 
 The secondary language used in the project was JavaScript. Given that I wanted to create an interactive, web-based visualisation, it was the obvious choice as it is the only scripting language supported by all major browsers. I could have used a language that transpiles to JavaScript, such as TypeScript, but I felt there was very little benefit unless I planned to build a much larger web-app. Although JavaScript began its life as a browser-based scripting language, it has recently become popular as a server-side programming language as well. Node.js is a server-side JavaScript runtime built on top of Google Chrome's V8 JavaScript engine. This allows developers to use the same language on both front-end and back-end web development, reducing duplication of code and the overhead of context switching. This enabled me to use JavaScript rather than Python in situations where it was better suited.
 
@@ -152,7 +152,7 @@ The top 100 scoring terms for each viewpoint are used to create hashmaps with th
 
 ### Cache
 
-The cache is implemented using Redis, an open-source, in-memory data-structure store. Its simple command based language and high performance made it the ideal choice for this service. It also supports key-space notifications, which are publish-subscribe (pub-sub) channels that receive event-messages every time a value is updated. This allows the websocket to be informed as soon as the analyser pushes new results to the cache in a highly efficient and performant manner.
+The cache is implemented using Redis, an open-source, in-memory data-structure store. Its simple command-based language and high performance made it the ideal choice for this service. It also supports key-space notifications, which are publish-subscribe (pub-sub) channels that receive event-messages every time a value is updated. This allows the websocket to be informed as soon as the analyser pushes new results to the cache in a highly efficient and performant manner.
 
 ### Websocket
 
