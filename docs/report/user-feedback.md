@@ -59,7 +59,7 @@ The feedback form began with a link to the web frontend and a disclaimer encoura
 For the most negative aspects of the system, responses included:
 > Would like to see that if I click on a particularly negative/positive day I could see what was trending then.
 
-This was a common request and was actually thought up at one of the meetings with my supervisor. At that point though, we had already deleted the text from the majority of the Tweets we had collected up to that point. This would mean only part of the graph would let you see the trending terms. With the Tweet IDs we store permanently it would have been possible to recover the text from the Tweets. We decided in the end that it would have been too messy to implement this half way through the project, but it is something I would like to add before using the pipeline for another topic.
+This was a common request and was actually thought up at one of the meetings with my supervisor. At that point though, we had already deleted the text from most of the Tweets we had collected up to that point. This would mean only part of the graph would have let you see the trending terms. With the Tweet IDs we store permanently, it would have been possible to recover the missing text from the Tweets. We decided in the end that it would have been too messy to implement this half way through the project, but it is something I would like to add before using the pipeline for another topic.
 
 > See that it's showing a graph of sentiment over time...but what should I do with that information? Can I interact with it? Can I change parameters? Etc. How to use the system is unclear.
 
@@ -74,7 +74,7 @@ For the most positive aspects of the system, responses included:
 
 The overall design and UI was specifically complemented in a majority of responses.
 
-> The words in the wordclouds linking back to Twitter made it very easy to understand the context of any word.
+> The words in the word clouds linking back to Twitter made it very easy to understand the context of any word.
 
 The linking of terms in the word clouds to Twitter was another popular feature. It clearly yielded a lot of benefit for quite a simple addition.
 
