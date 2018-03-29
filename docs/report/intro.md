@@ -13,6 +13,8 @@ This project's aim is to develop a machine learning based, sentiment analysis sy
 
 The majority of the project's development effort is involved with setting up the back-end of the system. This would include services such as data gathering, pre-processing, classifying, storing and analysing the results. A front-end web application will be used to display the live results of the system in a user-friendly manner. This would involve setting up a webserver to serve the application, as well as a websocket to transmit the results calculated by the back-end to the clients with low latencies and low overhead.
 
+This report will seek to cover: the background research undertaken, the design and development of the system and a discussion of the results generated.
+
 
 [1] - [The Offences Against The Person Act, 1861](http://www.irishstatutebook.ie/eli/1861/act/100/enacted/en/print.html)
 
