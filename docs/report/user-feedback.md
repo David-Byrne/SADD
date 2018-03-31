@@ -1,5 +1,5 @@
 # User Feedback
-In an attempt to further improve the user experience (UX) of the frontend of the system, a user feedback process was created. I created a feedback form based off the Questionnaire for User Interface Satisfaction (QUIS), which was originally developed by the University of Maryland [1]. I re-worded certain questions to make them more suitable for this application and I removed others which I felt were irrelevant. I tried to keep the questionnaire as minimal as possible to encourage more people to complete it, whilst still having a sufficient range of questions to generate valuable information.
+In an attempt to further improve the user experience (UX) of the frontend of the system, a user feedback process was created. I created a feedback form based off the Questionnaire for User Interface Satisfaction (QUIS), which was originally developed by the University of Maryland [19]. I re-worded certain questions to make them more suitable for this application and I removed others which I felt were irrelevant. I tried to keep the questionnaire as minimal as possible to encourage more people to complete it, whilst still having a sufficient range of questions to generate valuable information.
 
 The feedback form was created using Google Forms and then circulated using a shareable link. I tried to get a wide cross section of potential users, aiming for diversity in age, gender and computer literacy. The feedback form is completely anonymous however so there was no way for me to link answers to demographics. I felt this was the fairest approach as the small sample size may lead to the demographic information being potentially personally identifiable.
 
@@ -79,5 +79,3 @@ The overall design and UI was specifically complemented in a majority of respons
 The linking of terms in the word clouds to Twitter was another popular feature. It clearly yielded a lot of benefit for quite a simple addition.
 
 Overall the results were quite positive. Although it was not a large sample size of potential users, it was still very beneficial to receive feedback.
-
-[1] - [Development of an instrument measuring user satisfaction of the human-computer interface](http://delivery.acm.org/10.1145/60000/57203/p213-chin.pdf) by John P. Chin, Virginia A. Diehl and Kent L. Norman (1988)
