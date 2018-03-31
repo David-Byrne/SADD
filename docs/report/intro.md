@@ -14,16 +14,3 @@ This project's aim is to develop a machine learning based, sentiment analysis sy
 The majority of the project's development effort is involved with setting up the back-end of the system. This would include services such as data gathering, pre-processing, classifying, storing and analysing the results. A front-end web application will be used to display the live results of the system in a user-friendly manner. This would involve setting up a webserver to serve the application, as well as a websocket to transmit the results calculated by the back-end to the clients with low latencies and low overhead.
 
 This report will seek to cover: the background research undertaken, the design and development of the system and a discussion of the results generated.
-
-
-[1] - [The Offences Against The Person Act, 1861](http://www.irishstatutebook.ie/eli/1861/act/100/enacted/en/print.html)
-
-[2] - [Bhunreacht na hEireann](https://www.constitution.ie/Documents/Bhunreacht_na_hEireann_web.pdf)
-
-[3] - [Peter Sutherland’s 1983 advice on the Eighth Amendment](https://www.irishtimes.com/news/social-affairs/peter-sutherland-s-1983-advice-on-the-eighth-amendment-1.3353263)
-
-[4] - [Referendum Results 1937-2015](https://www.citizensassembly.ie/en/Manner-in-which-referenda-are-held/Referendum-Results-1937-2015.pdf)
-
-[5] - [History lesson: What happened during the 1983 abortion referendum?](http://www.thejournal.ie/abortion-referendum-1983-what-happened-1225430-Dec2013/)
-
-[6] - [Why Ireland became the only country in the democratic world to have a constitutional ban on abortion](https://www.irishtimes.com/news/politics/why-ireland-became-the-only-country-in-the-democratic-world-to-have-a-constitutional-ban-on-abortion-1.1907610)

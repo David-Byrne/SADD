@@ -9,22 +9,22 @@ The pipeline has been running almost constantly since the 8th of November, 2017.
 #### Figure 10.1: The number of Tweets collected daily since the pipeline began.
 
 This graph is quite a simple visualisation of daily Tweet count. It does highlight many of the key events of the campaign so far, showing Twitter is being used to discuss news as it breaks. Some of the important events that have a noticeable impact on the graph include:
-* 2017-11-18: [Sinn Féin adopts a united party position to repeal the eighth amendment, rejecting proposals for a free vote on the topic.](https://www.irishtimes.com/news/politics/sinn-f%C3%A9in-rejects-proposal-for-free-vote-on-eighth-amendment-1.3297287)
-* 2017-12-13: [Oireachtas committee votes to recommend repealing the eighth amendment.](https://www.rte.ie/news/2017/1213/927010-eighth_amendment/)
-* 2017-12-20: [Oireachtas committee publishes final report, recommending a repeal of the 8th amendment.](https://www.rte.ie/news/2017/1220/928633-eighth-amendment-committee/)
-* 2018-01-10: [Taoiseach raises concern that allowing abortion up to 12 weeks may be a step too far.](https://www.irishtimes.com/news/politics/proposal-to-allow-abortion-up-to-12-weeks-may-be-a-step-too-far-taoiseach-1.3351057)
-* 2018-01-17: [8th amendment debate commences in the Dáil.](https://www.rte.ie/news/2018/0117/933884-eighth_amendment/)
-* 2018-01-26: [First poll shows majority want to repeal the 8th amendment.](https://www.irishtimes.com/news/politics/repeal-side-takes-early-lead-after-round-one-of-abortion-campaign-1.3368780)
-* 2018-01-29: [Government formally decides to hold referendum. Taoiseach declares support for repealing the 8th amendment.](https://www.rte.ie/news/ireland/2018/0129/936851-cabinet-eighth-amendment/)
+* 2017-11-18: Sinn Féin adopts a united party position to repeal the eighth amendment [20].
+* 2017-12-13: Oireachtas committee votes to recommend repealing the eighth amendment [21].
+* 2017-12-20: Oireachtas committee publishes final report, recommending a repeal of the 8th amendment [22].
+* 2018-01-10: Taoiseach raises concern that allowing abortion up to 12 weeks may be a step too far [23].
+* 2018-01-17: 8th amendment debate commences in the Dáil [24].
+* 2018-01-26: First poll shows majority want to repeal the 8th amendment [25].
+* 2018-01-29: Government formally decides to hold referendum. Taoiseach declares support for repealing the 8th amendment [26].
 * 2018-02-10: An outage in the pipeline results in a number of hours of Tweets being missed.
-* 2018-02-18: [Regina Doherty TD says unless something is done, the referendum will not pass.](https://www.rte.ie/news/health/2018/0218/941613-eighth-amendment/)
-* 2018-02-21: [Dáil debate on 8th referendum concludes.](https://www.rte.ie/news/politics/2018/0221/942539-eighth-amendment-dail/)
-* 2018-03-07: [Supreme court finds the unborn does not have constitutional rights outside right to life.](https://www.rte.ie/news/2018/0307/945560-supreme-court-rights-of-unborn/)
+* 2018-02-18: Regina Doherty TD says unless something is done, the referendum will not pass [27].
+* 2018-02-21: Dáil debate on 8th referendum concludes [28].
+* 2018-03-07: Supreme court finds the unborn does not have constitutional rights outside right to life [29].
 
 ![daily_tweet_count_by_viewpoint](images/daily_tweet_count_by_viewpoint.png)
 #### Figure 10.2: The number of Tweets collected daily since the pipeline began, split by viewpoint.
 
-Here we see the daily Tweet count, split into the distinct viewpoints. The most obvious piece of information from this graph is the difference in volume of Tweets from either side. #RepealThe8th is a much more common term than #SaveThe8th. This would be expected however as the main demographics on Twitter are more likely to be pro-choice [1] [2]. It is hard to make comparisons between the 2 activity levels, due to the large difference between them. To counteract this, I graphed the same data, but normalised it by the average Tweet count for that particular viewpoint.
+Here we see the daily Tweet count, split into the distinct viewpoints. The most obvious piece of information from this graph is the difference in volume of Tweets from either side. #RepealThe8th is a much more common term than #SaveThe8th. This would be expected however as the main demographics on Twitter are more likely to be pro-choice [X+1] [X+2]. It is hard to make comparisons between the 2 activity levels, due to the large difference between them. To counteract this, I graphed the same data, but normalised it by the average Tweet count for that particular viewpoint.
 
 ![relative_daily_tweet_count_by_viewpoint](images/relative_daily_tweet_count_by_viewpoint.png)
 #### Figure 10.3: The number of Tweets per day for each viewpoint, relative to the average number of daily Tweets for that viewpoint.
@@ -94,7 +94,7 @@ Save seem to be using more emotive language focusing more on the unborn. Althoug
 ![wordcloud snow day](images/wordcloud-snowday.png)
 #### Figure 10.10: The Repeal word cloud from March 2nd, when Ireland was suffering a massive snow storm.
 
-Another strategy, used particularly by the Repeal side, that was highlighted by the word clouds was the linking of the debate to other news stories. The repeal word cloud, from when Ireland was suffering a large snowstorm on the 2nd of March, clearly shows this concept. Many of the trending terms are to do with the weather, including:
+Another strategy, used particularly by the Repeal side, that was highlighted by the word clouds was the linking of the debate to other news stories. The repeal word cloud, from when Ireland was suffering a large snowstorm on the 2nd of March, clearly shows this concept [X+3]. Many of the trending terms are to do with the weather, including:
 * #snow
 * #snowday
 * #SneachtaForChoice (sneachta being the Irish word for snow)
@@ -106,7 +106,7 @@ Initially looking at these, there's no clear relevance to the debate. After cros
 ![wordcloud march](images/wordcloud-march.png)
 #### Figure 10.11: The Save word cloud from February 26th, when they were promoting a rally.
 
-Dates and times for events are commonly very popular terms in the word clouds, since they are likely only related to one side. An example is this Save cloud, where we can see the key details of the "All-Ireland Rally for Life". This was taking place on Saturday the 10th of March, from 2pm in Parnell square, and was organised by Youth Defence [3].
+Dates and times for events are commonly very popular terms in the word clouds, since they are likely only related to one side. An example is this Save cloud, where we can see the key details of the "All-Ireland Rally for Life". This was taking place on Saturday the 10th of March, from 2pm in Parnell square, and was organised by Youth Defence [X+4].
 
 ![Twitter Lookup](images/twitter-search.png)
 #### Figure 10.12: Twitter search results that are automatically opened when clicking on a term in a word cloud. In this case the results shown correspond to clicking on the '#BeastFromTheEast' term in the Repeal word cloud.
@@ -138,9 +138,3 @@ This specifies all the details that are specific to the topic being analysed. As
 #### Figure 10.13: This shows the web frontend of the pipeline after collecting data on gaming console discussion from North America intermittently over the course of 3 consecutive days.
 
 With only a few hours of data collected overall, it's clearly not enough to draw any results from. It does show however, that the pipeline can be pointed at another target and work perfectly.
-
-[1] - [Twitter Demographics](https://sproutsocial.com/insights/new-social-media-demographics/#twitter)
-
-[2] - [Poll shows public support for abortion is cautious and conditional](https://www.irishtimes.com/news/social-affairs/poll-shows-public-support-for-abortion-is-cautious-and-conditional-1.2995696)
-
-[3] - [All-Ireland Rally for Life](http://cloynediocese.ie/event/save-8th-rally-dublin/)
