@@ -16,6 +16,6 @@ The services that together make up the entire system are as follows:
 * **Web**: This sends HTML pages to the clients when they load the page. This HTML is then inflated using the data sent by the websocket service to display the latest results and analytics.
 
 ![corpus @ 1.0](images/arch.png)
-#### Figure X: A system architecture diagram that displays the various microservices and how they connect to form the overall pipeline.
+#### Figure 3.1: A system architecture diagram that displays the various microservices and how they connect to form the overall pipeline.
 
 [1] - [Software Architecture Patterns](http://www.oreilly.com/programming/free/files/software-architecture-patterns.pdf) by Mark Richards
