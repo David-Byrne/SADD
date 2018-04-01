@@ -99,7 +99,7 @@ Another strategy, used particularly by the Repeal side, that was highlighted by 
 * #snowday
 * #SneachtaForChoice (sneachta being the Irish word for snow)
 * #BeastFromTheEast
-* ❄️
+* The 'snowflake emoji'
 
 Initially looking at these, there's no clear relevance to the debate. After cross checking them on Twitter however, a narrative became clear. People were Tweeting about the women who'd be trying fly to the UK for an abortion, but who were prevented travelling due to flights being cancelled. By linking their agenda to the most popular news story, they were hoping to get focus back to their arguments.
 
