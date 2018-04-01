@@ -57,8 +57,8 @@ While the validation dataset accuracy score gives a good estimate of likely real
              |   e   s  |
              |       e  |
 -------------+----------+
-Actual True  |<TP>  <FN>|
-Actual False |<FP>  <TN>|
+Actual True  |<TP>   FN |
+Actual False | FP   <TN>|
 -------------+----------+
 ````
 Where
