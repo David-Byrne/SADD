@@ -1,6 +1,6 @@
 # Results
 
-The primary goal of the project has been fulfilled. We have created a microservice based, machine learning pipeline, that can collect, classify and analyse Twitter data on any divisive domain and display these results in a web-based dashboard in real time. We have used the run up to the referendum on repealing the 8th amendment in Ireland as an initial, real-world test case to validate the system.
+The primary goal of the project has been fulfilled. We have created a microservice based, machine learning pipeline, that can collect, classify and analyse Twitter data on any divisive domain and display these results in a web-based dashboard in real time. We have used the run up to the referendum on repealing the 8th amendment in Ireland as an initial, real-world test case to validate the system, and displayed the results in real-time on [hateful8th.com](http://hateful8th.com/).
 
 ## Raw Data
 The pipeline has been running almost constantly since the 8th of November, 2017. Since then, it has collected over 120,000 Tweets regarding the 8th amendment debate. This makes it an extremely valuable corpus detailing the run up to one of the most important and controversial referenda in recent Irish history. It is my intention to keep the pipeline running until after the referendum is held, to increase the coverage of the dataset. Although this project will be finished by then, it would seem like a waste of a major opportunity to not keep the pipeline running until the end.
@@ -138,3 +138,30 @@ This specifies all the details that are specific to the topic being analysed. As
 #### Figure 10.13: This shows the web frontend of the pipeline after collecting data on gaming console discussion from North America intermittently over the course of 3 consecutive days.
 
 With only a few hours of data collected overall, it's clearly not enough to draw any results from. It does show however, that the pipeline can be pointed at another target and work perfectly.
+
+## Real-world Release
+Once I was happy that the development side of the project was complete, I posted a link to the website on the Irish forum of the social media site Reddit. I chose Reddit as it has a large focus on posting a topic and discussing it for a short while, before newer posts appear and the discussion shifts to them. This would allow me demonstrate the website to a large amount of users without needing to have a large social network to share it with, as would be required on Facebook or Twitter. I set up Google Analytics to gather information on the web traffic I received. This, combined with the feedback given directly by Reddit users, would give valuable insight into real-world usage and value of the system.
+
+The website received over 600 page views in the 24 hours after posting it on Reddit, according to the Google Analytics data. This figure underestimates the actual value, as many people run adblocking software which would also block Google Analytics from running. Of these recorded hits, 84.6% originated from Ireland, 5.1% from the United Kingdom and 2.5% from the United States. Given it was posted to an Irish forum, there's nothing overly surprising in these figures. 54% of users were on mobile phones, 39.5% on laptops or desktops and 6.5% on tablets. This statistic clearly shows the value that was added by making the site mobile friendly. Looking at the referral data, the vast majority of traffic came to the website via Reddit, which is what we'd expect. Interestingly though, there were small amounts of referrals from Twitter, Facebook and Messenger as well. This implies users on Reddit saw the link and further shared it to other people. In terms of users' systems, there weren't any surprising results with Chrome and Android Webview being the 2 most popular browsers and Android and Windows being the 2 most popular operating systems. English was by far the most popular language, with all but 2 users having it set as their main language. The remaining 2 users both had Irish set instead.
+
+The general reception to the website on Reddit was extremely positive, with the post being 88% 'up-voted'. Many of the comments were by users who were impressed by the site, including:
+> Wow. Very impressed OP. Well done. Absolutely love the name, very clever. I think you're onto a winner here. Start sharing it with news organizations.
+
+> This is pretty cool
+
+> I hope you dont mind but I tweeted out a link to the website and gave your reddit username. I've been fairly active on Twitter with the referendum so I think the website will benefit a lot of accounts
+
+> Well done, this is an excellent project
+
+> LOVE the name btw!
+
+
+A number of users were interested in the technical inner workings of the system, which I found somewhat surprising. Science, Technology, Engineering and Maths (STEM) fields are highly represented on Reddit which could explain the unusual levels of interest.
+
+> What algorithms did you use to determine the sentiment of the tweets?
+
+> Is it up on github to take a nosey?
+
+One user in particular was impressed enough to offer me a job based only off the Reddit post.
+
+> Wow. Very impressed. PM me if you're interested in some work.
