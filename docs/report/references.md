@@ -70,14 +70,22 @@
 
 28. Harris says unrestricted abortion 'already happening' in Ireland, RTÉ. Retrieved from https://www.rte.ie/news/politics/2018/0221/942539-eighth-amendment-dail/ on March 31st, 2018.
 
-29. Unborn does not have inherent constitutional rights outside right to life, RTÉ. Retrieved from https://www.rte.ie/news/2018/0307/945560-supreme-court-rights-of-unborn/ on March 31st, 2018.
+29. International Women's Day, March 8th. Retrieved from https://www.internationalwomensday.com/ on April 6th, 2018.
 
-... (more will be added here when extra results are available)
+30. ‘Rally for Life’ told 10 weeks left to save Eighth Amendment,The Irish Times. Retrieved from https://www.irishtimes.com/news/ireland/irish-news/rally-for-life-told-10-weeks-left-to-save-eighth-amendment-1.3422543 on April 6th, 2018.
 
-X+1. Twitter Demographics, Sprout Social. Retrieved from https://sproutsocial.com/insights/new-social-media-demographics/#twitter on March 31st, 2018.
+31. Dáil passes bill over referendum on Eighth Amendment, RTÉ. Retrieved from https://www.rte.ie/news/politics/2018/0321/949062-politics/ on April 6th, 2018.
 
-X+2. Poll shows public support for abortion is cautious and conditional, The Irish Times. Retrieved from https://www.irishtimes.com/news/social-affairs/poll-shows-public-support-for-abortion-is-cautious-and-conditional-1.2995696 on March 31st, 2018.
+32. Together for Yes referendum campaign launched, RTÉ. Retrieved from https://www.rte.ie/news/ireland/2018/0322/949284-eighth-amendment/ on April 6th, 2018.
 
-X+3. Beast from the East: Status Red snow alert in place until Friday, The Irish Times. Retrieved from https://www.irishtimes.com/news/environment/beast-from-the-east-status-red-snow-alert-in-place-until-friday-1.3408511 on March 31st, 2018.
+33. Govt confirms referendum on Eighth Amendment will be held 25 May, RTÉ. Retrieved from https://www.rte.ie/news/2018/0328/950558-seanad_referendum_bill/ on April 6th, 2018.
 
-X+4. All-Ireland Rally for Life, Cloyne Diocese. Retrieved from http://cloynediocese.ie/event/save-8th-rally-dublin/ on March 31st, 2018.
+34. Twitter Demographics, Sprout Social. Retrieved from https://sproutsocial.com/insights/new-social-media-demographics/#twitter on March 31st, 2018.
+
+35. Poll shows public support for abortion is cautious and conditional, The Irish Times. Retrieved from https://www.irishtimes.com/news/social-affairs/poll-shows-public-support-for-abortion-is-cautious-and-conditional-1.2995696 on March 31st, 2018.
+
+36. Save the 8th campaign launches in Dublin, RTÉ. Retrieved from https://www.rte.ie/news/eighth-amendment/2018/0329/950911-save8th-campaign-launch/ on April 6th, 2018.
+
+37. Beast from the East: Status Red snow alert in place until Friday, The Irish Times. Retrieved from https://www.irishtimes.com/news/environment/beast-from-the-east-status-red-snow-alert-in-place-until-friday-1.3408511 on March 31st, 2018.
+
+38. All-Ireland Rally for Life, Cloyne Diocese. Retrieved from http://cloynediocese.ie/event/save-8th-rally-dublin/ on March 31st, 2018.

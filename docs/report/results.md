@@ -3,7 +3,7 @@
 The primary goal of the project has been fulfilled. We have created a microservice based, machine learning pipeline, that can collect, classify and analyse Twitter data on any divisive domain and display these results in a web-based dashboard in real time. We have used the run up to the referendum on repealing the 8th amendment in Ireland as an initial, real-world test case to validate the system, and displayed the results in real-time on [hateful8th.com](http://hateful8th.com/).
 
 ## Raw Data
-The pipeline has been running almost constantly since the 8th of November, 2017. Since then, it has collected over 120,000 Tweets regarding the 8th amendment debate. This makes it an extremely valuable corpus detailing the run up to one of the most important and controversial referenda in recent Irish history. It is my intention to keep the pipeline running until after the referendum is held, to increase the coverage of the dataset. Although this project will be finished by then, it would seem like a waste of a major opportunity to not keep the pipeline running until the end.
+The pipeline has been running almost constantly since the 8th of November, 2017. Since then, it has collected over 250,000 Tweets regarding the 8th amendment debate. This makes it an extremely valuable corpus detailing the run up to one of the most important and controversial referenda in recent Irish history. It is my intention to keep the pipeline running until after the referendum is held, to increase the coverage of the dataset. Although this project will be finished by then, it would seem like a waste of a major opportunity to not keep the pipeline running until the end.
 
 ![daily_tweet_count](images/daily_tweet_count.png)
 #### Figure 10.1: The number of Tweets collected daily since the pipeline began.
@@ -19,17 +19,21 @@ This graph is quite a simple visualisation of daily Tweet count. It does highlig
 * 2018-02-10: An outage in the pipeline results in a number of hours of Tweets being missed.
 * 2018-02-18: Regina Doherty TD says unless something is done, the referendum will not pass [27].
 * 2018-02-21: Dáil debate on 8th referendum concludes [28].
-* 2018-03-07: Supreme court finds the unborn does not have constitutional rights outside right to life [29].
+* 2018-03-08: International Women's Day [29].
+* 2018-03-10: 'Rally for life' held, where tens of thousands marched calling for the preservation of the Eighth Amendment [30].
+* 2018-03-21: Dáil passes bill to allow the holding of a referendum on the Eighth Amendment [31].
+* 2018-03-22: 'Together for Yes' campaign launched to advocate for a repeal of the Eighth Amendment [32].
+* 2018-03-28: The date of the referendum is confirmed by the government [33].
 
 ![daily_tweet_count_by_viewpoint](images/daily_tweet_count_by_viewpoint.png)
 #### Figure 10.2: The number of Tweets collected daily since the pipeline began, split by viewpoint.
 
-Here we see the daily Tweet count, split into the distinct viewpoints. The most obvious piece of information from this graph is the difference in volume of Tweets from either side. #RepealThe8th is a much more common term than #SaveThe8th. This would be expected however as the main demographics on Twitter are more likely to be pro-choice [X+1] [X+2]. It is hard to make comparisons between the 2 activity levels, due to the large difference between them. To counteract this, I graphed the same data, but normalised it by the average Tweet count for that particular viewpoint.
+Here we see the daily Tweet count, split into the distinct viewpoints. The most obvious piece of information from this graph is the difference in volume of Tweets from either side. #RepealThe8th is a much more common term than #SaveThe8th. This would be expected however as the main demographics on Twitter are more likely to be pro-choice [34] [35]. It is hard to make comparisons between the 2 activity levels, due to the large difference between them. To counteract this, I graphed the same data, but normalised it by the average Tweet count for that particular viewpoint.
 
 ![relative_daily_tweet_count_by_viewpoint](images/relative_daily_tweet_count_by_viewpoint.png)
 #### Figure 10.3: The number of Tweets per day for each viewpoint, relative to the average number of daily Tweets for that viewpoint.
 
-This gives us a far clearer comparison between the two viewpoints' activity levels. We can see there are certain news stories that are far more important for one side than the other. E.g. The Taoiseach raising concerns that allowing abortion up to 12 weeks may be a step too far on January 10th led to a large jump in Repeal Tweets but almost no change in Save activity levels. The supreme court finding the unborn does not have constitutional rights outside right to life was a much more important issue to the Save side than the Repeal side however. Another clear feature of this graph is the increase in Twitter activity from both sides over time. The Save activity noticeably increased after the first poll showed Repeal with an early lead, on January 26th. As the referendum date gets nearer, we can expect to see further growth in activity levels from both sides.
+This gives us a far clearer comparison between the two viewpoints' activity levels. We can see there are certain news stories that are far more important for one side than the other. E.g. International women's day on March 8th was a much bigger event for the Repeal side than for the Save side. The 'Rally for Life' march 2 days later generated a much larger increase in Save activity than Repeal activity. It also shows up events that didn't produce a noticeable impact in the simple count graphs. E.g. A large spike in Save activity on March 29th, when the Save the 8th campaign officially launched [36]. There's no unusual spike in activity in the other graphs however as a decrease in Repeal activity masked the impact. Another clear feature of this graph is the increase in Twitter activity from both sides over time. The Save activity noticeably increased after the first poll showed Repeal with an early lead, on January 26th. As the referendum date gets nearer, we can expect to see further growth in activity levels from both sides.
 
 ## Tweet Time Analysis
 What time people tend to Tweet about this debate at is another area to explore. As can be seen from above, large spikes in Twitter activity tend to follow big news breaking. I analysed the timestamps of all the Tweets the pipeline has classified to see if any interesting information could be extracted. Potentially, this sort of data could be used by groups to maximise exposure for Twitter campaigns on the topic.
@@ -53,7 +57,7 @@ Analysing sentiment is the most challenging aspect of the project. Despite the c
 
 This shows the smoothed sentiment calculated so far by the pipeline. It is displayed in the range [-1,1] as we found this to be a more user-friendly option than the usual range of [0,1]. For the remainder of this section, all figures for sentiment will be given for the [-1,1] range to keep consistency with the graph.
 
-It can clearly be seen from this graph that the sentiment values were more extreme nearer the start of the debate, especially on the Save side. This is more likely to do with the lower levels of Twitter activity nearer the start, than any calming of discussion. As seen in the above subsections, there was very little Save Twitter activity in the first few months of measurements. This means noise had a far greater impact as a few extra negative Tweets in a day noticeably brought down the average. From mid-January onwards, all daily values have kept within the [-0.2,0.4] interval. This coincides with the increase in Twitter activity discussed above.
+It can clearly be seen from this graph that the sentiment values were more extreme nearer the start of the debate, especially on the Save side. This is more likely to do with the lower levels of Twitter activity nearer the start, than any calming of discussion. As seen in the above subsections, there was very little Save Twitter activity in the first few months of measurements. This means noise had a far greater impact as a few extra negative Tweets in a day noticeably brought down the average. From mid-January onwards, almost all daily values have kept within the [-0.2,0.4] interval. This coincides with the increase in Twitter activity discussed above.
 
 Unlike the above section on Tweet volumes, it is much harder to link any changes in the graph to specific events in the campaign. The rate of Tweets may increase but the overall sentiment doesn't swing outside of the usual fluctuation zone. The overall sentiment levels are too changeable to say with any confidence that a particular fluctuation was caused by a specific event. As the referendum draws nearer, it's possible that reactions to certain news stories would be more uniform, resulting in clearer changes in sentiment. An example of this would be on results day, where we would expect very positive Tweets from the winning side and potentially very negative Tweets from the other.
 
@@ -65,7 +69,7 @@ Unlike the above section on Tweet volumes, it is much harder to link any changes
 
 Interestingly, a number of patterns are visible in the sentiment data between the 2 sides. For some short periods of time, both sentiment levels tend to change in a synchronised manner (fig. 10.7 above). They rise and fall on the same days, even when there's a large gap in their real values. A possible explanation for this is that sentiment expressed by one side is reacted to in a similar manner by the other side. A polite debate would likely result in positive sentiment from both sides, whereas an angry one would likely result in negative sentiment. Inversely, for other short periods of time, they move in opposite directions (fig. 10.8 above). This is probably closer to what one might expect, as positive news for one side would likely be negative news for the other (e.g. poll results showing one side has a large lead).
 
-The overall average sentiment for Repeal Tweets is 0.1415 and for Save Tweets is 0.2017. Surprisingly, both values are positive meaning the debate might not be as negative as some feared it would be. It also shows Save supporters may be slightly more positive than Repeal supporters, although there is very little between the two sides.
+The overall average sentiment for Repeal Tweets is 0.1002 and for Save Tweets is 0.1968. Surprisingly, both values are positive meaning the debate might not be as negative as some feared it would be. It also shows Save supporters may be slightly more positive than Repeal supporters, although there is very little between the two sides.
 
 ## Word Clouds
 
@@ -94,7 +98,7 @@ Save seem to be using more emotive language focusing more on the unborn. Althoug
 ![wordcloud snow day](images/wordcloud-snowday.png)
 #### Figure 10.10: The Repeal word cloud from March 2nd, when Ireland was suffering a massive snow storm.
 
-Another strategy, used particularly by the Repeal side, that was highlighted by the word clouds was the linking of the debate to other news stories. The repeal word cloud, from when Ireland was suffering a large snowstorm on the 2nd of March, clearly shows this concept [X+3]. Many of the trending terms are to do with the weather, including:
+Another strategy, used particularly by the Repeal side, that was highlighted by the word clouds was the linking of the debate to other news stories. The repeal word cloud, from when Ireland was suffering a large snowstorm on the 2nd of March, clearly shows this concept [37]. Many of the trending terms are to do with the weather, including:
 * #snow
 * #snowday
 * #SneachtaForChoice (sneachta being the Irish word for snow)
@@ -106,7 +110,7 @@ Initially looking at these, there's no clear relevance to the debate. After cros
 ![wordcloud march](images/wordcloud-march.png)
 #### Figure 10.11: The Save word cloud from February 26th, when they were promoting a rally.
 
-Dates and times for events are commonly very popular terms in the word clouds, since they are likely only related to one side. An example is this Save cloud, where we can see the key details of the "All-Ireland Rally for Life". This was taking place on Saturday the 10th of March, from 2pm in Parnell square, and was organised by Youth Defence [X+4].
+Dates and times for events are commonly very popular terms in the word clouds, since they are likely only related to one side. An example is this Save cloud, where we can see the key details of the "All-Ireland Rally for Life". This was taking place on Saturday the 10th of March, from 2pm in Parnell square, and was organised by Youth Defence [38].
 
 ![Twitter Lookup](images/twitter-search.png)
 #### Figure 10.12: Twitter search results that are automatically opened when clicking on a term in a word cloud. In this case the results shown correspond to clicking on the '#BeastFromTheEast' term in the Repeal word cloud.
