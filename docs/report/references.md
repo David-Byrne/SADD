@@ -72,7 +72,7 @@
 
 29. International Women's Day, March 8th. Retrieved from https://www.internationalwomensday.com/ on April 6th, 2018.
 
-30. ‘Rally for Life’ told 10 weeks left to save Eighth Amendment,The Irish Times. Retrieved from https://www.irishtimes.com/news/ireland/irish-news/rally-for-life-told-10-weeks-left-to-save-eighth-amendment-1.3422543 on April 6th, 2018.
+30. ‘Rally for Life’ told 10 weeks left to save Eighth Amendment, The Irish Times. Retrieved from https://www.irishtimes.com/news/ireland/irish-news/rally-for-life-told-10-weeks-left-to-save-eighth-amendment-1.3422543 on April 6th, 2018.
 
 31. Dáil passes bill over referendum on Eighth Amendment, RTÉ. Retrieved from https://www.rte.ie/news/politics/2018/0321/949062-politics/ on April 6th, 2018.
 
