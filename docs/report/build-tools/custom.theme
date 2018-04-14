@@ -1,5 +1,5 @@
 {
-	"_comment": "modified from Tango theme https://github.com/tajmone/pandoc-goodies/blob/master/skylighting-themes/builtin-tango.theme",
+    "_comment": "modified from Tango theme https://github.com/tajmone/pandoc-goodies/blob/master/skylighting-themes/builtin-tango.theme",
     "text-color": null,
     "background-color": "#f4f4f4",
     "line-number-color": "#aaaaaa",
@@ -14,7 +14,7 @@
         },
         "Attribute": {
             "text-color": "#c4a000",
-			"_comment": "used for special builtins like encodeURIComponent, @annotation...",
+            "_comment": "used for special builtins like encodeURIComponent, @annotation...",
             "background-color": null,
             "bold": false,
             "italic": false,
@@ -36,7 +36,7 @@
         },
         "Function": {
             "text-color": "#c4a000",
-			"_comment": "used for AVG in SQL",
+            "_comment": "used for AVG in SQL",
             "background-color": null,
             "bold": false,
             "italic": false,
@@ -44,7 +44,7 @@
         },
         "String": {
             "text-color": "#0f9152",
-			"_comment": "#4e9a06 used for normal strings",
+            "_comment": "#4e9a06 used for normal strings",
             "background-color": null,
             "bold": false,
             "italic": false,
@@ -52,7 +52,7 @@
         },
         "ControlFlow": {
             "text-color": "#204a87",
-			"_comment": "for, if, return...",
+            "_comment": "for, if, return...",
             "background-color": null,
             "bold": true,
             "italic": false,
@@ -60,7 +60,7 @@
         },
         "Operator": {
             "text-color": "#b854d4",
-			"_comment": "used for +, =, {, => #ce5c00 ",
+            "_comment": "used for +, =, {, => #ce5c00 ",
             "background-color": null,
             "bold": true,
             "italic": false,
@@ -89,7 +89,7 @@
         },
         "Variable": {
             "text-color": "#000000",
-			"_comment": " window",
+            "_comment": " window",
             "background-color": null,
             "bold": false,
             "italic": false,
@@ -118,7 +118,7 @@
         },
         "VerbatimString": {
             "text-color": "#0f9152",
-			"_comment": "#4e9a06 used for `` strings in JS",
+            "_comment": "#4e9a06 used for `` strings in JS",
             "background-color": null,
             "bold": false,
             "italic": false,
@@ -147,7 +147,7 @@
         },
         "Char": {
             "text-color": "#8f5902",
-			"_comment": "used for ::int and ::date in SQL, #4e9a06",
+            "_comment": "used for ::int and ::date in SQL, #4e9a06",
             "background-color": null,
             "bold": false,
             "italic": false,
@@ -162,7 +162,7 @@
         },
         "Float": {
             "text-color": "#038f99",
-			"_comment": "#0000cf used for floating point numbers",
+            "_comment": "#0000cf used for floating point numbers",
             "background-color": null,
             "bold": false,
             "italic": false,
@@ -170,7 +170,7 @@
         },
         "Comment": {
             "text-color": "#888888",
-			"_comment": "comment 8f5902",
+            "_comment": "comment 8f5902",
             "background-color": null,
             "bold": false,
             "italic": true,
@@ -192,7 +192,7 @@
         },
         "SpecialChar": {
             "text-color": "#b854d4",
-			"_comment": "#000000 used for ${var} in JS",
+            "_comment": "#000000 used for ${var} in JS",
             "background-color": null,
             "bold": false,
             "italic": false,
@@ -200,7 +200,7 @@
         },
         "DecVal": {
             "text-color": "#038f99",
-			"_comment": "Used for whole numbers, previously:#0000cf ",
+            "_comment": "Used for whole numbers, previously:#0000cf ",
             "background-color": null,
             "bold": false,
             "italic": false,
@@ -208,7 +208,7 @@
         },
         "Keyword": {
             "text-color": "#204a87",
-			"_comment": "used for def, in, const, SELECT...",
+            "_comment": "used for def, in, const, SELECT...",
             "background-color": null,
             "bold": true,
             "italic": false,

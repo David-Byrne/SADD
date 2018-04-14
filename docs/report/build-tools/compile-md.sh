@@ -22,59 +22,59 @@ cat appendix.md >>  $outdir/out.md
 
 # md -> pdf
 pandoc --pdf-engine=xelatex \
-	   --toc \
-	   --highlight-style=./build-tools/custom.theme \
-	   -V papersize:a4 \
-	   -V fontsize=12pt \
+       --toc \
+       --highlight-style=./build-tools/custom.theme \
+       -V papersize:a4 \
+       -V fontsize=12pt \
        -V geometry:margin=2.3cm \
-	   -V documentclass:article \
-	   -M title='Sentiment Analysis in Divisive Domains' \
-	   -M author='David Byrne' \
-	   -M date='April 2018' \
-	   -M modified='`date`' \
-	   -M institute='NUI Galway' \
+       -V documentclass:article \
+       -M title='Sentiment Analysis in Divisive Domains' \
+       -M author='David Byrne' \
+       -M date='April 2018' \
+       -M modified='`date`' \
+       -M institute='NUI Galway' \
        -M subtitle='Creating a microservices based, machine learning pipeline for real-time sentiment analysis of Twitter data' \
-	   -M keywords='Sentiment Analysis',' Machine Learning',' Divisive Domains',' Twitter' \
-	   -f gfm \
-	   -s $outdir/out.md \
-	   -o $outdir/out.pandoc.pdf
+       -M keywords='Sentiment Analysis',' Machine Learning',' Divisive Domains',' Twitter' \
+       -f gfm \
+       -s $outdir/out.md \
+       -o $outdir/out.pandoc.pdf
 
 # md -> tex
 pandoc --toc \
-	   --highlight-style=./build-tools/custom.theme \
-	   -V papersize:a4 \
-	   -V fontsize=12pt \
+       --highlight-style=./build-tools/custom.theme \
+       -V papersize:a4 \
+       -V fontsize=12pt \
        -V geometry:margin=2.3cm \
-	   -V documentclass:article \
-	   -M title='Sentiment Analysis in Divisive Domains' \
-	   -M author='David Byrne' \
-	   -M date='April 2018' \
-	   -M modified='`date`' \
-	   -M institute='NUI Galway' \
+       -V documentclass:article \
+       -M title='Sentiment Analysis in Divisive Domains' \
+       -M author='David Byrne' \
+       -M date='April 2018' \
+       -M modified='`date`' \
+       -M institute='NUI Galway' \
        -M subtitle='Creating a microservices based, machine learning pipeline for real-time sentiment analysis of Twitter data' \
-	   -M keywords='Sentiment Analysis',' Machine Learning',' Divisive Domains',' Twitter' \
-	   -f gfm \
-	   -t latex \
-	   -s $outdir/out.md  \
-	   -o $outdir/out.pandoc.tex
+       -M keywords='Sentiment Analysis',' Machine Learning',' Divisive Domains',' Twitter' \
+       -f gfm \
+       -t latex \
+       -s $outdir/out.md  \
+       -o $outdir/out.pandoc.tex
 
 # md -> docx
 pandoc --toc \
-	   --highlight-style=./build-tools/custom.theme \
-	   -V papersize:a4 \
-	   -V fontsize=12pt \
+       --highlight-style=./build-tools/custom.theme \
+       -V papersize:a4 \
+       -V fontsize=12pt \
        -V geometry:margin=2.3cm \
-	   -V documentclass:article \
-	   -M title='Sentiment Analysis in Divisive Domains' \
-	   -M author='David Byrne' \
-	   -M date='April 2018' \
-	   -M modified='`date`' \
-	   -M institute='NUI Galway' \
+       -V documentclass:article \
+       -M title='Sentiment Analysis in Divisive Domains' \
+       -M author='David Byrne' \
+       -M date='April 2018' \
+       -M modified='`date`' \
+       -M institute='NUI Galway' \
        -M subtitle='Creating a microservices based, machine learning pipeline for real-time sentiment analysis of Twitter data' \
-	   -M keywords='Sentiment Analysis',' Machine Learning',' Divisive Domains',' Twitter' \
-	   -f gfm \
-	   -s $outdir/out.md \
-	   -o $outdir/out.pandoc.docx
+       -M keywords='Sentiment Analysis',' Machine Learning',' Divisive Domains',' Twitter' \
+       -f gfm \
+       -s $outdir/out.md \
+       -o $outdir/out.pandoc.docx
 
 
 
