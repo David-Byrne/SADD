@@ -1,0 +1,219 @@
+{
+    "_comment": "modified from Tango theme https://github.com/tajmone/pandoc-goodies/blob/master/skylighting-themes/builtin-tango.theme",
+    "text-color": null,
+    "background-color": "#f4f4f4",
+    "line-number-color": "#aaaaaa",
+    "line-number-background-color": null,
+    "text-styles": {
+        "Other": {
+            "text-color": "#8f5902",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Attribute": {
+            "text-color": "#c4a000",
+            "_comment": "used for special builtins like encodeURIComponent, @annotation...",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "SpecialString": {
+            "text-color": "#4e9a06",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Annotation": {
+            "text-color": "#8f5902",
+            "background-color": null,
+            "bold": true,
+            "italic": true,
+            "underline": false
+        },
+        "Function": {
+            "text-color": "#c4a000",
+            "_comment": "used for AVG in SQL",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "String": {
+            "text-color": "#0f9152",
+            "_comment": "#4e9a06 used for normal strings",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "ControlFlow": {
+            "text-color": "#204a87",
+            "_comment": "for, if, return...",
+            "background-color": null,
+            "bold": true,
+            "italic": false,
+            "underline": false
+        },
+        "Operator": {
+            "text-color": "#b854d4",
+            "_comment": "used for +, =, {, => #ce5c00 ",
+            "background-color": null,
+            "bold": true,
+            "italic": false,
+            "underline": false
+        },
+        "Error": {
+            "text-color": "#a40000",
+            "background-color": null,
+            "bold": true,
+            "italic": false,
+            "underline": false
+        },
+        "BaseN": {
+            "text-color": "#0000cf",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Alert": {
+            "text-color": "#ef2929",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Variable": {
+            "text-color": "#000000",
+            "_comment": " window",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Extension": {
+            "text-color": null,
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Preprocessor": {
+            "text-color": "#8f5902",
+            "background-color": null,
+            "bold": false,
+            "italic": true,
+            "underline": false
+        },
+        "Information": {
+            "text-color": "#8f5902",
+            "background-color": null,
+            "bold": true,
+            "italic": true,
+            "underline": false
+        },
+        "VerbatimString": {
+            "text-color": "#0f9152",
+            "_comment": "#4e9a06 used for `` strings in JS",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Warning": {
+            "text-color": "#8f5902",
+            "background-color": null,
+            "bold": true,
+            "italic": true,
+            "underline": false
+        },
+        "Documentation": {
+            "text-color": "#8f5902",
+            "background-color": null,
+            "bold": true,
+            "italic": true,
+            "underline": false
+        },
+        "Import": {
+            "text-color": null,
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Char": {
+            "text-color": "#8f5902",
+            "_comment": "used for ::int and ::date in SQL, #4e9a06",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "DataType": {
+            "text-color": "#204a87",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Float": {
+            "text-color": "#038f99",
+            "_comment": "#0000cf used for floating point numbers",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Comment": {
+            "text-color": "#888888",
+            "_comment": "comment 8f5902",
+            "background-color": null,
+            "bold": false,
+            "italic": true,
+            "underline": false
+        },
+        "CommentVar": {
+            "text-color": "#8f5902",
+            "background-color": null,
+            "bold": true,
+            "italic": true,
+            "underline": false
+        },
+        "Constant": {
+            "text-color": "#000000",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "SpecialChar": {
+            "text-color": "#b854d4",
+            "_comment": "#000000 used for ${var} in JS",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "DecVal": {
+            "text-color": "#038f99",
+            "_comment": "Used for whole numbers, previously:#0000cf ",
+            "background-color": null,
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "Keyword": {
+            "text-color": "#204a87",
+            "_comment": "used for def, in, const, SELECT...",
+            "background-color": null,
+            "bold": true,
+            "italic": false,
+            "underline": false
+        }
+    }
+}
+
