@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.com/David-Byrne/SADD.svg?token=eRCaTs5qpsFidWXpUGtZ&branch=master)](https://travis-ci.com/David-Byrne/FYP)
 
-This, together with an accompanying thesis, was submitted as my Final Year Project for the BSc in Computer Science and Information Technology at NUI Galway.
+This, together with [the accompanying thesis](https://files.davidbyrne.io/FYP), was submitted as my Final Year Project for the BSc in Computer Science and Information Technology at NUI Galway.
 
 As an initial, real-world test case to validate the system, it was applied to Tweets regarding Ireland's 2018 referendum on whether or not to repeal the 8th amendment. The results are displayed in real-time at [hateful8th.com](http://hateful8th.com/).
 
