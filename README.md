@@ -2,7 +2,7 @@
 
 ### A microservices based, machine learning pipeline for real-time sentiment analysis of Twitter data.
 
-[![Build Status](https://travis-ci.com/David-Byrne/SADD.svg?token=eRCaTs5qpsFidWXpUGtZ&branch=master)](https://travis-ci.com/David-Byrne/FYP)
+[![Build Status](https://travis-ci.com/David-Byrne/SADD.svg?token=eRCaTs5qpsFidWXpUGtZ&branch=master)](https://travis-ci.com/David-Byrne/SADD)
 
 This, together with [the accompanying thesis](https://files.davidbyrne.io/FYP), was submitted as my Final Year Project for the BSc in Computer Science and Information Technology at NUI Galway.
 
