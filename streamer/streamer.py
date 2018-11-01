@@ -43,7 +43,8 @@ def main():
         config = json.load(file)
     hashtag1 = config["topic1"]["name"].lower()
     hashtag2 = config["topic2"]["name"].lower()
-    stream = tweepy.Stream(auth=auth, listener=TwitterStreamer(config))
+    stream = tweepy.Stream(auth=auth, listener=TwitterStreamer(config)) # noqa: W606
+    # until a new tweepy release >3.6.0 includes https://github.com/tweepy/tweepy/pull/1042
     stream.filter(track=[hashtag1, hashtag2], async=True)
 
 
