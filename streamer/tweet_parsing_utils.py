@@ -12,7 +12,7 @@ class TweetParser(object):
 
     def get_tweet_viewpoint(self, status):
         text = TweetParser.get_tweet_text(status).lower()
-        used_hts = re.findall("#\w+", text)
+        used_hts = re.findall(r"#\w+", text)
         # This regex is used to match hashtags, it means hash symbol followed by at least
         # one word character
 

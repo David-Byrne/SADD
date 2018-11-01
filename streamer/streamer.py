@@ -44,7 +44,8 @@ def main():
     hashtag1 = config["topic1"]["name"].lower()
     hashtag2 = config["topic2"]["name"].lower()
     stream = tweepy.Stream(auth=auth, listener=TwitterStreamer(config))
-    stream.filter(track=[hashtag1, hashtag2], async=True)
+    stream.filter(track=[hashtag1, hashtag2], async=True)  # noqa: W606
+    # until a new tweepy release >3.6.0 includes https://github.com/tweepy/tweepy/pull/1042
 
 
 if __name__ == '__main__':
