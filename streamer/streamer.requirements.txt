@@ -1,2 +1,2 @@
-requests==2.14.2
+requests==2.20.0
 tweepy==3.5.0
